@@ -1,0 +1,73 @@
+---
+title: "Klaritics SDKs: Send Analytics from Mobile and Web"
+sidebarTitle: "Overview"
+description: "Integrate Klaritics analytics into Android, iOS, Web, React Native, KMP, and Flutter apps. Initialize with project_id and server_host, then log events."
+---
+
+Klaritics provides client SDKs for Android, iOS, Web, React Native, Kotlin Multiplatform, and Flutter. Every SDK uses the same initialization pattern: provide your `project_id` and `server_host`, then start logging events and user properties. This page covers the concepts shared across all platforms and links to platform-specific setup guides.
+
+## Supported platforms
+
+<CardGroup cols={2}>
+  <Card title="Web" icon="globe" href="/sdk/web">
+    Browser and SPA integration via npm or script tag.
+  </Card>
+
+  <Card title="Android" icon="mobile" href="/sdk/android">
+    Gradle-based Android apps using Maven coordinates.
+  </Card>
+
+  <Card title="iOS" icon="apple" href="/sdk/ios">
+    Swift and Objective-C apps via Swift Package Manager.
+  </Card>
+
+  <Card title="React Native" icon="code" href="/sdk/react-native">
+    Cross-platform JS apps for iOS and Android.
+  </Card>
+
+  <Card title="Kotlin Multiplatform" icon="code" href="/sdk/kmp">
+    Shared Kotlin code across Android, iOS, and other targets.
+  </Card>
+
+  <Card title="Flutter" icon="layer-group" href="/sdk/flutter">
+    Cross-platform Dart apps for iOS and Android.
+  </Card>
+</CardGroup>
+
+## Shared initialization
+
+Every SDK requires two values to initialize:
+
+- `project_id`: your Klaritics project identifier, found in the Klaritics dashboard
+- `server_host`: the URL of your Klaritics instance (for example, `https://analytics.yourcompany.com`)
+
+The SDK does not start capturing events until both values are provided. We recommend verifying that the host is reachable at initialization time.
+
+## Verify your integration
+
+After you initialize the SDK in your app, send a few test events to confirm the setup end to end before you start building dashboards.
+
+<Steps>
+  <Step title="Trigger a few events in your app">
+    Run your app in a debug build and perform real actions that call `logAppEvent`, `logClientEvent`, or `logEvent`. Sign in, tap a button, open a screen, add an item to the cart. Aim for at least 5 to 10 events across a couple of user sessions.
+  </Step>
+  <Step title="Watch events land on the Getting Started page">
+    Open the Klaritics dashboard and go to **Getting Started**. Newly received events for your project appear here in near real time, along with the platform they came from and the attributes attached to them.
+  </Step>
+  <Step title="Click Complete Setup">
+    Once Klaritics has received enough events from your app, the **Complete Setup** CTA on the Getting Started page becomes active. Click it to mark your integration as complete and unlock the full dashboard.
+  </Step>
+  <Step title="Build your first dashboard">
+    With events flowing, head to [Saved Dashboards](/dashboards/saved-dashboards) to pin charts, funnels, and retention widgets, or start from a [template](/templates/product-analytics) to get a working analytics view in minutes.
+  </Step>
+</Steps>
+
+## Event and attribute naming
+
+When you log events and attributes from your application, use plain names that describe what happened in your product, for example `ProductClicked` or `add_to_cart`, with attributes like `userId` or `item`.
+
+<Warning>
+  Do not use `$` as a prefix for events or attributes that you log. The Klaritics SDKs reserve the `$` prefix for events and attributes that they add automatically, such as session and device metadata. Names you log that start with `$` may collide with SDK-managed data.
+</Warning>
+
+For the full naming guidance, see [Event and attribute naming](/sdk/event-naming).

@@ -1,0 +1,50 @@
+---
+title: "Naming Events and Attributes in Your Klaritics Integration"
+sidebarTitle: "Event Naming"
+description: "Guidance for naming the events and attributes you send from your app with Klaritics SDKs, and why you should avoid the reserved $ prefix."
+---
+
+Consistent event and attribute names make your Klaritics analytics easier to query, chart, and share across your team. This page covers how to name the events and attributes you send from your application and the one reserved prefix to avoid.
+
+## Name events for what happens in your product
+
+Use clear, descriptive names that map directly to user actions or business events in your app. Pick a casing convention (for example `snake_case` like `add_to_cart`, or `PascalCase` like `ProductClicked`) and use it consistently everywhere you call the SDK.
+
+```js
+Klaritics.logEvent("ADD_TO_CART", {
+  userId: "user@example.com",
+  value: 1299,
+  item: "Sony Head Phone 1201"
+});
+```
+
+Attach the properties that describe the event: identifiers, amounts, item names, screen names, and any other context you want to slice by later.
+
+## Do not use `$` as a prefix
+
+The Klaritics SDKs use `$` as a reserved prefix for events and attributes that they add on your behalf, such as session events and standard device or user metadata.
+
+<Warning>
+  Do not use `$` as a prefix for events or attributes that you log. Names you send that start with `$` may collide with the SDK's own data, be filtered out, or behave unpredictably in Klaritics.
+</Warning>
+
+Examples:
+
+| Do not use | Use instead |
+| --- | --- |
+| `$add_to_cart` | `add_to_cart` |
+| `$checkout_completed` | `checkout_completed` |
+| `$user_email` | `user_email` |
+
+## Recommended conventions
+
+- Keep names short, lowercase or PascalCase, and consistent across platforms.
+- Use verbs for events (`signed_up`, `ProductClicked`) and nouns for attributes (`userId`, `plan`).
+- Reuse attribute names across events when they mean the same thing, so charts and funnels line up.
+- Document your event taxonomy in one place and share it with everyone integrating a Klaritics SDK. See [Event Taxonomy](/data/event-taxonomy).
+
+## Summary
+
+- Send events and attributes with plain, descriptive names that match your product.
+- Do not use `$` as a prefix for your events or attributes; it is reserved for data added by the Klaritics SDK.
+- Keep naming and casing consistent across every platform you integrate.

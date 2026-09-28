@@ -1,0 +1,298 @@
+---
+title: "Real-Time Events"
+sidebarTitle: "Real-Time Events"
+---
+
+## Overview
+
+**Real-Time Events** lets you monitor live user activity across the platform. It gives you instant visibility into incoming events so product, analytics, and engineering teams can debug, validate, and analyze user behavior as it happens.
+
+Instead of running a query or building a chart, you open the page, choose a time window, optionally narrow the events you care about, and inspect individual events and their properties.
+
+Real-Time Events helps you:
+
+- See events as users trigger them
+- Debug and validate event tracking
+- Monitor live user behavior
+- Filter, search, and explore events
+
+---
+
+## Who it is for
+
+| Role | What they use it for |
+| :-- | :-- |
+| **Product Managers** | Validate feature usage and monitor feature adoption in real time |
+| **Data Analysts** | Explore user behavior and get quick insights without running queries |
+| **QA Engineers** | Verify that events are firing correctly and that event properties are correct |
+| **Developers** | Debug instrumentation issues and identify missing or incorrect data |
+
+---
+
+## What Real-Time Events helps you answer
+
+- Is this event firing when users perform the action?
+- What did the event contain? Which properties were sent, and which are missing?
+- Which users triggered an event, and where and on what device?
+- How is a feature being used right now?
+- Was there a delay between when an event occurred and when the platform processed it?
+
+---
+
+## Page at a glance
+
+The Real-Time Events page has four sections.
+
+| Section | Purpose |
+| :-- | :-- |
+| **Time Window** | Choose the period of events to view. Also contains Edit Columns and Search. |
+| **Metric** | Choose which events to view (all events, or specific events) and filter them. |
+| **Properties** | Refine results using event properties, user properties, and cohorts. |
+| **Events Table** | Browse matching events and expand any event to inspect its details. |
+
+### What the product does and what you can do
+
+| The product… | You can… |
+| :-- | :-- |
+| Shows events triggered by users within the selected time window | Change the time window, including a custom date range |
+| Sorts events with the most recent first | Search by event name or Distinct ID |
+| Shows the count of results ("Showing 100 most recent results of X matches") | Choose which columns appear in the table |
+| Adds default properties to every event automatically | Select one or more specific events, duplicate them, reorder them, or remove them |
+| Resets to **All Users** if the selected event is removed | Apply event property, user property, and cohort filters |
+| Shows missing property values as `-` | Show only each user's first-time events |
+|  | Expand an event and view its properties or its raw JSON payload |
+|  | Open the page from a chart using **View Events** |
+
+---
+
+## Default state
+
+When you open the Real-Time Events page:
+
+- The time window is **Last 30 Days**.
+- The event selection is **All Users**.
+- The Events Table shows all events triggered by all users within the selected time window.
+
+---
+
+## Time Window
+
+The Time Window section controls which period of events is shown. The selected window applies to the events displayed in the table.
+
+### Preset time windows
+
+Select one of the following:
+
+- Today
+- Yesterday
+- Last 7 days
+- Last 30 days
+- 3 months
+- 12 months
+
+### Custom date range
+
+Use the **Custom Date Range Picker** to choose a specific period. It supports fixed dates, relative ranges, and quick selection options.
+
+---
+
+## Search
+
+Use Search to quickly find events in the table. You can search by:
+
+- **Event name**
+- **Distinct ID**
+
+---
+
+## Edit Columns
+
+Use **Edit Columns** to choose which columns appear in the Events Table. The available columns are listed in the Edit Columns dropdown.
+
+---
+
+## Metric section: choose the events
+
+The Metric section controls which events appear in the table. You can collapse this section when you don't need it.
+
+### All Users (default)
+
+When **All Users** is selected:
+
+- The table shows **all events across all users**.
+- The **Add Event** option is **not available**.
+- Filters you apply affect **all events**. You can use event properties and user properties.
+- The **First-Time filter**, when enabled, shows only the **first event triggered by each user**, across all events.
+
+### A specific event
+
+When you select a specific event (for example, "Event A"):
+
+- The table shows data **only for that event**.
+- Filters apply **only to that event**. You can use event properties and user properties.
+- The **First-Time filter**, when enabled, shows the **first occurrence of the selected event per user**.
+
+### Work with multiple events
+
+| Action | What happens |
+| :-- | :-- |
+| **Add multiple events** | You can add more than one event to the Metric section and analyze them simultaneously. |
+| **Duplicate** | Adds a copy of the event **below the original**. The copy is a **separate query instance with its own independent filters**. |
+| **Reorder** | Drag and drop events to change their order. The PRD states that order affects visualization and comparison. |
+| **Remove** | Removes the event. If a selected event is removed, the page **automatically resets to All Users** and the table shows all user events. |
+| **Collapse** | Collapse the Metric section to save space. |
+
+### Where filters apply
+
+| Selection | Filter scope | Filter types supported |
+| :-- | :-- | :-- |
+| **All Users** | Global (all events) | Event properties, user properties |
+| **Specific event** | That event only (individual) | Event properties, user properties |
+
+---
+
+## Properties section: refine with filters
+
+The Properties section lets you refine the events you see using **event properties**, **user properties**, and **cohorts**.
+
+### Add a property filter
+
+1. Select **Add Property**. The **Properties popup** opens.
+2. Choose a tab to browse what you can filter by.
+3. Select one or more properties.
+4. Choose an **operator** (for example `=`, `≠`, `contains`) and enter a **value**.
+5. Apply. The filter appears in the active filters area.
+
+### Properties popup tabs
+
+| Tab | What it shows |
+| :-- | :-- |
+| **All** | Event properties, user properties, and cohorts combined |
+| **Events** | Event properties only (for example `event_name`, `page_url`, `Button_clicked`) |
+| **Users** | User properties only (for example `country`, `device_type`, `Signup_date`) |
+| **Cohorts** | Your existing cohorts, with an option to **Create New Cohort** |
+
+### Filter scope
+
+Applied filters work at the level of your event selection:
+
+- With **All Users**, filters apply **globally**.
+- With a **specific event**, filters apply **per event**.
+
+### Cohorts
+
+- You can select an existing cohort or **create a new cohort directly from the popup**.
+- When a cohort is applied, **only users who belong to that cohort** are included in the results.
+
+### Manage applied filters
+
+- Applied properties appear as **filter chips/tags**.
+- Each chip can be **edited or removed individually**.
+- You can **expand or collapse** the Properties section, and hide or show applied properties.
+
+---
+
+## Events Table
+
+The Events Table is the core of the page. It shows a live stream of user-triggered events with key details about each one.
+
+### What the table shows
+
+- Events are sorted with the **most recent first**.
+- A results line reads: **"Showing 100 most recent results of X matches"**.
+- Applicable columns include **Event Name**, **Timestamp**, **Distinct ID**, **City**, **Country**, and **OS**, among others.
+- If there is **no event data in the selected time window**, the table shows no data.
+- A **refresh button** is available.
+
+### Inspect an event
+
+Select a row's **expand icon** to open the event's detailed view. The expanded panel has three tabs:
+
+| Tab | What it shows |
+| :-- | :-- |
+| **All Properties** | Your Properties and Default Properties together |
+| **Your Properties** | Custom properties sent by the client |
+| **Default Properties** | Properties automatically tracked by the SDK. |
+
+#### JSON Mode
+
+**JSON Mode** shows the complete raw event payload in a structured JSON format.
+
+- It is a **toggle switch** in the expanded event view.
+- The default is **OFF** (structured view).
+- When switched **ON**, the panel changes from the property display to raw JSON.
+
+---
+
+## Property types
+
+Every event on the page can show three groups of properties.
+
+| Type | What it is |
+| :-- | :-- |
+| **All Properties** | A combined view of Your Properties and Default Properties |
+| **Your Properties** | Custom properties sent by the client. They are event-specific and must be mapped to the corresponding event during implementation. |
+| **Default Properties** | System-generated properties tracked automatically by the platform. They need no client-side effort and are mapped to every incoming event. |
+
+If a property value was not received in the event payload, the page shows `-`.
+
+---
+
+## View Events from a visualization
+
+You can open Real-Time Events from a chart.
+
+1. Select a point on a visualization.
+2. Choose **View Events**.
+3. The Real-Time Events page opens in a **new tab** with the selected event and filters applied.
+
+**Multiple events:** If the chart's Metric section contains more than one event, **View Events** is **disabled**. 
+
+---
+
+## Common workflows
+
+### Verify that an event is firing
+
+1. Keep the time window on **Today** or a short recent period.
+2. Select the event in the Metric section.
+3. Check the Events Table for matching rows, most recent first.
+4. Use **Search** to find a specific Distinct ID if you are testing with a known user.
+
+### Check what an event contained
+
+1. Find the event in the table.
+2. Expand the row.
+3. Review **Your Properties** for custom properties and **All Properties** for the full set. A value of `-` means it was not received.
+4. Turn on **JSON Mode** to see the complete raw payload.
+
+### Look for ingestion delays
+
+1. Expand an event.
+2. Compare **Event Time** with **Processed Time**. A large gap indicates an ingestion delay.
+
+### Focus on first-time activity
+
+1. Choose **All Users** or a specific event.
+2. Enable the **First-Time filter**.
+3. Read the results as each user's first event (All Users) or first occurrence of the selected event (specific event).
+
+### Narrow to a group of users
+
+1. Select **Add Property**.
+2. Open the **Cohorts** tab and select a cohort, or create a new one.
+3. The table now includes only users in that cohort.
+
+---
+
+## Rules and limitations at a glance
+
+- Add Event is **not available** while **All Users** is selected.
+- Removing a selected event resets the page to **All Users**.
+- A duplicated event is an independent query with its own filters.
+- Filters are global with **All Users** and per event with a specific event.
+- The table shows the **100 most recent** results, with the total number of matches.
+- **View Events** from a visualization is disabled when the chart has multiple events.
+- Missing property values appear as `-`.
+- Location properties are inferred from the IP address.
+- Date, time-range, Edit Columns, and Search capabilities are labelled **V1** in the PRD.

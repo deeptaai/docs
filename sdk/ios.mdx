@@ -1,0 +1,90 @@
+---
+title: "Integrate the Klaritics iOS SDK in Your App"
+sidebarTitle: "iOS"
+description: "Add the Klaritics iOS SDK via Swift Package Manager, initialize it in your AppDelegate with project_id and host, and log events from Swift or Objective-C."
+---
+
+The Klaritics iOS SDK collects analytics from iOS applications and sends them to your self-hosted Klaritics instance. Add the package with Swift Package Manager, then initialize it in your app delegate.
+
+## Add the Klaritics SDK to your project
+
+Klaritics uses Swift Package Manager to install and manage dependencies.
+
+<Steps>
+  <Step title="Open the Add Package Dependencies dialog">
+    In Xcode, choose **File → Add Package Dependencies** from the menu bar.
+  </Step>
+  <Step title="Add the Klaritics repository">
+    When prompted, paste the Klaritics Apple platform SDK repository URL:
+
+    ```text
+    github.com/deeptaai/klaritics-ios-sdk
+    ```
+  </Step>
+  <Step title="Add the Klaritics library to your target">
+    In the **Choose Package Products** dialog, select the **Klaritics** library and choose your application target under **Add to Target**, then click **Add Package**.
+  </Step>
+</Steps>
+
+<Note>
+  When finished, Xcode automatically resolves and downloads the dependency in the background.
+</Note>
+
+## Initialize the Klaritics iOS SDK
+
+Import Klaritics and call `Klaritics.setup(config)` from your `AppDelegate` in `application(_:didFinishLaunchingWithOptions:)`. Replace `<project-id>` and `<host>` with the values from your Klaritics dashboard. Your project ID is available on the **Getting Started** page of the dashboard.
+
+```swift AppDelegate.swift
+//...
+import Klaritics
+
+@UIApplicationMain
+class AppDelegate: NSObject {
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        let config = KlariticsConfig(appId: "<project-id>", host: "<host>")
+        Klaritics.setup(config)
+
+        //..ur code
+        return true
+    }
+}
+```
+
+The SDK does not initialize until both `appId` (your `project_id`) and `host` are provided.
+
+## Logging events
+
+Use `logAppEvent` to send standard analytics events. The method accepts an event name and an optional dictionary of additional information.
+
+<CodeGroup>
+
+```swift Swift
+let info = ["ButtonLabel": "Hey"]
+Klaritics.logAppEvent(
+    withName: "ButtonClicked",
+    info: info
+)
+```
+
+```objc Objective-C
+NSDictionary *info = @{
+    @"ButtonLabel": @"Hey"
+};
+[Klaritics logAppEventForEvent:@"LANG_SELECT" withInfo:info];
+```
+
+</CodeGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Verify your integration" icon="circle-check" href="/sdk/overview#verify-your-integration">
+    Send test events from your app and watch them land on the Getting Started page.
+  </Card>
+
+  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
+    Learn the naming conventions Klaritics expects for events and attributes.
+  </Card>
+</CardGroup>

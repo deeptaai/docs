@@ -1,0 +1,652 @@
+---
+title: "User Profiles"
+sidebarTitle: "User Profiles"
+---
+
+## Overview
+
+**User Profiles** provides a user-level view of analytics data. Instead of looking only at aggregated charts, funnels, or cohorts, you can inspect an individual user's activity, properties, and event history in one place.
+
+User Profiles helps teams:
+
+- Explore individual users
+- Inspect user and system properties
+- Understand individual user journeys
+- Investigate specific user issues
+- Validate whether events are being tracked correctly
+- Inspect the details of individual events
+
+It connects aggregated analytics with the underlying user-level behavior.
+
+---
+
+## What User Profiles Helps You Understand
+
+User Profiles is designed to answer questions such as:
+
+- **What exactly did this user do?**
+- **What properties are associated with this user?**
+- **Which events did the user perform?**
+- **When did the user's activity occur?**
+- **Why might this user have dropped off?**
+- **Are the expected events being tracked correctly?**
+- **What properties were associated with a specific event?**
+
+---
+
+## User Profiles at a Glance
+
+The User Profiles experience has two main areas:
+
+1. **User List View** - Find users that match specific profile or event conditions.
+2. **User Profile Page** - Investigate an individual user's properties and event journey.
+
+#### User List View
+
+The User List View contains:
+
+- Filters Section
+- Users Table
+
+#### User Profile Page
+
+The User Profile Page contains:
+
+- **User Information Panel**
+- **Activity Timeline**
+- **Properties Panel**
+
+---
+
+## 1. User List View
+
+When you open User Profiles, the page displays the list of users.
+
+By default:
+
+- No filters are applied.
+- No events are selected.
+- The Users Table displays all available users.
+
+The page allows you to narrow the list using user properties or event activity.
+
+---
+
+### 1.1 Filters
+
+The Filters section provides two ways to identify users:
+
+1. **Global Filters** - Filter users based on their profile or system properties.
+2. **Users Who Did** - Filter users based on their event activity.
+
+These filters can be used to identify a specific group of users before opening their individual profiles.
+
+---
+
+## 2. Global Filters
+
+Global Filters allow you to find users based on user-level attributes.
+
+#### Available Properties
+
+The property selector includes:
+
+- User Properties
+- Default/System Properties
+
+Examples include:
+
+- Country
+- Platform
+- Device Type
+- User ID
+- Device ID
+
+Properties can be selected using a searchable dropdown.
+
+#### Applying a Global Filter
+
+A typical filter consists of:
+
+**Property → Value**
+
+For example:
+
+> Country = India
+
+Multiple global filters can be applied.
+
+When multiple global filters are used, they are combined using **AND** logic.
+
+#### Example
+
+Suppose you configure:
+
+- Country = India
+- Platform = Android
+
+The resulting users must satisfy **both** conditions.
+
+---
+
+## 3. Users Who Did
+
+The **Users Who Did** filter identifies users based on their event activity.
+
+You can select an event, define how many times it should have occurred, and specify when the activity should have happened.
+
+For example:
+
+> Users who performed `HomePageLaunched` at least once during the last 30 days.
+
+---
+
+### 3.1 Select an Event
+
+Select any tracked event from the searchable event dropdown.
+
+For example:
+
+- `HomePageLaunched`
+- `PaymentCompleted`
+- `CoursePurchased`
+
+---
+
+### 3.2 Event-Level Filters
+
+After selecting an event, you can apply event-specific conditions.
+
+#### Event Property Filters
+
+Event properties can be used to further narrow the event activity.
+
+For example:
+
+> Event = `HomePageLaunched`<br />Event Property: Country = India
+
+This identifies users who performed the selected event under the specified event-property condition.
+
+#### First Time Filter
+
+The **First Time Filter** identifies users who performed the selected event for the first time.
+
+This can be used when the analysis needs to distinguish a user's first occurrence of an event from later occurrences.
+
+#### Duplicate
+
+**Duplicate** creates another copy of the event condition.
+
+This can be useful when building multiple event conditions from the same event.
+
+#### Remove
+
+**Remove** deletes the selected event condition from the filter.
+
+---
+
+## 4. Event Count Conditions
+
+For each selected event, you can define an aggregation condition based on the total number of times the event occurred.
+
+Supported operators are:
+
+| Operator | Meaning |
+| :-- | :-- |
+| `>` | Greater than |
+| `≥` | Greater than or equal to |
+| `<` | Less than |
+| `=` | Equal to |
+| `≠` | Not equal to |
+| `≤` | Less than or equal to |
+
+#### Examples
+
+**At least one occurrence**
+
+> Total Events ≥ 1
+
+**At least five occurrences**
+
+> Total Events ≥ 5
+
+The condition determines which users are returned to the Users Table.
+
+---
+
+## 5. Time Range
+
+Event-based filtering can be restricted to a specific time period.
+
+#### Predefined Time Ranges
+
+Predefined ranges include Last 7 days and Last 30 days. You can also select a **Custom Date Range**.
+
+The selected time range determines which event activity is considered when identifying matching users.
+
+---
+
+## 6. Multiple Event Conditions
+
+You can add multiple events to the same event-based query.
+
+Three logical operators are supported.
+
+#### AND
+
+The user must perform **all** selected events.
+
+Example:
+
+> `HomePageLaunched` AND `PaymentCompleted`
+
+The resulting users must have performed both events.
+
+#### OR
+
+The user must perform **at least one** of the selected events.
+
+Example:
+
+> `PaymentCompleted` OR `LoanApplied`
+
+The resulting users can have performed either event.
+
+#### THEN
+
+**THEN** represents a sequential event flow.
+
+Example:
+
+> `HomePageLaunched` THEN `PaymentCompleted`
+
+This represents users who performed the events in the specified order.
+
+---
+
+## 7. Negative Filtering
+
+User Profiles also supports filtering for users who **did not perform** a specific event.
+
+For example:
+
+> Users who did NOT perform `PaymentCompleted`
+
+This allows you to identify users who are missing a particular behavior.
+
+---
+
+## 8. Example: Find Users Who Visited the Homepage
+
+Suppose you want to find users who launched the homepage at least once in the last 30 days.
+
+Configure the filter as:
+
+| Setting | Value |
+| :-- | :-- |
+| Event | `HomePageLaunched` |
+| Condition | Total Events ≥ 1 |
+| Time Range | Last 30 days |
+
+The resulting users are displayed in the Users Table.
+
+---
+
+## 9. Users Table
+
+The Users Table displays users matching the currently applied filters.
+
+### Default Columns
+
+The default table includes:
+
+- User ID
+- Device ID
+- First Triggered
+- Last Triggered
+- Country
+- Platform
+
+### Available Columns
+
+The table can be configured using the following available columns:
+
+| Column | Description |
+| :-- | :-- |
+| User ID | User identifier |
+| Device ID | Device identifier |
+| Distinct ID | Distinct user identifier |
+| First Triggered | Timestamp of the user's first trigger |
+| Last Triggered | Timestamp of the user's latest trigger |
+| Country | User's country |
+| Platform | User's platform |
+| Region | User's region |
+| State | User's state |
+
+---
+
+## 10. Customize the Users Table
+
+You can control which columns are visible using the column settings.
+
+#### Show or Hide Columns
+
+Use column settings to:
+
+- Show available columns
+- Hide columns that are not needed
+
+#### Column Sorting
+
+Table columns support:
+
+- Ascending sorting
+- Descending sorting
+
+---
+
+## 11. Open an Individual User Profile
+
+Selecting a user from the Users Table opens the **User Profile Page**.
+
+The profile provides three views of the selected user:
+
+1. **User Information Panel**
+2. **Activity Timeline**
+3. **Properties Panel**
+
+Together, these provide the user's identity information, historical activity, and details about individual events.
+
+---
+
+## 12. User Information Panel
+
+The User Information Panel displays information associated with the selected user.
+
+### User Identity
+
+The panel displays:
+
+- User ID
+- Device ID
+- First trigger timestamp
+- Last trigger timestamp
+- Distinct ID
+
+### User Properties
+
+Additional user attributes include:
+
+- City
+- Country
+- Carrier
+- Device Family
+- OS
+- Platform
+
+These properties represent the user's current state.
+
+#### Latest Property Values
+
+User properties display their **latest values**.
+
+For example, if a user's platform or location changes, the profile displays the latest available value rather than presenting a historical sequence of property values.
+
+---
+
+## 13. Activity Timeline
+
+The Activity Timeline shows the selected user's event activity over time.
+
+Events are:
+
+- Displayed in reverse chronological order (newest first)
+- Grouped into sessions
+
+The timeline can also be restricted to a selected date range.
+
+---
+
+### 13.1 Event Information
+
+Each event displayed in the timeline includes:
+
+- Event name
+- Timestamp
+
+For example:
+
+> Main Landing Screen - 10:32 AM
+
+---
+
+## 14. Session Grouping
+
+Events are grouped into sessions in the Activity Timeline.
+
+Each session includes:
+
+- Session start event
+- Session end event
+
+---
+
+## 15. Timeline Interactions
+
+The Activity Timeline supports several interactions.
+
+#### Scroll
+
+You can scroll through the user's event history.
+
+#### Load More
+
+Additional events can be loaded when more activity is available.
+
+#### Search Events
+
+The timeline includes a search option for events.
+
+#### Select an Event
+
+Selecting an event opens its details in the Properties Panel.
+
+The Properties Panel updates based on the selected event.
+
+---
+
+## 16. Select a Date Range
+
+You can select a date range for the Activity Timeline.
+
+The timeline displays activity based on the selected date range.
+
+For example:
+
+> Select a date range → View the user's events that occurred within that period.
+
+---
+
+## 17. Properties Panel
+
+The Properties Panel provides detailed information about the event selected in the Activity Timeline.
+
+By default, the panel is empty because no event has been selected.
+
+Once an event is selected, the panel displays properties associated with that specific event.
+
+The properties are organized into three categories:
+
+1. **Event Properties**
+2. **User Properties**
+3. **Default Properties**
+
+---
+
+## 18. Property Views
+
+The Properties Panel provides two views.
+
+### Info View
+
+**Info View** is the default view.
+
+It presents the selected event's information in a structured property format.
+
+### Raw View
+
+**Raw View** displays the raw JSON/event payload associated with the selected event.
+
+This is particularly useful when inspecting the underlying event data.
+
+---
+
+## 19. Dynamic Event Inspection
+
+The Properties Panel changes when a different event is selected.
+
+For example:
+
+1. Select Event A in the timeline.
+2. The Properties Panel displays Event A's properties.
+3. Select Event B.
+4. The Properties Panel updates to display Event B's properties.
+
+The panel is scrollable to accommodate large property sets.
+
+---
+
+## 20. A Typical User Investigation
+
+A common workflow is to start with a group of users and then investigate an individual user.
+
+#### Step 1: Find the Users
+
+Use **Global Filters** to find users based on properties.
+
+For example:
+
+> Country = India<br />Platform = Android
+
+#### Step 2: Add Event Behavior
+
+Use **Users Who Did** to identify users based on their activity.
+
+For example:
+
+> `HomePageLaunched` → Total Events ≥ 1 → Last 30 days
+
+#### Step 3: Review the Users Table
+
+Review the matching users and their:
+
+- User ID
+- Device ID
+- First Triggered
+- Last Triggered
+- Country
+- Platform
+
+#### Step 4: Open a User
+
+Select an individual user to investigate their behavior.
+
+#### Step 5: Review User Information
+
+Check:
+
+- Identity information
+- Current user properties
+- First and last trigger timestamps
+
+#### Step 6: Review the Timeline
+
+Inspect the user's events in reverse chronological order and across sessions.
+
+#### Step 7: Select an Event
+
+Select an event that requires investigation.
+
+#### Step 8: Inspect Event Details
+
+Use the Properties Panel to inspect:
+
+- Event properties
+- User properties
+- Default properties
+
+Switch to **Raw View** when you need to inspect the raw event payload.
+
+---
+
+## 21. Common Use Cases
+
+### Understand a User Journey
+
+Use the Activity Timeline to see the sequence of events performed by an individual user.
+
+### Investigate Drop-Offs
+
+Start by identifying users based on their behavior, then inspect an individual user's timeline to understand what happened before the expected next action.
+
+### Debug Event Tracking
+
+Select an event and inspect its properties and raw payload.
+
+This can help teams verify whether the expected event information is being received.
+
+### Investigate a Support Issue
+
+Find the relevant user using profile or event conditions and inspect their individual activity.
+
+### Validate User Properties
+
+Open a user profile and review the latest values of properties such as:
+
+- Country
+- Platform
+- Device Family
+- OS
+- Carrier
+
+---
+
+## 22. Key Concepts
+
+| Concept | What it means |
+| :-- | :-- |
+| **Global Filter** | Filters users using user-level or default/system properties |
+| **Users Who Did** | Filters users based on their event activity |
+| **Event Property Filter** | Narrows event activity using properties associated with the event |
+| **First Time Filter** | Identifies users who performed an event for the first time |
+| **AND** | User must satisfy all specified event conditions |
+| **OR** | User must satisfy at least one specified event condition |
+| **THEN** | Represents a sequential event flow |
+| **Negative Filter** | Finds users who did not perform a specified event |
+| **User Profile** | Detailed view of one selected user |
+| **Activity Timeline** | Chronological view of the user's events |
+| **Properties Panel** | Details of the event selected in the timeline |
+| **Info View** | Structured property representation |
+| **Raw View** | Raw JSON/event payload |
+
+---
+
+## Summary
+
+User Profiles provides a user-level investigation workflow on top of aggregated analytics.
+
+The overall experience is:
+
+**Find Users → Filter by Properties or Behavior → Review Users Table → Open a User → Inspect User Information → Explore Activity Timeline → Select an Event → Inspect Event Properties**
+
+It combines:
+
+- User-level filtering
+- Event-based filtering
+- Multiple event conditions
+- User identity and properties
+- Session-grouped activity
+- Event-level inspection
+- Structured and raw event views
+
+This makes User Profiles the place to move from **“What is happening across users?”** to **“What happened for this specific user?”**

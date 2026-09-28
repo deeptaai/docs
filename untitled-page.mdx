@@ -1,0 +1,588 @@
+---
+title: "Engagement Matrix"
+---
+
+Engagement Matrix helps you understand how users engage with product features by comparing two dimensions:
+
+- **Breadth** - how many active users use a feature.
+- **Depth** - how frequently those users perform the feature.
+
+Each selected event is plotted as a point on a two-dimensional matrix. The matrix uses the selected Median or Average values to divide the chart into four quadrants, helping you compare feature engagement patterns at a glance.
+
+Use Engagement Matrix to identify features that are widely adopted, features used frequently by a smaller group of users, features that are broadly used but infrequently used, and features with relatively low adoption and frequency.
+
+## What Engagement Matrix answers
+
+Engagement Matrix is useful when you want to understand questions such as:
+
+- Which features are used by the largest share of active users?
+- Which features are used repeatedly?
+- Which features are both widely adopted and frequently used?
+- Which features are mainly used by a smaller group of highly engaged users?
+- Which features have broad adoption but relatively low usage frequency?
+- Which features have both low adoption and low frequency?
+- How has feature engagement moved between two time periods?
+- How do selected events compare with one another?
+
+The matrix combines adoption and frequency into a single view so that you can compare engagement patterns across events.
+
+## Core concepts
+
+| Concept | Description |
+| --- | --- |
+| **Breadth** | Percentage of active users who performed a selected event during the selected time period. |
+| **Depth / Frequency** | Average number of times users performed the selected event during the selected time period. |
+| **Active Users** | The active-user population depends on the selected granularity: DAU for Daily, WAU for Weekly, and MAU for Monthly. |
+| **Granularity** | Determines the time unit used for the engagement calculation: Daily, Weekly, or Monthly. |
+| **Sectioned By** | Determines whether the matrix divider lines are calculated using Median or Average. |
+| **Median** | The middle value of the plotted event values for an axis. |
+| **Quadrants** | The four areas created by the horizontal and vertical Median/Average divider lines. |
+
+## How Engagement Matrix works
+
+Engagement Matrix follows four main areas:
+
+1. **Events Configuration** - choose the events you want to analyze.
+2. **Filters** - narrow the analysis using available properties or cohorts.
+3. **Date Range & Compare** - define the analysis period, granularity, and optional comparison.
+4. **Engagement Matrix** - review the plotted events and supporting matrix table.
+
+---
+
+# Build an Engagement Matrix
+
+## 1. Select events
+
+The Events Configuration section controls which events are included in the matrix.
+
+You can:
+
+- Select multiple events.
+- Search for events.
+- Remove selected events.
+- Add filters to individual events.
+
+Each selected event appears as an event card containing:
+
+- Event Name
+- Filter option
+- Remove option
+
+Each selected event is represented by a plotted point in the matrix when comparison is disabled.
+
+### Default event selection
+
+When you first open Engagement Matrix, **Top Events** is selected by default.
+
+The system automatically selects the **top 20 events based on overall event usage within the selected time range (by default last 7 days)**.
+
+These events are plotted automatically so you can begin exploring engagement without manually selecting events.
+
+You can change this selection at any time by:
+
+- Removing events.
+- Adding events.
+- Searching for and selecting specific events.
+
+The matrix updates based on the selected events.
+
+---
+
+# 2. Filter individual events
+
+You can apply filters to an individual event from its event card.
+
+Event-level filters support:
+
+- **Event Properties**
+- **User Properties**
+
+This allows you to restrict the data represented by a particular event.
+
+For example, if you select a purchase event, an event-level filter can be applied using the properties available for that event or its users.
+
+---
+
+# 3. Choose how engagement is measured
+
+The **Measured As** section controls the engagement metrics displayed in the matrix.
+
+Engagement is represented using:
+
+- **% Active Users**
+- **Average Times Performed**
+
+The active-user metric changes according to the selected granularity.
+
+### Daily
+
+Daily granularity uses:
+
+- **% DAU**
+- **Average Times Performed per day**
+
+### Weekly
+
+Weekly granularity uses:
+
+- **% WAU**
+- **Average Times Performed per week**
+
+### Monthly
+
+Monthly granularity uses:
+
+- **% MAU**
+- **Average Times Performed per month**
+
+This means that changing the granularity changes the active-user population used for the breadth calculation.
+
+---
+
+# 4. Choose how the matrix is divided
+
+The **Sectioned By** option determines how the horizontal and vertical divider lines are calculated.
+
+You can choose:
+
+- **Median**
+- **Average**
+
+### Median
+
+When Median is selected, the matrix is divided using the median values of the plotted events.
+
+The vertical divider represents the median Breadth value.
+
+The horizontal divider represents the median Depth/Frequency value.
+
+### Average
+
+When Average is selected, the matrix is divided using the average values of the plotted events.
+
+The vertical divider represents the average Breadth value.
+
+The horizontal divider represents the average Depth/Frequency value.
+
+Because the divider values depend on the selected events, changing the selected events can change the quadrant boundaries.
+
+---
+
+# 5. Apply filters
+
+The main Filters section allows you to narrow the Engagement Matrix analysis.
+
+The available property categories are:
+
+- **All Properties**
+- **User Properties**
+- **Cohorts**
+
+You can also choose the **data type** of the filter. Filters affect the data used for the Engagement Matrix analysis.
+
+---
+
+# 6. Select a date range
+
+Engagement Matrix supports predefined time windows as well as a custom date range.
+
+Available predefined time windows are:
+
+- Today
+- Yesterday
+- Last 7 days
+- Last 30 days
+- 3 months
+- 12 months
+
+You can also use the **Custom Date Range Picker** to define a specific analysis period.
+
+---
+
+# 7. Select the granularity
+
+The supported granularity options are:
+
+- **Daily**
+- **Weekly**
+- **Monthly**
+
+Granularity determines the active-user metric used in the matrix:
+
+| Granularity | Active-user metric |
+| --- | --- |
+| Daily | DAU |
+| Weekly | WAU |
+| Monthly | MAU |
+
+It also determines the corresponding frequency period.
+
+For example, Monthly uses % MAU and Average Times Performed per month.
+
+---
+
+# 8. Compare two periods
+
+You can compare engagement movement between two relative periods by enabling **Compare**.
+
+Comparison supports:
+
+- Day
+- Week
+- Month
+
+You can enter a:
+
+- **Start Period**
+- **End Period**
+
+Examples:
+
+- Day 0 → Day 5
+- Week 0 → Week 1
+- Month 0 → Month 1
+
+## Compare visualization
+
+When Compare is enabled, each selected event is represented by two points:
+
+- One point for the start period.
+- One point for the end period.
+
+The start-period point uses approximately **70-80% opacity**.
+
+The end-period point uses **100% opacity**.
+
+For example, if two events are selected, the matrix displays four plotted points:
+
+- Event A - start period
+- Event A - end period
+- Event B - start period
+- Event B - end period
+
+## Compare hover behavior
+
+When you hover over either point belonging to an event:
+
+- Both points for that event are highlighted.
+- A faint connector line appears between the points.
+- The direction of movement is shown.
+- Other event points appear faded.
+
+This makes it easier to see how an event's engagement moved between the two selected periods.
+
+### Compare tooltip
+
+The tooltip displays:
+
+- Event Name
+- Start Period % Active Users
+- Start Period Average Times
+- End Period % Active Users
+- End Period Average Times
+
+---
+
+# Incomplete periods
+
+Incomplete periods are excluded from calculations.
+
+For example, if the current month is not complete, that incomplete month should not be included when calculating monthly averages.
+
+This prevents a partially completed period from being treated as a complete period when comparing engagement.
+
+---
+
+# Understand the Engagement Matrix
+
+The Engagement Matrix is a two-dimensional scatter chart.
+
+### X-axis - Breadth
+
+The X-axis represents **Active Users**:
+
+**Low Active Users → High Active Users**
+
+Moving from left to right means that a larger share of the active-user population performed the event.
+
+### Y-axis - Depth
+
+The Y-axis represents **Frequency**:
+
+**Low Frequency → High Frequency**
+
+Moving from bottom to top means that users performed the event more frequently.
+
+The selected Median or Average values create the horizontal and vertical divider lines.
+
+---
+
+# Understand the four quadrants
+
+The matrix contains four quadrants.
+
+| Position | Engagement pattern | Quadrant |
+| --- | --- | --- |
+| **Top Right** | High Active Users + High Frequency | **Core Features** |
+| **Top Left** | Low Active Users + High Frequency | **Power Features** |
+| **Bottom Right** | High Active Users + Low Frequency | **Utility Features** |
+| **Bottom Left** | Low Active Users + Low Frequency | **Underperforming Features** |
+
+## Core Features
+
+**High Active Users + High Frequency**
+
+These events are used by a large share of active users and are performed frequently.
+
+Identifies this quadrant as representing **core features**.
+
+## Power Features
+
+**Low Active Users + High Frequency**
+
+These events have lower breadth but higher frequency.
+
+Identifies this quadrant as representing **power-user features**.
+
+## Utility Features
+
+**High Active Users + Low Frequency**
+
+These events are used by many active users but have lower frequency.
+
+Identifies this quadrant as representing **utility features**.
+
+## Underperforming Features
+
+**Low Active Users + Low Frequency**
+
+These events have both lower breadth and lower frequency relative to the other plotted events.
+
+Identifies this quadrant as representing **underperforming features**.
+
+The quadrant is a relative classification based on the selected divider calculation; it does not by itself explain why an event has its position.
+
+---
+
+# Matrix Table
+
+The Matrix Table appears below the visualization.
+
+It provides a tabular view of the events plotted in the matrix.
+
+The table contains:
+
+- Checkbox
+- Event Name
+- % Active Users
+- Average Times Performed
+
+The table also displays the overall Median or Average values used for the matrix dividers.
+
+## Select or deselect events
+
+You can use the checkbox for each event to control whether that event is included in the matrix.
+
+When an event is deselected:
+
+1. The event is removed from the matrix.
+2. The Median/Average calculations are recalculated.
+3. The quadrant boundaries update automatically.
+
+This means the matrix boundaries reflect the currently selected events.
+
+---
+
+# Export the Matrix Table
+
+You can export the matrix table as a **CSV** file.
+
+The downloaded CSV contains the **visible table columns**.
+
+This allows you to take the table data outside the Engagement Matrix for further analysis.
+
+---
+
+# Save an Engagement Matrix
+
+You can save the Engagement Matrix chart and:
+
+- Pin it to an existing dashboard.
+- Pin it to a new dashboard.
+
+---
+
+# How the Engagement Matrix is calculated
+
+The Engagement Matrix uses Breadth and Depth calculations for each selected event.
+
+## Breadth
+
+Breadth represents the percentage of active users who performed the selected event.
+
+Conceptually:
+
+**Breadth = Users who performed the event ÷ Active Users × 100**
+
+The active-user population depends on the selected granularity.
+
+For example:
+
+- Daily → DAU
+- Weekly → WAU
+- Monthly → MAU
+
+## Depth
+
+Depth represents the average number of times the event was performed by users who performed that event.
+
+Conceptually:
+
+**Average Times Performed = Total Event Occurrences ÷ Users Who Performed the Event**
+
+For example, if:
+
+- 295,998 users performed an event.
+- The event occurred 2,669,466 times.
+
+Then:
+
+**2,669,466 ÷ 295,998 ≈ 9.0**
+
+This means the users who performed that event performed it approximately 9 times during the relevant period.
+
+---
+
+# Example: Reading a feature's position
+
+Suppose you are analyzing a product feature represented by an event.
+
+If the event appears:
+
+### Far to the right
+
+A relatively large percentage of active users performed the event.
+
+This indicates higher Breadth.
+
+### High on the chart
+
+Users who performed the event performed it frequently.
+
+This indicates higher Depth.
+
+### Top right
+
+The event has both high Breadth and high Depth relative to the other selected events.
+
+It therefore falls into the **Core Features** quadrant.
+
+### Top left
+
+The event has lower Breadth but higher Depth.
+
+It falls into the **Power Features** quadrant.
+
+### Bottom right
+
+The event has higher Breadth but lower Depth.
+
+It falls into the **Utility Features** quadrant.
+
+### Bottom left
+
+The event has lower Breadth and lower Depth.
+
+It falls into the **Underperforming Features** quadrant.
+
+---
+
+# Example: Comparing engagement movement
+
+Suppose you select a feature and compare:
+
+**Day 0 → Day 5**
+
+The matrix displays two points for that feature.
+
+- The Day 0 point represents the earlier comparison period.
+- The Day 5 point represents the later comparison period.
+
+When you hover over either point, both points are highlighted and a connector shows the movement between them.
+
+The tooltip lets you compare:
+
+- Day 0 % Active Users
+- Day 0 Average Times
+- Day 5 % Active Users
+- Day 5 Average Times
+
+This lets you see whether the feature's Breadth, Depth, or both have changed between the selected periods.
+
+---
+
+# Typical ways to use Engagement Matrix
+
+## Identify core features
+
+Select the relevant product events and look for events positioned in the **Core Features** quadrant.
+
+These events have both relatively high adoption and frequency.
+
+## Find highly frequent niche features
+
+Look at the **Power Features** quadrant.
+
+These events have high frequency but lower active-user breadth.
+
+## Identify broadly used utility behavior
+
+Look at the **Utility Features** quadrant.
+
+These events have high breadth but lower frequency.
+
+## Find lower-engagement events
+
+Look at the **Underperforming Features** quadrant.
+
+These events have both lower breadth and lower frequency relative to the selected events.
+
+## Compare engagement over time
+
+Enable Compare and select two relative periods.
+
+Use the movement between the two points for each event to understand how its engagement changed between the periods.
+
+---
+
+# Important behavior to remember
+
+- Each selected event appears as one point when Compare is disabled.
+- Each selected event appears as two points when Compare is enabled.
+- The matrix divider values are based on the selected Median or Average setting.
+- Deselecting an event recalculates the divider values and updates the quadrants.
+- Changing granularity changes the active-user metric from DAU to WAU to MAU.
+- Incomplete periods are excluded from calculations.
+- The default **Top Events** selection contains the top 20 events based on overall event usage within the selected time range.
+- Users can replace the default events with their own event selection.
+- Event-level filters support Event Properties and User Properties.
+- Analysis-level filters support All Properties, Event Properties, User Properties, and Cohorts.
+- The matrix table can be exported as CSV.
+- The chart can be saved and pinned to dashboards.
+
+# In summary
+
+Engagement Matrix provides a single view for comparing feature engagement across two dimensions:
+
+**Breadth** - how many active users use a feature.
+
+**Depth** - how frequently those users use it.
+
+By plotting selected events against these dimensions and dividing the matrix using Median or Average values, Engagement Matrix organizes events into four engagement patterns:
+
+- **Core Features** - high breadth, high frequency
+- **Power Features** - low breadth, high frequency
+- **Utility Features** - high breadth, low frequency
+- **Underperforming Features** - low breadth, low frequency
+
+You can customize the events, apply filters, choose a time range and granularity, compare two periods, inspect the supporting table, export the results, and save the chart to dashboards.

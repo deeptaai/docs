@@ -1,0 +1,468 @@
+---
+title: "Funnels"
+---
+
+Funnels help you understand how users progress through a sequence of events.
+
+Define the steps in the order users are expected to complete them, then analyze how many users reach each step, where they drop off, how many complete the funnel, and how long conversion takes.
+
+Use Funnels to identify conversion gaps, compare performance across segments, and understand where users leave a flow.
+
+---
+
+# What a funnel answers
+
+A funnel helps you answer:
+
+- How many users reached each step?
+- How many users completed the funnel?
+- Where are users dropping off?
+- What is the overall conversion rate?
+- How long does it take users to convert?
+- How does funnel performance differ across user segments?
+
+---
+
+# Core concepts
+
+| Concept | Definition |
+| :-- | :-- |
+| **Funnel** | A sequence of two or more events analyzed in a specific order. |
+| **Step** | An individual event in the funnel. The order of steps matters. |
+| **Step-wise User Count** | Number of users who reached a particular step. |
+| **Conversion Rate** | Percentage of users who progress from the first step to the final step. |
+| **Drop-off** | Users who do not progress from one step to the next. |
+| **Time to Convert** | Time users take to progress through the funnel and reach the final step. |
+| **Breakdown** | Segmentation of funnel results by a supported property. |
+| **Conversion Time Window** | Maximum time allowed for a user to complete the funnel after the first step. |
+| **Time Window** | Period of data included in the analysis. |
+
+---
+
+# How funnels are evaluated
+
+Funnels follow three basic rules.
+
+### 1. Events are sequential
+
+Events are evaluated in the order you configure them.
+
+For example:
+
+```text
+Product Viewed
+      ↓
+Added to Cart
+      ↓
+Checkout Started
+      ↓
+Purchase Completed
+```
+
+A user must progress through the configured sequence.
+
+### 2. A funnel requires at least two events
+
+A single event does not produce a funnel.
+
+If fewer than two events are configured, Klaritics displays an empty state instead of the funnel visualization.
+
+### 3. The selected time window applies throughout the analysis
+
+The selected time window is used for:
+
+- User counts
+- Conversion
+- Drop-offs
+- Time to Convert
+- Breakdowns
+- Visualizations
+- Funnel table
+
+---
+
+# Build a funnel
+
+1. **Open Funnels**<br />Start a new funnel analysis.
+2. **Add the first event**<br />Select the event representing the entry point of the flow, such as `Signup Started`.
+3. **Add the next event**<br />Add the next step, such as `Account Created`.
+4. **Add additional events**<br />Continue adding events in the order users should progress through them.
+5. **Configure event property filters**<br />Optionally restrict individual steps using event properties.
+6. **Filter the audience**<br />Optionally narrow the analysis using supported properties or cohorts.
+7. **Select a time window**<br />Choose the period to analyze.
+8. **Add a breakdown**<br />Optionally segment results by a supported property.
+9. **Choose a visualization**<br />Select Funnel Steps, Line, Bar, or Metric.
+10. **Analyze the results**<br />Review the visualization and table, then create a cohort or export the results.
+
+---
+
+# Configure events
+
+## Add and order events
+
+Each event represents one step in the user journey.
+
+For example:
+
+```text
+Product Viewed
+      ↓
+Added to Cart
+      ↓
+Checkout Started
+      ↓
+Purchase Completed
+```
+
+The sequence determines how users are evaluated.
+
+## Event property filters
+
+You can filter an individual event using its event properties.
+
+For example:
+
+**Event:** `Purchase Completed`
+
+**Filter:** `Plan = Premium`
+
+Only matching `Purchase Completed` occurrences are counted for that step.
+
+## Remove an event
+
+You can remove any event from the funnel.
+
+The funnel recalculates using the remaining sequence.
+
+For example:
+
+Before:
+
+```text
+Viewed Product
+      ↓
+Added to Cart
+      ↓
+Checkout Started
+      ↓
+Purchase Completed
+```
+
+After removing `Checkout Started`:
+
+```text
+Viewed Product
+      ↓
+Added to Cart
+      ↓
+Purchase Completed
+```
+
+---
+
+# Filter the audience
+
+Audience filters apply to the funnel as a whole.
+
+They determine which users are eligible for the analysis.
+
+## Property filters
+
+You can filter using supported user properties, such as:
+
+- `Country = India`
+- `Platform = Android`
+- `Plan = Premium`
+
+## Cohort filters
+
+You can restrict the analysis to an existing cohort.
+
+For example:
+
+`Cohort = Trial Users`
+
+### Event filters vs. audience filters
+
+These filters operate at different levels:
+
+| Filter | Applies to |
+| :-- | :-- |
+| **Event Property Filter** | Individual funnel step |
+| **Property Filter** | Entire funnel audience |
+| **Cohort Filter** | Entire funnel audience |
+
+---
+
+# Time window
+
+Select the time window for the analysis.
+
+The selected window determines the data used throughout the funnel, including user counts, conversion, drop-offs, Time to Convert, breakdowns, visualizations, and the table.
+
+---
+
+# Metrics
+
+Klaritics provides four core funnel metrics.
+
+## Step-wise User Count
+
+Shows how many users reached each step.
+
+Example:
+
+| Funnel Step | Users |
+| :-- | :-- |
+| Product Viewed | 10,000 |
+| Added to Cart | 4,500 |
+| Checkout Started | 2,800 |
+| Purchase Completed | 1,900 |
+
+---
+
+## Conversion Rate
+
+The overall conversion rate measures the percentage of users who progress from the first step to the final step.
+
+For example:
+
+```text
+First Step Users = 10,000
+Final Step Users = 1,900
+
+Conversion Rate = 19%
+```
+
+---
+
+## Drop-offs
+
+Drop-offs show where users are lost between steps.
+
+For example:
+
+```text
+Product Viewed       10,000
+        ↓
+Added to Cart          4,500
+
+Drop-off = 5,500 users
+```
+
+Step-level drop-offs help identify where the largest losses occur.
+
+---
+
+## Time to Convert
+
+Time to Convert measures how long users take to progress through the funnel and reach the final step.
+
+For example:
+
+```text
+Product Viewed
+      ↓
+Added to Cart
+      ↓
+Checkout Started
+      ↓
+Purchase Completed
+
+Time to Convert = 2 hours
+```
+
+---
+
+# Breakdowns
+
+Breakdowns let you compare funnel performance across segments.
+
+Supported properties include:
+
+- Country
+- Platform
+- Device
+- Subscription Plan
+- Other supported properties
+
+For example, a Platform breakdown might show:
+
+| Platform | Conversion |
+| :-- | :-- |
+| Web | 21% |
+| Android | 16% |
+| iOS | 24% |
+
+This lets you compare how different segments progress through the same funnel.
+
+---
+
+# Visualizations
+
+Klaritics provides four visualization types.
+
+## Funnel Steps
+
+The primary funnel visualization.
+
+It shows:
+
+- Users at each step
+- Conversion
+- Drop-offs
+- Overall funnel progression
+
+## Line
+
+Shows funnel results as a trend over the selected time period.
+
+## Bar
+
+Provides a comparison-oriented view of funnel results.
+
+## Metric
+
+Displays a single key value, such as:
+
+- Conversion Rate
+- Converted Users
+
+---
+
+# Funnel table
+
+The funnel table provides the numerical results behind the visualization.
+
+Example:
+
+| Step | Users | Conversion | Drop-off |
+| :-- | :-- | :-- | :-- |
+| Product Viewed | 10,000 | 100% | — |
+| Added to Cart | 4,500 | 45% | 55% |
+| Checkout Started | 2,800 | 28% | 37.8% |
+| Purchase Completed | 1,900 | 19% | 32.1% |
+
+Use the table to inspect the exact step-level results alongside the visual funnel.
+
+---
+
+# Act on funnel results
+
+## Create a cohort
+
+You can turn funnel results into a cohort for reuse in other Klaritics analyses.
+
+For example:
+
+```text
+Signup
+   ↓
+Profile Completed
+   ↓
+Subscription Completed
+```
+
+The resulting cohort can represent users who completed the subscription funnel.
+
+## Export as CSV
+
+You can export funnel results as CSV for:
+
+- External analysis
+- Reporting
+- Sharing
+- Spreadsheet analysis
+- Data processing
+
+The export reflects the current funnel configuration.
+
+---
+
+# Empty states
+
+Klaritics displays an empty state when the funnel configuration is incomplete.
+
+| Situation | Result |
+| :-- | :-- |
+| No events added | Add at least two events to analyze a funnel. |
+| Only one event added | Add at least two events to analyze a funnel. |
+
+A single-step configuration does not render a funnel visualization.
+
+---
+
+# Example: Signup to Subscription
+
+Consider the following funnel:
+
+```text
+Signup Started
+      ↓
+Account Created
+      ↓
+Email Verified
+      ↓
+Subscription Completed
+```
+
+Example results:
+
+| Step | Users |
+| :-- | :-- |
+| Signup Started | 10,000 |
+| Account Created | 8,000 |
+| Email Verified | 6,000 |
+| Subscription Completed | 2,500 |
+
+From these results:
+
+- **Overall Conversion:** 25%
+- **Largest Drop-off:** Email Verified → Subscription Completed
+- **Time to Convert:** 3 days
+
+This tells you how users progress through the flow and where the largest loss occurs.
+
+---
+
+# What you can do
+
+### Build
+
+Create a sequential funnel using two or more events. Add, remove, and reorder the configured steps as needed.
+
+### Filter
+
+Apply event property filters to individual steps and property or cohort filters to the overall audience.
+
+### Segment
+
+Break down results using supported properties such as Country, Platform, Device, or Subscription Plan.
+
+### Analyze
+
+Review step-wise users, conversion rate, drop-offs, and Time to Convert.
+
+### Visualize
+
+Switch between Funnel Steps, Line, Bar, and Metric views and inspect the underlying table.
+
+### Act
+
+Create a cohort from funnel results or export the current funnel data as CSV.
+
+---
+
+# In summary
+
+Funnels show how users progress through a defined sequence of events.
+
+Configure the journey:
+
+**Event 1 → Event 2 → Event 3 → Event 4**
+
+Then use the results to understand:
+
+**Users → Conversion → Drop-offs → Time to Convert**
+
+You can further refine the analysis with event filters, audience filters, cohorts, time windows, and breakdowns, then visualize or export the results for further analysis.

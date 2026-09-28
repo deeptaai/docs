@@ -1,0 +1,80 @@
+---
+title: "Quickstart: Get Started with Klaritics"
+sidebarTitle: "Quickstart"
+description: "Deploy Klaritics, install a Klaritics SDK, send your first event, and build your first dashboard in a few steps."
+---
+
+This quickstart walks through deploying Klaritics on your own infrastructure, integrating an SDK, sending your first event, and building a dashboard.
+
+<Steps>
+  <Step title="Deploy Klaritics">
+    Follow the [self-hosted deployment guide](/deployment/self-hosted) to run Klaritics in your environment. You will end up with an `app_id` and a `server_host` URL for your deployment.
+  </Step>
+  <Step title="Install a Klaritics SDK">
+    Pick the platform you want to instrument:
+
+    <CardGroup cols={3}>
+      <Card title="Web" icon="globe" href="/sdk/web">
+      </Card>
+
+      <Card title="Android" icon="mobile" href="/sdk/android">
+      </Card>
+
+      <Card title="iOS" icon="mobile" href="/sdk/ios">
+      </Card>
+
+      <Card title="React Native" icon="mobile" href="/sdk/react-native">
+      </Card>
+
+      <Card title="Flutter" icon="mobile" href="/sdk/flutter">
+      </Card>
+    </CardGroup>
+
+    Each SDK is initialized with your `app_id` and `server_host`.
+  </Step>
+  <Step title="Initialize the SDK">
+    Example for the Web SDK:
+
+    ```js
+    import Klaritics from "@deeptaai/klaritics-web-sdk";
+    
+    Klaritics.init("YOUR_APP_ID", {
+      server_host: "https://YOUR_SERVER_HOST"
+    });
+    ```
+  </Step>
+  <Step title="Send your first event">
+    ```js
+    Klaritics.logEvent("ADD_TO_CART", {
+      userId: "user@example.com",
+      value: 1299,
+      item: "Sony Head Phone 1201"
+    });
+    ```
+
+    Open the [Real-time Events](/data/real-time-events) view in Klaritics to confirm the event was received.
+  </Step>
+  <Step title="Build a dashboard">
+    Create a [chart analysis](/analysis/chart-analysis) from your event, pin it as a widget, and add it to a [saved dashboard](/dashboards/create-dashboard). Configure [alerts](/alerts/overview) on the widget to get notified when metrics change.
+  </Step>
+</Steps>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Explore the SDKs" icon="code" href="/sdk/overview">
+    Read the full SDK integration guide for every supported platform.
+  </Card>
+
+  <Card title="Set up your taxonomy" icon="database" href="/data/event-taxonomy">
+    Organize the events and attributes coming into Klaritics.
+  </Card>
+
+  <Card title="Try a template" icon="layer-group" href="/templates/overview">
+    Start from a Product Analytics, Flow Analysis, Feature Adoption, or Product KPIs template.
+  </Card>
+
+  <Card title="Manage users and roles" icon="users" href="/user-management/roles">
+    Invite teammates and control access with roles.
+  </Card>
+</CardGroup>

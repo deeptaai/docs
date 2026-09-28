@@ -1,0 +1,57 @@
+---
+title: "Self-hosted Deployment: Run Klaritics on Your Infrastructure"
+sidebarTitle: "Self-hosted"
+description: "Deploy Klaritics in your own infrastructure for full data ownership, control, and privacy. Provision, deploy, configure, and connect your SDKs."
+---
+
+Klaritics is designed to run inside your own infrastructure. Self-hosting gives you full control over your data, ensures no third-party sharing, and lets you operate the platform according to your own security and compliance requirements.
+
+## Why self-host Klaritics
+
+<CardGroup cols={2}>
+  <Card title="Data ownership" icon="shield">
+    Your event data never leaves your environment. You control storage, backups, and access.
+  </Card>
+
+  <Card title="Privacy and compliance" icon="lock">
+    Meet internal policies and regulatory requirements without relying on external SaaS commitments.
+  </Card>
+
+  <Card title="Operational control" icon="settings">
+    Manage uptime, scaling, and upgrades on your own schedule.
+  </Card>
+
+  <Card title="No third-party sharing" icon="eye-off">
+    Eliminate data egress to external analytics vendors.
+  </Card>
+</CardGroup>
+
+## High-level deployment flow
+
+<Steps>
+  <Step title="Provision infrastructure">
+    Prepare the servers, networking, and storage your environment requires. Klaritics runs as a containerized application, so ensure your environment supports container orchestration.
+  </Step>
+  <Step title="Deploy Klaritics">
+    Install the Klaritics application on your infrastructure. You will receive deployment artifacts and configuration guidance as part of your setup package.
+  </Step>
+  <Step title="Get your credentials">
+    After deployment, retrieve your `app_id` and `server_host` from the Klaritics admin interface. These identify your instance and tell the SDKs where to send data.
+  </Step>
+  <Step title="Configure your SDKs">
+    Point the [Klaritics SDK](/sdk/overview) at your `server_host` instead of a cloud endpoint. Use your `app_id` to authenticate events. See [Quickstart](/quickstart) for a step-by-step walkthrough.
+  </Step>
+  <Step title="Verify the integration">
+    Trigger events from your application and confirm they appear in [Real-time Events](/data/real-time-events).
+  </Step>
+</Steps>
+
+<Warning>
+  Keep your `server_host` and `app_id` secure. Treat them as sensitive configuration values and manage them through your internal secrets tooling.
+</Warning>
+
+## Next steps
+
+- [Quickstart](/quickstart)
+- [SDK Overview](/sdk/overview)
+- [Real-time Events](/data/real-time-events)

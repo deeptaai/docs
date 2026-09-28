@@ -1,0 +1,58 @@
+---
+title: "Third Party Cohorts: Import External Cohorts"
+sidebarTitle: "Third Party Cohorts"
+description: "Import cohorts defined in external systems into Klaritics and use them in your analyses, funnels, and retention reports."
+---
+
+Third Party Cohorts in Klaritics let you bring cohort definitions from external systems into your instance. Once imported, these cohorts behave like native Klaritics cohorts. You can use them to filter analyses, compare segments in [Funnels](/analysis/funnels), and measure [Retention](/analysis/retention) for groups you have already defined elsewhere.
+
+## Why use third-party cohorts
+
+If your team already defines user segments in another platform, re-creating those filters in Klaritics is repetitive and error-prone. Importing those cohorts directly keeps your segments consistent across tools and saves time.
+
+## How it works
+
+<Steps>
+  <Step title="Connect the external source">
+    Configure the integration with your third-party system from the Integrations settings.
+  </Step>
+  <Step title="Select cohorts to import">
+    Choose which cohorts from the external system should be available inside Klaritics.
+  </Step>
+  <Step title="Sync and refresh">
+    The cohort membership syncs on a schedule you define. Imported cohorts update automatically as the source changes.
+  </Step>
+  <Step title="Use in analyses">
+    Select the imported cohort as a filter or breakdown in any analysis that supports cohorts.
+  </Step>
+</Steps>
+
+## Where you can use imported cohorts
+
+<CardGroup cols={2}>
+  <Card title="Cohort analysis" icon="users">
+    Compare behavior across imported and native cohorts in [Cohorts](/analysis/cohorts).
+  </Card>
+
+  <Card title="Funnels" icon="filter">
+    Measure conversion rates for specific imported segments.
+  </Card>
+
+  <Card title="Retention" icon="refresh-cw">
+    Track how well an imported cohort retains over time.
+  </Card>
+
+  <Card title="Dashboard filters" icon="layout-dashboard">
+    Apply imported cohorts as filters on dashboard widgets for focused views.
+  </Card>
+</CardGroup>
+
+<Note>
+  Imported cohorts are read-only inside Klaritics. Edit the cohort definition in the source system and the changes will sync on the next refresh.
+</Note>
+
+## Next steps
+
+- [Cohorts Analysis](/analysis/cohorts)
+- [Funnels Analysis](/analysis/funnels)
+- [Retention Analysis](/analysis/retention)

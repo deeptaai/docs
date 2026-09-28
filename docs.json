@@ -1,0 +1,160 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "luma",
+  "name": "Klaritics",
+  "colors": {
+    "primary": "#1DA2D4",
+    "light": "#3AB8CD",
+    "dark": "#1974C5"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "pages": [
+      {
+        "group": "Getting Started",
+        "pages": [
+          "index",
+          "quickstart"
+        ]
+      }
+    ],
+    "groups": [
+      {
+        "group": "Get Started",
+        "icon": "rocket",
+        "pages": [
+          "index",
+          "quickstart"
+        ]
+      },
+      {
+        "group": "User Management",
+        "icon": "users",
+        "pages": [
+          "user-management/roles",
+          "user-management/users"
+        ]
+      },
+      {
+        "group": "Analysis",
+        "icon": "chart-line",
+        "pages": [
+          "untitled-page-3",
+          "chart-analysis",
+          "untitled-page",
+          "untitled-page-2",
+          "analysis/retention",
+          "analysis/cohorts",
+          "analysis/user-flows",
+          "analysis/pivot-tables",
+          "analysis/user-sessions"
+        ]
+      },
+      {
+        "group": "Dashboards",
+        "icon": "chart-bar",
+        "pages": [
+          "dashboards/overview",
+          "dashboards/create-dashboard",
+          "dashboards/manage-layouts",
+          "dashboards/share-and-export"
+        ]
+      },
+      {
+        "group": "Widgets",
+        "icon": "puzzle-piece",
+        "pages": [
+          "widgets/overview",
+          "widgets/chart-widgets",
+          "widgets/metric-widgets",
+          "widgets/table-widgets",
+          "widgets/custom-widgets"
+        ]
+      },
+      {
+        "group": "Data",
+        "icon": "database",
+        "pages": [
+          "untitled-page-4",
+          "data/real-time-events",
+          "data/real-time-users"
+        ]
+      },
+      {
+        "group": "Templates",
+        "icon": "layer-group",
+        "pages": [
+          "templates/overview",
+          "templates/product-analytics",
+          "templates/flow-analysis",
+          "templates/feature-adoption",
+          "templates/product-kpis"
+        ]
+      },
+      {
+        "group": "Alerts & Integrations",
+        "icon": "bell",
+        "pages": [
+          "alerts/overview",
+          "integrations/third-party-cohorts"
+        ]
+      },
+      {
+        "group": "SDK Integration",
+        "icon": "code",
+        "pages": [
+          "sdk/overview",
+          "sdk/web",
+          "sdk/android",
+          "sdk/ios",
+          "sdk/react-native",
+          "sdk/kmp",
+          "sdk/flutter",
+          "sdk/event-naming"
+        ]
+      },
+      {
+        "group": "Deployment",
+        "icon": "server",
+        "pages": [
+          "deployment/self-hosted"
+        ]
+      },
+      {
+        "group": "Reference",
+        "icon": "book",
+        "pages": [
+          "release-notes"
+        ]
+      },
+      {
+        "group": "Sdk",
+        "pages": [
+          "sdk/kmp"
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "https://klaritics.com/book-demo"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://klaritics.com/"
+    }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://klaritics.com"
+    }
+  }
+}

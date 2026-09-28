@@ -1,0 +1,454 @@
+---
+title: "Event Taxonomy"
+---
+
+Event Taxonomy provides a centralized view of the events tracked in your application.
+
+Use it to understand what events exist, how they are being used, when they were last received, which reports use them, and their current visibility and tracking status.
+
+You can also manage event metadata, search and filter events, inspect event properties, export event data, and perform supported event-management actions.
+
+---
+
+# What Event Taxonomy helps you understand
+
+Event Taxonomy helps answer questions such as:
+
+- What events are being tracked?
+- Which events are currently active?
+- Which events have become inactive?
+- Where is an event being used?
+- When was an event first or last tracked?
+- Which application versions generated an event?
+- What properties are associated with an event?
+- Is an event visible, hidden, merged, or dropped?
+- Who last modified an event's metadata?
+
+---
+
+# Events Page
+
+The Events page contains four main areas:
+
+1. **KPI Cards**
+2. **Search and Filters**
+3. **Events Table**
+4. **Event Details**
+
+---
+
+# KPI Cards
+
+The Events page displays event-level summary metrics:
+
+- **Total Events**
+- **Active Events**
+- **Inactive Events**
+- **Dropped Events**
+
+### Total Events
+
+The total number of events in the Event Taxonomy.
+
+### Active Events
+
+The number of unique events that received at least one event in the last 30 days.
+
+### Inactive Events
+
+The number of unique events that received no events in the last 30 days.
+
+### Dropped Events
+
+The number of unique events that have been dropped.
+
+---
+
+# Search Events
+
+Use the search field to find events by:
+
+- Event Name
+- Display Name
+- Description
+
+Search supports:
+
+- Case-insensitive matching
+- Partial matching
+- Relevance-based result ranking
+
+This allows you to find an event even when the search text matches only part of its name, display name, or description.
+
+---
+
+# Filter Events
+
+Filters help narrow the Events Table to the events you want to inspect.
+
+## Event Visibility
+
+You can filter by:
+
+- **Visible**
+- **Hidden**
+- **Dropped**
+
+## Tracking Status
+
+You can filter by:
+
+- **Active**
+- **Inactive**
+- **Dropped**
+
+Tracking Status is system-generated and cannot be manually changed.
+
+## Category
+
+Filter events by category, such as:
+
+- Payment
+- Notification
+- Other categories configured in the taxonomy
+
+Users can create new categories. Existing categories are available in the category selector.
+
+## Version
+
+You can filter events by application version.
+
+Versions represent the unique app versions in which an event was triggered.
+
+For example, if an event was received from:
+
+`v1.0`, `v1.1`, `v2.0`
+
+those versions are available for filtering.
+
+Version filtering supports multiple selections.
+
+### App version
+
+`app_version` is a standard system-defined event property.
+
+It is:
+
+- Automatically attached to events.
+- Provided through SDK initialization.
+
+---
+
+# Events Table
+
+The Events Table provides a centralized view of event metadata and usage.
+
+| Column | Description |
+| :-- | :-- |
+| **Event Name** | Original system-generated event name. It is unique and cannot be edited. |
+| **Display Name** | User-facing event name. Can be edited for readability and does not need to be unique. |
+| **Description** | Short explanation of the event. |
+| **Category** | Category associated with the event. |
+| **Count** | Total number of times the event has been triggered. |
+| **First Tracked** | First time the event was tracked. |
+| **Last Tracked** | Most recent time the event was tracked. |
+| **Last Modified By** | User who last modified the event metadata. Default: System. |
+| **Status** | Current event visibility/lifecycle state. |
+| **Tracking Status** | System-generated Active, Inactive, or Dropped state. |
+| **Versions** | Application versions in which the event was triggered. |
+| **No. of Reports Used** | Number of reports that use the event. |
+
+---
+
+# Customize the Events Table
+
+You can show or hide table columns according to your needs.
+
+The default columns are:
+
+- Event Name
+- Display Name
+- Description
+- Count
+- Status
+- Tracking
+
+---
+
+# Event Visibility Status
+
+Event Visibility describes whether and how an event can be used in reports.
+
+## Visible
+
+The event is available for selection in charts and reports.
+
+## Hidden
+
+A hidden event is not available for selection in new charts or reports.
+
+Existing reports that already use the event continue to function.
+
+## Dropped
+
+Dropped events are blocked at the ingestion level.
+
+When an event is dropped:
+
+- New incoming data is not stored.
+- Historical data remains available.
+- The event cannot be used in new reports.
+- The action can be reversed using **Undrop**.
+
+When attempting to drop an event, a confirmation/concern dialog is displayed.
+
+---
+
+# Tracking Status
+
+Tracking Status describes whether the system has recently received the event.
+
+| Status | Definition |
+| :-- | :-- |
+| **Active** | The event was received within the last 30 days. |
+| **Inactive** | No event was received within the last 30 days. |
+| **Dropped** | The event's visibility status is Dropped. |
+
+Tracking Status is generated by the system and cannot be manually modified.
+
+---
+
+# Event Details
+
+Select an event from the Events Table to open its Event Detail Page.
+
+The page contains:
+
+1. **Details**
+2. **Usage**
+3. **Event Properties**
+
+---
+
+# Details
+
+The Details section contains the event's metadata.
+
+| Field | Description |
+| :-- | :-- |
+| **Event Name** | Original system-generated event name. Cannot be edited. |
+| **Display Name** | User-facing name. Can be edited. |
+| **Description** | Short explanation of the event. |
+| **Category** | Category associated with the event. |
+| **Status** | Current event state. |
+| **Tracking** | Current Active or Inactive tracking state. |
+
+---
+
+# Usage
+
+The Usage section provides information about how the event is being tracked and used.
+
+| Field | Description |
+| :-- | :-- |
+| **Count** | Total number of times the event has been triggered. |
+| **First Tracked** | First time the event was tracked. |
+| **Last Tracked** | Most recent time the event occurred. |
+| **Last Modified By** | User who last modified the event metadata. Default: System. |
+| **No. of Reports Used** | Number of reports using the event. |
+| **Versions** | Application versions in which the event was triggered. |
+
+This section helps you understand both the event's tracking activity and its usage across reports.
+
+---
+
+# Event Properties
+
+The Event Properties section lists properties associated with the selected event.
+
+Each property contains:
+
+- **Property Name**
+- **Data Type**
+- **Description**
+
+For example:
+
+| Property Name | Data Type | Description |
+| :-- | :-- | :-- |
+| `product_id` | integer | Unique identifier of the product |
+| `price` | integer | Price of the product |
+| `coupon_code` | string | Coupon used during purchase |
+
+Select a property name to open its Event Property Detail Page.
+
+If an event has multiple properties, they are displayed in a scrollable list.
+
+If the event has no properties, the page displays:
+
+> **No event properties available**
+
+---
+
+# Import Events
+
+Event import is supported using a CSV file with predefined columns.
+
+The defined import columns are:
+
+- Event Name
+- Description
+- Event Properties
+
+The system validates the uploaded file.
+
+Import validation includes checks for:
+
+- Invalid column names
+- Missing required fields
+
+---
+
+# Export Events
+
+You can export the list of events in **CSV format**.
+
+The export allows the event taxonomy data shown in the Events page to be taken outside the product for further use.
+
+---
+
+# Event Actions
+
+## History
+
+The History action allows you to view changes made to an event's details, including who edited the event metadata.
+
+## Delete / Remove
+
+The PRD defines a Delete/Remove action that permanently deletes the entire event data from the database.
+
+This is different from **Dropped** behavior as currently described:
+
+- **Dropped:** new data is stopped while historical data remains available.
+- **Delete/Remove:** the event data is deleted from the database.
+
+---
+
+# Common Event Management Scenarios
+
+## Find an inactive event
+
+1. Open Event Taxonomy.
+2. Filter **Tracking Status** by `Inactive`.
+3. Review the resulting events.
+4. Open an event to inspect its usage, versions, properties, and reports.
+
+## Understand where an event is used
+
+1. Find the event using Search or Filters.
+2. Open the Event Detail Page.
+3. Review **No. of Reports Used**.
+4. Inspect the event's other usage information.
+
+## Investigate an event's properties
+
+1. Open the event.
+2. Go to **Event Properties**.
+3. Review property names, data types, and descriptions.
+4. Select a property to open its detail page.
+
+## Hide an event from new reports
+
+1. Open the event.
+2. Change its visibility to **Hidden**.
+3. The event is no longer available for selection in new reports.
+4. Existing reports using the event continue to function.
+
+## Stop incoming data for an event
+
+Use the **Dropped** state when an event should no longer receive new incoming data.
+
+After an event is dropped:
+
+- New data is not stored.
+- Historical data remains available.
+- The event cannot be used in new reports.
+- The action can be reversed using **Undrop**.
+
+---
+
+# Empty States
+
+If no events match the current search or filters, the Events page displays:
+
+> **No events found for the selected filters**
+
+If an event has no associated properties, the Event Properties section displays:
+
+> **No event properties available**
+
+---
+
+# Event Name vs. Display Name
+
+These fields serve different purposes.
+
+### Event Name
+
+The original tracked event name.
+
+- System-generated
+- Unique
+- Not editable
+
+### Display Name
+
+The user-facing name.
+
+- Editable
+- Intended for readability
+- Does not need to be unique
+
+Changing the Display Name does not change the original Event Name.
+
+---
+
+# Event Taxonomy at a glance
+
+| Need | Use |
+| :-- | :-- |
+| See all tracked events | Events Table |
+| Find a specific event | Search |
+| Narrow the event list | Filters |
+| Understand overall event health | KPI Cards |
+| Check recent tracking | Tracking Status |
+| Understand event visibility | Event Status |
+| See where an event is used | No. of Reports Used |
+| Check application versions | Versions |
+| Understand event metadata | Details |
+| Inspect properties | Event Properties |
+| Review changes | History |
+| Stop new incoming data | Dropped |
+| Hide an event from new reports | Hidden |
+| Download event data | Export |
+| Add events in bulk | Import |
+
+---
+
+# In summary
+
+Event Taxonomy provides a central place to understand and manage the events tracked in your application.
+
+You can:
+
+- Search and filter events.
+- Monitor Active, Inactive, and Dropped tracking states.
+- Review event usage and application versions.
+- Manage Display Names, Descriptions, and Categories.
+- Understand event visibility through Visible, Hidden and Dropped states.
+- Inspect event properties and navigate to property details.
+- Review event modification history.
+- Import and export event data.
+- Manage event lifecycle through supported actions.
+
+The **Events Table** provides the overview, while the **Event Detail Page** provides deeper information about an individual event, its usage, and its properties.

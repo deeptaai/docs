@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="32" viewBox="0 0 180 32" fill="none">
+  <defs>
+    <linearGradient id="kg0" x1="17.5775" y1="9.58166" x2="21.1822" y2="5.79742" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#92D99F"/>
+
+      <stop offset="1" stop-color="#FCF17B"/>
+    </linearGradient>
+
+    <linearGradient id="kg1" x1="9.82632" y1="14.469" x2="0.426092" y2="16.8472" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3AB8CD"/>
+
+      <stop offset="1" stop-color="#1974C5"/>
+    </linearGradient>
+
+    <linearGradient id="kg2" x1="15.8685" y1="8.29875" x2="4.75632" y2="13.6053" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#92D7A1"/>
+
+      <stop offset="0.624506" stop-color="#39B7CD"/>
+
+      <stop offset="1" stop-color="#2BABD0"/>
+    </linearGradient>
+
+    <linearGradient id="kg3" x1="17.9223" y1="9.0125" x2="5.65191" y2="23.3389" gradientUnits="userSpaceOnUse">
+      <stop offset="0.075126" stop-color="#B3DA8E"/>
+
+      <stop offset="0.157369" stop-color="#77D1AD"/>
+
+      <stop offset="0.528846" stop-color="#37B0CD"/>
+
+      <stop offset="1" stop-color="#1C76C4"/>
+    </linearGradient>
+
+    <linearGradient id="kg4" x1="18.7371" y1="11.7807" x2="7.31278" y2="22.8885" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#86D9A1"/>
+
+      <stop offset="0.528846" stop-color="#37B0CD"/>
+
+      <stop offset="1" stop-color="#1C76C4"/>
+    </linearGradient>
+
+    <linearGradient id="kg5" x1="21.5425" y1="2.14309" x2="4.99424" y2="11.4858" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EDF07F"/>
+
+      <stop offset="1" stop-color="#1DA2D4"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(2, 4)">
+    <circle cx="21.1174" cy="5.7938" r="0.8555" fill="url(#kg0)"/>
+
+    <circle cx="19.0423" cy="6.0382" r="0.7326" fill="url(#kg0)"/>
+
+    <circle cx="17.0892" cy="6.6491" r="0.8554" fill="url(#kg0)"/>
+
+    <circle cx="14.0376" cy="6.7713" r="0.8555" fill="url(#kg0)"/>
+
+    <circle cx="20.8733" cy="8.1154" r="0.7326" fill="url(#kg0)"/>
+
+    <circle cx="20.5071" cy="10.1926" r="0.8555" fill="url(#kg0)"/>
+
+    <circle cx="20.5071" cy="13.3695" r="0.8555" fill="url(#kg0)"/>
+
+    <circle cx="9.39909" cy="15.0799" r="0.8555" fill="url(#kg1)"/>
+
+    <circle cx="6.8357" cy="16.424" r="0.8555" fill="url(#kg1)"/>
+
+    <circle cx="3.90611" cy="17.2793" r="0.8555" fill="url(#kg1)"/>
+
+    <circle cx="0.8545" cy="17.035" r="0.8545" fill="url(#kg1)"/>
+
+    <circle cx="15.3802" cy="8.72642" r="0.8555" fill="url(#kg2)"/>
+
+    <circle cx="13.4272" cy="10.4371" r="0.8555" fill="url(#kg2)"/>
+
+    <circle cx="11.1079" cy="12.5143" r="0.8555" fill="url(#kg2)"/>
+
+    <circle cx="7.81213" cy="13.2474" r="0.8545" fill="url(#kg2)"/>
+
+    <circle cx="5.00461" cy="13.614" r="0.8545" fill="url(#kg2)"/>
+
+    <circle cx="17.9438" cy="9.33677" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="15.9907" cy="11.414" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="13.6715" cy="13.7356" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="11.9625" cy="15.935" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="10.3757" cy="17.2791" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="8.1785" cy="18.7453" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="5.73718" cy="20.2116" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="2.92966" cy="21.4335" r="0.8545" fill="url(#kg3)"/>
+
+    <circle cx="18.554" cy="12.1473" r="0.8545" fill="url(#kg4)"/>
+
+    <circle cx="16.8451" cy="14.2245" r="0.8545" fill="url(#kg4)"/>
+
+    <circle cx="15.0141" cy="16.4239" r="0.8545" fill="url(#kg4)"/>
+
+    <circle cx="12.939" cy="18.8677" r="0.8545" fill="url(#kg4)"/>
+
+    <circle cx="10.6197" cy="21.1893" r="0.8545" fill="url(#kg4)"/>
+
+    <circle cx="7.44602" cy="23.1443" r="0.8545" fill="url(#kg4)"/>
+
+    <path d="M13.0326 21.0949C12.9842 21.3311 13.1362 21.5627 13.3741 21.6017C15.3728 21.929 17.4265 21.6918 19.3021 20.9123C21.3123 20.0769 23.0254 18.6571 24.2193 16.8369C25.4133 15.0167 26.0332 12.8799 25.9988 10.7033C25.9667 8.67241 25.3663 6.69417 24.2698 4.99123C24.1393 4.78855 23.8663 4.74137 23.669 4.87989C23.4718 5.01842 23.425 5.29016 23.5548 5.4933C24.5511 7.05279 25.0966 8.86104 25.126 10.7171C25.1576 12.7189 24.5875 14.6841 23.4894 16.3581C22.3913 18.0321 20.8159 19.3379 18.9671 20.1062C17.253 20.8186 15.3771 21.0385 13.5498 20.7458C13.3118 20.7077 13.0811 20.8588 13.0326 21.0949Z" fill="url(#kg5)"/>
+
+    <path d="M21.3757 2.65579C21.5474 2.43235 21.5062 2.1109 21.2749 1.94985C19.7197 0.866768 17.9056 0.207378 16.0118 0.0414702C13.9482 -0.139306 11.876 0.273344 10.0391 1.23082C8.20221 2.1883 6.67718 3.65074 5.64359 5.4459C4.69502 7.09342 4.19663 8.95821 4.19386 10.8534C4.19344 11.1352 4.43331 11.3531 4.71483 11.3403C4.99636 11.3275 5.21281 11.0888 5.21459 10.807C5.22535 9.10624 5.6765 7.43407 6.52802 5.95512C7.46456 4.32851 8.84641 3.00339 10.5108 2.13581C12.1752 1.26823 14.0529 0.894323 15.9227 1.05813C17.6228 1.20706 19.2519 1.79486 20.6523 2.76004C20.8843 2.91997 21.204 2.87924 21.3757 2.65579Z" fill="url(#kg5)"/>
+  </g>
+
+  <text x="38" y="22" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">Klaritics</text>
+</svg>

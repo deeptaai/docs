@@ -1,0 +1,736 @@
+---
+title: "Impact Analysis"
+---
+
+Impact Analysis helps you understand how user behavior changes around the first time a user performs a specific action.
+
+You select a **Treatment Event** that you believe may influence user behavior and one or more **Outcome Events** whose behavior you want to evaluate. Impact Analysis aligns users around their first Treatment Event occurrence and shows Outcome Event behavior before and after that point.
+
+For example:
+
+- **Treatment Event:** Nudge Clicked
+- **Outcome Event:** Course Purchased
+
+The analysis helps answer:
+
+> How does user behavior change after the first nudge click?
+
+Impact Analysis is designed to help teams measure behavioral changes, quantify observed changes in key metrics, and investigate whether a feature or action is associated with changes in subsequent behavior.
+
+**Important:** Impact Analysis identifies correlation, not causation. A change in behavior after a Treatment Event does not by itself prove that the Treatment Event caused the change.
+
+---
+
+# What Impact Analysis helps you understand
+
+Impact Analysis can be used to investigate questions such as:
+
+- Does performing a feature relate to increased engagement with another feature?
+- Does user behavior change after users first interact with a particular feature?
+- How does an outcome behave in the days or weeks before and after treatment?
+- How large is the observed change?
+- How confident is the analysis in the observed difference?
+
+Typical examples include:
+
+- Whether creating a dashboard is associated with more report exports.
+- Whether clicking a nudge is associated with more purchases.
+- Whether using a feature is associated with increased engagement with another feature.
+- Whether behavior changes after a user first performs an onboarding action.
+
+---
+
+# Important: Impact Analysis does not prove causation
+
+Impact Analysis is a behavioral analysis tool.
+
+It compares behavior around a Treatment Event, but users are not randomly assigned to treatment and control groups.
+
+Therefore:
+
+**A change after the Treatment Event does not necessarily mean the Treatment Event caused the change.**
+
+Other actions or circumstances may also contribute to the observed change.
+
+Impact Analysis is therefore not:
+
+- A/B testing
+- Causal inference
+- Experiment randomization
+- Multi-touch attribution
+
+Use the results as evidence for investigating behavioral relationships rather than as proof of causal impact.
+
+---
+
+# Core concepts
+
+| Concept | Description |
+| :-- | :-- |
+| **Treatment Event** | The event that you hypothesize may influence subsequent user behavior. |
+| **Outcome Event** | The event whose behavior you want to evaluate around the Treatment Event. |
+| **Day / Week 0** | The first occurrence of the Treatment Event for an individual user. |
+| **Relative time** | Time measured relative to each user's first Treatment Event occurrence. |
+| **Pre-treatment period** | Relative time before Day/Week 0. |
+| **Post-treatment period** | Relative time after Day/Week 0. |
+| **Measured As** | Determines the metric used to evaluate the Outcome Event. |
+| **Lift** | A value shown in the metric table to represent the observed change. |
+| **Confidence Score** | A statistical indicator shown with the analysis results. |
+| **Analysis Window** | The relative period around Treatment Event occurrence that is displayed in the chart. |
+
+---
+
+# How Impact Analysis works
+
+The analysis follows this basic flow:
+
+1. Select a Treatment Event.
+2. Select one or more Outcome Events.
+3. Choose how to measure the Outcome Event.
+4. Apply filters if needed.
+5. Select the analysis date range.
+6. Select Daily or Weekly granularity.
+7. Review the relative-time chart.
+8. Review Lift and Confidence Score in the metric table.
+9. Export the table if needed.
+
+---
+
+# Create an Impact Analysis
+
+## 1. Start with the Treatment Event
+
+The **Treatment Events** section defines the user action you believe may influence later behavior.
+
+The Treatment Event is required before the analysis can run.
+
+### To add a Treatment Event
+
+1. Open the Treatment Events section.
+2. Click **\+ Add Event**.
+3. Select an event from the Event Taxonomy.
+
+The default Treatment Events section is empty.
+
+---
+
+# 2. Add Outcome Events
+
+The **Outcome Events** section defines the behavior you want to evaluate after the Treatment Event.
+
+At least one Outcome Event is required before the analysis can run.
+
+### To add an Outcome Event
+
+1. Open the Outcome Events section.
+2. Click **\+ Add Event**.
+3. Select one or more events.
+
+For example:
+
+**Treatment Event**
+
+`Dashboard Created`
+
+**Outcome Event**
+
+`Report Exported`
+
+The analysis then examines report-export behavior around the first time each user created a dashboard.
+
+---
+
+# Treatment and Outcome Event rules
+
+Impact Analysis supports multiple events, but there is an important relationship between the two selections.
+
+You can have:
+
+### One Treatment Event → Multiple Outcome Events
+
+For example:
+
+**Treatment**
+
+`Dashboard Created`
+
+**Outcomes**
+
+- `Report Exported`
+- `Report Shared`
+- `Report Viewed`
+
+Or:
+
+### Multiple Treatment Events → One Outcome Event
+
+For example:
+
+**Treatments**
+
+- `Dashboard Created`
+- `Dashboard Shared`
+
+**Outcome**
+
+`Report Exported`
+
+This prevents configurations where multiple Treatment Events are combined with multiple Outcome Events.
+
+If the configuration violates this rule, the product displays an error indicating that only one side of the relationship can contain multiple events.
+
+# 3. Choose how to measure impact
+
+The **Measured As** option determines what the analysis measures for the Outcome Event.
+
+The default is: **Average**
+
+Available options are:
+
+1. **Average**
+2. **Active %**
+3. **Frequency**
+
+---
+
+## Average
+
+Average measures the average number of Outcome Event occurrences.
+
+For example, if five users generated a total of four Outcome Events on a relative day:
+
+**Average = 4 ÷ 5 = 0.8**
+
+This allows you to compare average Outcome Event activity before and after the Treatment Event.
+
+### Average chart
+
+The Y-axis displays average values.
+
+The tooltip includes:
+
+- Relative day
+- Outcome Event
+- Average value
+- Event Count / Unique Users
+
+---
+
+## Active %
+
+Active % measures the percentage of users who performed the Outcome Event.
+
+For example, if three of five users performed the Outcome Event on Day +1:
+
+**Active % = 3 ÷ 5 × 100 = 60%**
+
+### Active % chart
+
+The Y-axis displays percentages.
+
+The tooltip includes:
+
+- Relative day
+- Outcome Event
+- Active % value
+- Feature used count / Active users
+
+---
+
+## Frequency
+
+Frequency shows how many users performed the Outcome Event a particular number of times during a relative day or week.
+
+Users are grouped into frequency buckets.
+
+For example:
+
+| Frequency bucket | Users |
+| :-- | :-- |
+| 1 time | 3 |
+| 2 times | 0 |
+| 3 times | 0 |
+
+The chart plots these frequency buckets over relative time.
+
+The Y-axis represents the number of unique users in each frequency bucket.
+
+### Frequency tooltip
+
+The tooltip includes:
+
+- Relative day
+- Outcome Event
+- Frequency Count
+- Unique Users
+
+**Important:** Frequency is represented as a distribution of users across event-count buckets. It should not be interpreted as the same calculation as Average.
+
+---
+
+# 4. Apply filters
+
+You can filter the Impact Analysis using the Filters section.
+
+When you select the Filter option, the properties popup provides:
+
+- **All Properties**
+- **User Properties**
+- **Cohorts**
+
+You can also select the data type of the filter. Filters allow you to narrow the population or event data included in the analysis.
+
+---
+
+# 5. Select the analysis time window
+
+Impact Analysis provides predefined time windows:
+
+- Today
+- Yesterday
+- Last 7 days
+- Last 30 days
+- 3 months
+- 12 months
+
+You can also select a **Custom Date Range**.
+
+The selected date range determines the period from which users are identified for the analysis.
+
+---
+
+# 6. Select the time granularity
+
+Impact Analysis supports two granularities:
+
+- **Daily**
+- **Weekly**
+
+## Daily
+
+When Daily is selected, you can select dates individually using the calendar.
+
+The chart then uses relative days:
+
+- Day -7
+- Day -6
+- ...
+- Day -1
+- Day 0
+- Day +1
+- ...
+- Day +7
+
+## Weekly
+
+When Weekly is selected, the date selector aligns with complete weeks.
+
+You cannot select individual dates inside a week. The selected date range automatically aligns to the beginning and end of the corresponding weeks.
+
+The chart uses relative weeks such as:
+
+- Week -4
+- Week -3
+- ...
+- Week -1
+- Week 0
+- Week +1
+- ...
+- Week +4
+
+---
+
+# Understanding relative time
+
+Impact Analysis does not simply plot calendar dates.
+
+Instead, users are aligned around their own first Treatment Event occurrence.
+
+For each user:
+
+1. Find the user's Treatment Event occurrences.
+2. Identify the **first occurrence**.
+3. Assign that occurrence to **Day 0** or **Week 0**.
+4. Convert the user's Outcome Event timestamps into relative time.
+5. Aggregate the results across users.
+6. Calculate the selected metric.
+
+This alignment allows users with different Treatment Event dates to be analyzed together.
+
+---
+
+# Day 0 and Week 0
+
+**Day/Week 0 represents the first occurrence of the Treatment Event for each user.**
+
+Relative time is interpreted as:
+
+| Relative time | Meaning |
+| :-- | :-- |
+| Negative | Before the Treatment Event |
+| 0 | First Treatment Event occurrence |
+| Positive | After the Treatment Event |
+
+For example:
+
+**Day -3**
+
+The Outcome Event behavior three days before the user's first Treatment Event.
+
+**Day 0**
+
+The user's first Treatment Event day.
+
+**Day +3**
+
+The Outcome Event behavior three days after the user's first Treatment Event.
+
+---
+
+# Impact Analysis visualization
+
+Once the required events are configured, the visualization uses a **Line chart**.
+
+The chart shows Outcome Event behavior across relative time.
+
+## X-axis
+
+The X-axis represents relative time around the Treatment Event.
+
+### Daily
+
+Example:
+
+`Day -7 → Day -1 → Day 0 → Day +1 → Day +7`
+
+### Weekly
+
+Example:
+
+`Week -4 → Week -1 → Week 0 → Week +1 → Week +4`
+
+---
+
+## Y-axis
+
+The Y-axis depends on the selected **Measured As** option.
+
+| Measured As | Y-axis |
+| :-- | :-- |
+| Average | Average values |
+| Active % | Percentage values |
+| Frequency | Frequency distribution / user counts |
+
+---
+
+# Treatment Event reference line
+
+The chart contains a vertical reference line at Day/Week 0.
+
+The reference line marks the point at which users first performed the Treatment Event.
+
+The label identifies the first treatment-event point and separates:
+
+- **Pre-treatment behavior**
+- **Post-treatment behavior**
+
+This makes it easier to visually compare behavior before and after the Treatment Event.
+
+---
+
+# Reading the chart
+
+The chart can help you identify patterns such as:
+
+### Increasing behavior after Day 0
+
+If the Outcome Event metric increases after Day 0 compared with the preceding period, the analysis shows an increase in the observed behavior following the Treatment Event.
+
+### Decreasing behavior after Day 0
+
+If the metric decreases after Day 0, the observed Outcome Event behavior is lower following the Treatment Event.
+
+### Little visible change
+
+If the metric remains relatively similar before and after Day 0, the analysis does not show a substantial visible change in that metric.
+
+These observations describe behavioral patterns. They should not be interpreted as proof that the Treatment Event caused the change.
+
+---
+
+# Chart tooltips
+
+The tooltip depends on the selected measurement.
+
+## Average
+
+Displays:
+
+- Relative day
+- Outcome Event
+- Average value
+- Event Count / Unique Users
+
+Example:
+
+**Day +4**
+
+`Money Transfer Completed`
+
+- Average: 2.5
+- 3 times
+- 2 users
+
+## Active %
+
+Displays:
+
+- Relative day
+- Outcome Event
+- Active % value
+- Feature used count / Active users
+
+Example:
+
+**Day +4**
+
+`Money Transfer Completed`
+
+- Active %: 75%
+- 3 out of 4 users
+
+## Frequency
+
+Displays:
+
+- Relative day
+- Outcome Event
+- Frequency Count
+- Unique Users
+
+Example:
+
+**Day +4**
+
+`Money Transfer Completed`
+
+- 2 times
+- 15 users
+
+---
+
+# Metric Table
+
+The metric table summarizes the impact results.
+
+## When Measured As is Average or Active %
+
+The default columns are:
+
+- Event Name
+- Lift
+- Confidence Score
+- Day intervals
+
+## When Measured As is Frequency
+
+The default columns are:
+
+- Event Name
+- Lift
+- Frequency
+- Confidence Score
+- Day intervals
+
+The exact values depend on the selected Treatment Event, Outcome Event, date range, granularity, filters, and measurement.
+
+---
+
+# Lift
+
+**Lift** is provided in the metric table as an indication of the observed change associated with the analysis.
+
+It helps quantify how the Outcome Event behavior differs around the Treatment Event.
+
+---
+
+# Confidence Score
+
+The metric table also provides a **Confidence Score**.
+
+The purpose of the score is to indicate the statistical confidence associated with the observed change.
+
+For Average, the analysis specifies a **paired t-test**, because the analysis compares:
+
+- The same users
+- Before vs. after behavior
+- Continuous numeric values
+
+The same process applies to Active % and Frequency.
+
+---
+
+# Interpreting Lift and Confidence Score
+
+This provides four interpretation patterns:
+
+| Lift | Confidence | Interpretation |
+| :-- | :-- | :-- |
+| High | High | Strong evidence of impact |
+| Low | Low | Likely noise |
+| High | Low | More data is needed |
+| Low | High | Impact exists, but business value may be small |
+
+# Why Day 0 matters for confidence calculations
+
+Day 0 is the Treatment Event day.
+
+The confidence-score example excludes Day 0 because it is the treatment day itself.
+
+The example compares the Outcome Event values from relative days before and after treatment.
+
+For example:
+
+- Day -7
+- Day -6
+- ...
+- Day -1
+- Day +1
+- ...
+- Day +7
+
+Day 0 is normally excluded from this particular before/after confidence calculation.
+
+# A complete analysis example
+
+A typical Impact Analysis can be configured as:
+
+| Setting | Example |
+| :-- | :-- |
+| Treatment Event | Stock Purchased |
+| Outcome Event | Money Transfer Completed |
+| Date Range | Last 7 days |
+| Analysis Window | Day -7 to Day +7 |
+| Measured As | Average |
+| Granularity | Daily |
+
+The analysis then aligns each user's first Stock Purchased event to Day 0 and plots Money Transfer Completed behavior around that point.
+
+You can then examine:
+
+- Behavior before treatment.
+- Behavior after treatment.
+- Lift.
+- Confidence Score.
+- Changes across relative days.
+
+---
+
+# Empty state
+
+When no Treatment Event and no Outcome Event have been selected, the visualization area displays an onboarding state.
+
+The header is:
+
+> **How does one action affect how users do other actions?**
+
+The onboarding explains three steps.
+
+### Step 1 - Hypothesize Driver
+
+Select an event that you think could drive different user behavior.
+
+This corresponds to selecting the Treatment Event.
+
+### Step 2 - Test Its Effects
+
+Choose events to see if their performance changes over time after the driver.
+
+This corresponds to selecting Outcome Events and the measurement.
+
+### Step 3 - Investigate
+
+Validate assumptions and investigate the observed impact.
+
+This represents the analysis and interpretation stage.
+
+---
+
+# Export results
+
+The metric table can be downloaded using the **Export CSV** action.
+
+The export provides the table data so the results can be used outside the Impact Analysis view.
+
+---
+
+# Important limitations
+
+Keep the following points in mind when interpreting an Impact Analysis:
+
+### Correlation is not causation
+
+A change after the Treatment Event does not prove that the Treatment Event caused the change.
+
+### Treatment Event means first occurrence
+
+The analysis aligns each user around their **first** Treatment Event occurrence within the analysis logic.
+
+### Users are aligned individually
+
+Different users can perform the Treatment Event on different calendar dates. Their timelines are converted into a common relative timeline.
+
+### Day/Week 0 is special
+
+Day/Week 0 represents the first Treatment Event occurrence and is treated differently from the surrounding pre- and post-treatment periods for confidence calculations.
+
+### Multiple-event configurations are constrained
+
+You cannot freely combine multiple Treatment Events with multiple Outcome Events. One side can contain multiple events while the other contains one.
+
+### Granularity affects time selection
+
+Daily analysis allows individual date selection, while Weekly analysis aligns the selected dates to complete weeks.
+
+### Statistical results require context
+
+Confidence Score should be considered alongside Lift, user counts, and the observed pattern rather than viewed in isolation.
+
+---
+
+# What you can do with Impact Analysis
+
+With Impact Analysis, you can:
+
+- Select a Treatment Event.
+- Select one or more Outcome Events.
+- Measure outcomes using Average, Active %, or Frequency.
+- Apply property and cohort filters.
+- Analyze behavior using Daily or Weekly granularity.
+- Choose predefined or custom date ranges.
+- Align users around their first Treatment Event occurrence.
+- Compare behavior before and after treatment.
+- Review relative-time trends in a line chart.
+- Inspect Lift and Confidence Score.
+- Export the metric table as CSV.
+- Investigate whether an observed behavioral change is associated with a specific user action.
+
+---
+
+# In summary
+
+Impact Analysis helps you investigate how user behavior changes around a user's first interaction with a selected feature or action.
+
+The analysis works by:
+
+**Treatment Event → First occurrence → User alignment → Relative time → Outcome measurement → Impact interpretation**
+
+You define the action you want to investigate as the **Treatment Event**, select the behavior you want to evaluate as the **Outcome Event**, choose a measurement, and then examine the Outcome Event across relative time.
+
+The resulting chart shows behavior before and after the Treatment Event, while the metric table summarizes **Lift** and **Confidence Score**.
+
+The most important interpretation rule is:
+
+> **Impact Analysis identifies correlation, not causation.**
+
+Use the analysis to identify meaningful behavioral patterns and hypotheses for further investigation, rather than treating an observed post-treatment change as proof that the Treatment Event caused it.

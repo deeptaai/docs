@@ -1,0 +1,146 @@
+---
+title: "Integrate the Klaritics Flutter SDK in Your App"
+sidebarTitle: "Flutter"
+description: "Add the klaritics_flutter package, initialize the SDK once from Dart, and log events, user attributes, and session attributes across Android and iOS."
+---
+
+The Klaritics Flutter SDK is a Dart wrapper around the native Android and iOS SDKs. A single call from Dart initializes both platforms, so you do not need to add native setup code to your `Activity`, `Application`, or `AppDelegate`.
+
+<Note>
+  The Flutter SDK requires Flutter `>= 3.0.1`.
+</Note>
+
+## Installation
+
+Add the `klaritics_flutter` package to your `pubspec.yaml`:
+
+```yaml pubspec.yaml
+dependencies:
+  klaritics_flutter: ^1.0.0
+```
+
+Then import it in your Dart code:
+
+```dart
+import 'package:klaritics_flutter/klaritics_flutter.dart';
+```
+
+## Initialize the SDK
+
+Initialize the SDK **once** from Dart. Call it from `main()` before `runApp`, and `await` the call before you log any events. Replace `YOUR_PROJECT_ID` and `YOUR_HOST` with the values from your Klaritics dashboard. Your project ID is available on the **Getting Started** page of the dashboard.
+
+```dart main.dart
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final config = KlariticsConfig('YOUR_PROJECT_ID');
+  config.host = 'YOUR_HOST';
+  await KlariticsFlutter.setup(config);
+
+  runApp(const MyApp());
+}
+```
+
+<Tip>
+  Because initialization happens from Dart, you do not need to call the native `Klaritics.setup(...)` in your Android `Activity` or `Application`, or in your iOS `AppDelegate`.
+</Tip>
+
+## Android configuration
+
+<Steps>
+  <Step title="Add the Klaritics Maven repository">
+    The Klaritics Android SDK is published to a private Maven repository. Add it to the `repositories` block in your project-level `android/build.gradle` (or `settings.gradle`):
+
+    ```groovy android/build.gradle
+    maven {
+        url "https://asia-south1-maven.pkg.dev/org-infra-471907/klaritics-android-sdk"
+    }
+    ```
+  </Step>
+  <Step title="Add the SDK dependency">
+    Add the Klaritics dependency to your `app/build.gradle`:
+
+    ```groovy app/build.gradle
+    dependencies {
+        implementation "com.deeptaai.klaritics:klaritics-android-sdk:1.0.0"
+    }
+    ```
+  </Step>
+  <Step title="Configure ProGuard">
+    If you use ProGuard, add the following to `proguard-rules.pro`:
+
+    ```proguard proguard-rules.pro
+    -keep class com.deeptaai.klaritics.** { *; }
+    -dontwarn com.deeptaai.klaritics.**
+    ```
+  </Step>
+</Steps>
+
+## iOS configuration
+
+The Klaritics iOS SDK is consumed via Swift Package Manager. The plugin declares the dependency in its `Package.swift`, so with Flutter's Swift Package Manager support enabled it is added to your iOS app automatically. No `AppDelegate` changes are required.
+
+## APIs
+
+### Identifying users
+
+The Klaritics SDK automatically captures a device ID that the backend uses to identify users. If you want to attach your own identifier (useful for studying a specific user's journey), call `setUserIdentifier`:
+
+```dart
+KlariticsFlutter.setUserIdentifier("<SOME_USER_ID>");
+```
+
+### User attributes
+
+Attach identifying or profile information to the current user, such as name, age, or gender:
+
+```dart
+KlariticsFlutter.setUserAttributes({
+  'age': 27,
+  'gender': "male",
+});
+```
+
+### Session attributes
+
+A session is the user's journey from opening the app to closing it. Attach information that is meaningful for the current session, such as network type or location:
+
+```dart
+KlariticsFlutter.setSessionAttributes({
+  "network": "4G",
+  "location": "Hyderabad",
+});
+```
+
+### App events
+
+App events let you analyze user behavior and optimize your product around goals such as retention or feature adoption. Log an event with a name and optional attributes:
+
+```dart
+KlariticsFlutter.logAppEvent("Login", attributes: {
+  "type": "Google",
+  "language": "valyrian",
+});
+```
+
+### Client events
+
+Client events stay on the device and are not sent to Klaritics. Use them to capture behavioral signals for local logic such as nudges or in-app prompts (for example, a soft back press or the user reaching the end of a page).
+
+```dart
+KlariticsFlutter.logClientEvent("SoftBackPressed", attributes: {
+  "screenName": "Payment",
+});
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Verify your integration" icon="circle-check" href="/sdk/overview#verify-your-integration">
+    Send test events from your app and watch them land on the Getting Started page.
+  </Card>
+
+  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
+    Learn the naming conventions Klaritics expects for events and attributes.
+  </Card>
+</CardGroup>

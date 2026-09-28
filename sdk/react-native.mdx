@@ -1,0 +1,188 @@
+---
+title: "React Native SDK Integration Guide for Klaritics Analytics"
+sidebarTitle: "React Native"
+description: "Integrate the Klaritics React Native SDK once in JavaScript to ship analytics to Android and iOS without writing native code."
+---
+
+The Klaritics React Native SDK lets you write your integration once in JavaScript and run the same code on Android and iOS. You never write native Java/Kotlin or Swift/Objective-C.
+
+**Package:** `@deeptaai/klaritics-react-native-sdk` · **Version:** 1.0.0
+
+## Requirements
+
+| Platform | Minimum |
+| --- | --- |
+| React Native | `0.60+` (autolinking) |
+| Android | `minSdkVersion 16` (compileSdk 34, targetSdk 29) |
+| iOS | `13.0+` |
+
+You need a **Project ID** and a **Host URL** from the Klaritics dashboard. Your project ID is available on the **Getting Started** page of the dashboard.
+
+## Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @deeptaai/klaritics-react-native-sdk
+```
+
+```bash yarn
+yarn add @deeptaai/klaritics-react-native-sdk
+```
+
+</CodeGroup>
+
+React Native 0.60+ autolinks the native module. There is no `react-native link`, no `MainApplication` edits, and no `settings.gradle` changes required.
+
+- **Android:** ready after install. See [Android setup](#android-setup).
+- **iOS:** run `pod install`. See [iOS setup](#ios-setup).
+
+## Android setup
+
+The Klaritics Android SDK is pulled in automatically via autolinking. The AAR is declared as a dependency of this package and resolved from its Maven repository at build time.
+
+There are **no manual steps**: no `MainApplication` edits, no manifest `meta-data`, and no project ID in Gradle.
+
+<Note>
+  If Android dependency resolution fails because your app uses Gradle's centralized `dependencyResolutionManagement` with `RepositoriesMode.FAIL_ON_PROJECT_REPOS`, add the Klaritics Maven repo to `android/settings.gradle`:
+
+  ```groovy android/settings.gradle
+  dependencyResolutionManagement {
+      repositories {
+          maven { url "https://asia-south1-maven.pkg.dev/org-infra-471907/klaritics-android-sdk" }
+      }
+  }
+  ```
+</Note>
+
+## iOS setup
+
+iOS is zero-config. Just install the pods:
+
+```bash
+cd ios && pod install
+```
+
+React Native autolinking picks up this package's podspec, which fetches the prebuilt Klaritics core framework (xcframework) and wires up the headers, linking, and embedding for you. There are **no Xcode steps, no Podfile edits, and nothing to add manually**.
+
+No `AppDelegate` code is required; initialization happens entirely from JavaScript.
+
+## Initialize the SDK
+
+The Project ID and Host are provided at runtime in JavaScript. You do **not** put them in `AndroidManifest.xml`, `Info.plist`, or Gradle. The `apiKey` prop takes your `project_id` value.
+
+### `KlariticsProvider`
+
+Wrap your app near the root. The SDK initializes on both platforms when the provider mounts.
+
+```jsx App.js
+import { KlariticsProvider } from '@deeptaai/klaritics-react-native-sdk'
+
+export default function App() {
+  return (
+    <KlariticsProvider apiKey="YOUR_PROJECT_ID" options={{ host: 'YOUR_HOST' }}>
+      {/* your app */}
+    </KlariticsProvider>
+  )
+}
+```
+
+## API reference
+
+### Imports
+
+```js
+// Import the SDK as a namespace object
+import Klaritics from '@deeptaai/klaritics-react-native-sdk'
+
+// Or import individual functions
+import { logAppEvent } from '@deeptaai/klaritics-react-native-sdk'
+```
+
+<Note>
+  All attribute objects are automatically **pruned** before being sent. `null`, `undefined`, `NaN`, `Infinity`, and empty nested objects are stripped out.
+</Note>
+
+| Function | Signature | Description |
+| --- | --- | --- |
+| `setup` | `(apiKey: string, options: { host: string })` | Initialize the SDK. |
+| `setUserIdentifier` | `(userId: string)` | Set a unique ID per user (email, phone, etc.). |
+| `setUserCustomInfo` | `(attributes: object)` | Set user-level attributes for grouping/identity. |
+| `setSessionCustomInfo` | `(attributes: object)` | Set attributes scoped to the current session. |
+| `logAppEvent` | `(eventName: string, attributes?: object, isAggregate?: boolean)` | Log an app event. `isAggregate` defaults to `false`. |
+| `logAggregateEvent` | `(eventName: string, attributes: object)` | Log an aggregate event (shorthand for `logAppEvent(..., true)`). |
+| `logClientEvent` | `(eventName: string, attributes?: object)` | Log a client-side event. |
+
+## Common recipes
+
+### Identify a user
+
+```js
+Klaritics.setUserIdentifier('john@doe.com')
+```
+
+### Set user and session properties
+
+```js
+Klaritics.setUserCustomInfo({
+  city: 'Hyderabad',
+  age: 12,
+})
+
+Klaritics.setSessionCustomInfo({
+  network: '4G',
+})
+```
+
+### Log an event
+
+```js
+Klaritics.logAppEvent('ADD_TO_CART', {
+  userId: 'user@example.com',
+  value: 1299,
+  item: 'Sony Head Phone 1201',
+})
+```
+
+### Log an aggregate event
+
+```js
+Klaritics.logAggregateEvent('Login', {
+  loginMode: 'Google',
+  id: '46Juzcyx',
+})
+```
+
+### Log a client event
+
+```js
+Klaritics.logClientEvent('SoftBackPressed', {
+  Screen: 'HomeScreen',
+})
+```
+
+## Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| Android build fails resolving `com.deeptaai.klaritics:klaritics-android-sdk` | Add the Klaritics Maven repo to `android/settings.gradle` (see [Android setup](#android-setup)). |
+| iOS `pod install` doesn't fetch the framework | Ensure network access to `storage.googleapis.com`, then re-run `cd ios && pod install`. |
+| `apiKey cannot be null or empty` in console | Pass a non-empty `apiKey` to `setup` / `KlariticsProvider`. |
+| `options.host cannot be null or empty` | Provide a valid host URL with no trailing slash. |
+| Events not appearing | Confirm `setup` runs once early in the lifecycle and the host and project ID match the dashboard. |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Verify your integration" icon="circle-check" href="/sdk/overview#verify-your-integration">
+    Send test events from your app and watch them land on the Getting Started page.
+  </Card>
+
+  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
+    Learn the naming conventions Klaritics expects for events and attributes.
+  </Card>
+</CardGroup>
+
+---
+
+**Package:** `@deeptaai/klaritics-react-native-sdk` · **Version:** 1.0.0 · **License:** MIT

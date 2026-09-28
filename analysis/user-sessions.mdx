@@ -1,0 +1,45 @@
+---
+title: "User Sessions"
+sidebarTitle: "User Sessions"
+description: "Explore individual user sessions, events, and properties in Klaritics to understand behavior at the single-user level. Pin session summaries to dashboards."
+---
+
+User Sessions in Klaritics lets you inspect the event stream for individual users. You can review the sequence of actions a user took, the properties attached to each event, and the timing between steps. This is useful for support, debugging, and understanding the real experience behind aggregate metrics.
+
+## When to use User Sessions
+
+Use User Sessions when you want to:
+
+- Reconstruct the steps a specific user took before a problem or conversion
+- Verify that events and properties are being sent correctly
+- Understand edge cases that aggregate charts can hide
+
+## Explore a session
+
+<Steps>
+  <Step title="Search for a user">
+    Find the user by user ID, email, or another identifying property.
+  </Step>
+  <Step title="Select a session">
+    Review the list of sessions for that user, ordered by time. Each session represents a contiguous period of activity.
+  </Step>
+  <Step title="Inspect the event stream">
+    Walk through the events in chronological order. Expand any event to see its full property payload.
+  </Step>
+  <Step title="Filter by event or property">
+    Narrow the stream to a specific event name or property value to focus on the actions that matter.
+  </Step>
+</Steps>
+
+## Save and share
+
+Save a filtered session view or a user query so you can return to it later. Pin session summaries to dashboards as widgets so your team can monitor patterns such as average events per session or sessions with specific events. You can also set alerts on a session widget to be notified when a qualifying session pattern is detected.
+
+<Tip>
+  Combine User Sessions with [User Flows](/analysis/user-flows) to move from aggregate path exploration to individual user verification.
+</Tip>
+
+## Next steps
+
+- [User Flows](/analysis/user-flows) to see aggregate paths across all users
+- [Engagement Matrix](/analysis/engagement-matrix) to segment users by engagement depth
