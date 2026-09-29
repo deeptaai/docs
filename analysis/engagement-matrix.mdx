@@ -1,5 +1,7 @@
 ---
 title: "Engagement Matrix"
+sidebarTitle: "Engagement Matrix"
+description: "Compare feature engagement in Klaritics across breadth (how many users) and depth (how often), plotted as four quadrants to spot core, power, utility, and underperforming features."
 ---
 
 Engagement Matrix helps you understand how users engage with product features by comparing two dimensions:
@@ -49,7 +51,7 @@ Engagement Matrix follows four main areas:
 
 ---
 
-# Build an Engagement Matrix
+## Build an Engagement Matrix
 
 ## 1. Select events
 
@@ -88,7 +90,7 @@ The matrix updates based on the selected events.
 
 ---
 
-# 2. Filter individual events
+## 2. Filter individual events
 
 You can apply filters to an individual event from its event card.
 
@@ -103,7 +105,7 @@ For example, if you select a purchase event, an event-level filter can be applie
 
 ---
 
-# 3. Choose how engagement is measured
+## 3. Choose how engagement is measured
 
 The **Measured As** section controls the engagement metrics displayed in the matrix.
 
@@ -139,7 +141,7 @@ This means that changing the granularity changes the active-user population used
 
 ---
 
-# 4. Choose how the matrix is divided
+## 4. Choose how the matrix is divided
 
 The **Sectioned By** option determines how the horizontal and vertical divider lines are calculated.
 
@@ -168,7 +170,7 @@ Because the divider values depend on the selected events, changing the selected 
 
 ---
 
-# 5. Apply filters
+## 5. Apply filters
 
 The main Filters section allows you to narrow the Engagement Matrix analysis.
 
@@ -182,7 +184,7 @@ You can also choose the **data type** of the filter. Filters affect the data use
 
 ---
 
-# 6. Select a date range
+## 6. Select a date range
 
 Engagement Matrix supports predefined time windows as well as a custom date range.
 
@@ -199,7 +201,7 @@ You can also use the **Custom Date Range Picker** to define a specific analysis 
 
 ---
 
-# 7. Select the granularity
+## 7. Select the granularity
 
 The supported granularity options are:
 
@@ -221,7 +223,7 @@ For example, Monthly uses % MAU and Average Times Performed per month.
 
 ---
 
-# 8. Compare two periods
+## 8. Compare two periods
 
 You can compare engagement movement between two relative periods by enabling **Compare**.
 
@@ -242,7 +244,7 @@ Examples:
 - Week 0 → Week 1
 - Month 0 → Month 1
 
-## Compare visualization
+### Compare visualization
 
 When Compare is enabled, each selected event is represented by two points:
 
@@ -260,7 +262,7 @@ For example, if two events are selected, the matrix displays four plotted points
 - Event B - start period
 - Event B - end period
 
-## Compare hover behavior
+### Compare hover behavior
 
 When you hover over either point belonging to an event:
 
@@ -271,7 +273,7 @@ When you hover over either point belonging to an event:
 
 This makes it easier to see how an event's engagement moved between the two selected periods.
 
-### Compare tooltip
+#### Compare tooltip
 
 The tooltip displays:
 
@@ -283,7 +285,7 @@ The tooltip displays:
 
 ---
 
-# Incomplete periods
+## Incomplete periods
 
 Incomplete periods are excluded from calculations.
 
@@ -293,7 +295,7 @@ This prevents a partially completed period from being treated as a complete peri
 
 ---
 
-# Understand the Engagement Matrix
+## Understand the Engagement Matrix
 
 The Engagement Matrix is a two-dimensional scatter chart.
 
@@ -317,7 +319,7 @@ The selected Median or Average values create the horizontal and vertical divider
 
 ---
 
-# Understand the four quadrants
+## Understand the four quadrants
 
 The matrix contains four quadrants.
 
@@ -328,7 +330,7 @@ The matrix contains four quadrants.
 | **Bottom Right** | High Active Users + Low Frequency | **Utility Features** |
 | **Bottom Left** | Low Active Users + Low Frequency | **Underperforming Features** |
 
-## Core Features
+### Core Features
 
 **High Active Users + High Frequency**
 
@@ -336,7 +338,7 @@ These events are used by a large share of active users and are performed frequen
 
 Identifies this quadrant as representing **core features**.
 
-## Power Features
+### Power Features
 
 **Low Active Users + High Frequency**
 
@@ -344,7 +346,7 @@ These events have lower breadth but higher frequency.
 
 Identifies this quadrant as representing **power-user features**.
 
-## Utility Features
+### Utility Features
 
 **High Active Users + Low Frequency**
 
@@ -352,7 +354,7 @@ These events are used by many active users but have lower frequency.
 
 Identifies this quadrant as representing **utility features**.
 
-## Underperforming Features
+### Underperforming Features
 
 **Low Active Users + Low Frequency**
 
@@ -364,7 +366,7 @@ The quadrant is a relative classification based on the selected divider calculat
 
 ---
 
-# Matrix Table
+## Matrix Table
 
 The Matrix Table appears below the visualization.
 
@@ -379,7 +381,7 @@ The table contains:
 
 The table also displays the overall Median or Average values used for the matrix dividers.
 
-## Select or deselect events
+### Select or deselect events
 
 You can use the checkbox for each event to control whether that event is included in the matrix.
 
@@ -393,7 +395,7 @@ This means the matrix boundaries reflect the currently selected events.
 
 ---
 
-# Export the Matrix Table
+## Export the Matrix Table
 
 You can export the matrix table as a **CSV** file.
 
@@ -403,7 +405,7 @@ This allows you to take the table data outside the Engagement Matrix for further
 
 ---
 
-# Save an Engagement Matrix
+## Save an Engagement Matrix
 
 You can save the Engagement Matrix chart and:
 
@@ -412,11 +414,11 @@ You can save the Engagement Matrix chart and:
 
 ---
 
-# How the Engagement Matrix is calculated
+## How the Engagement Matrix is calculated
 
 The Engagement Matrix uses Breadth and Depth calculations for each selected event.
 
-## Breadth
+### Breadth
 
 Breadth represents the percentage of active users who performed the selected event.
 
@@ -432,7 +434,7 @@ For example:
 - Weekly → WAU
 - Monthly → MAU
 
-## Depth
+### Depth
 
 Depth represents the average number of times the event was performed by users who performed that event.
 
@@ -453,7 +455,7 @@ This means the users who performed that event performed it approximately 9 times
 
 ---
 
-# Example: Reading a feature's position
+## Example: Reading a feature's position
 
 Suppose you are analyzing a product feature represented by an event.
 
@@ -497,7 +499,7 @@ It falls into the **Underperforming Features** quadrant.
 
 ---
 
-# Example: Comparing engagement movement
+## Example: Comparing engagement movement
 
 Suppose you select a feature and compare:
 
@@ -521,33 +523,33 @@ This lets you see whether the feature's Breadth, Depth, or both have changed bet
 
 ---
 
-# Typical ways to use Engagement Matrix
+## Typical ways to use Engagement Matrix
 
-## Identify core features
+### Identify core features
 
 Select the relevant product events and look for events positioned in the **Core Features** quadrant.
 
 These events have both relatively high adoption and frequency.
 
-## Find highly frequent niche features
+### Find highly frequent niche features
 
 Look at the **Power Features** quadrant.
 
 These events have high frequency but lower active-user breadth.
 
-## Identify broadly used utility behavior
+### Identify broadly used utility behavior
 
 Look at the **Utility Features** quadrant.
 
 These events have high breadth but lower frequency.
 
-## Find lower-engagement events
+### Find lower-engagement events
 
 Look at the **Underperforming Features** quadrant.
 
 These events have both lower breadth and lower frequency relative to the selected events.
 
-## Compare engagement over time
+### Compare engagement over time
 
 Enable Compare and select two relative periods.
 
@@ -555,7 +557,7 @@ Use the movement between the two points for each event to understand how its eng
 
 ---
 
-# Important behavior to remember
+## Important behavior to remember
 
 - Each selected event appears as one point when Compare is disabled.
 - Each selected event appears as two points when Compare is enabled.
@@ -570,7 +572,7 @@ Use the movement between the two points for each event to understand how its eng
 - The matrix table can be exported as CSV.
 - The chart can be saved and pinned to dashboards.
 
-# In summary
+## In summary
 
 Engagement Matrix provides a single view for comparing feature engagement across two dimensions:
 

@@ -1,33 +1,59 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
 # Documentation project instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
+- Product guides for **Klaritics**, a self-hosted product analytics platform by Deepta AI
+- Built on [Mintlify](https://mintlify.com). Pages are MDX files with YAML frontmatter
+- Configuration lives in `docs.json` — navigation, redirects, theme, and branding
+- **Pushing to `main` deploys to production.** Work on a branch and preview with `mint dev` first
 - Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
 - Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
 
 ## Terminology
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+Get these right — the docs have been inconsistent about them before.
+
+| Use | Not | Note |
+| --- | --- | --- |
+| Chart Analysis | Insights | Same module. "Insights" was an earlier internal name and must not appear in the docs |
+| `project_id` | `app_id` | The credential every SDK initializes with |
+| `server_host` | endpoint, base URL | The URL of the customer's self-hosted instance |
+| widget | card, tile | An analysis pinned to a dashboard |
+| saved dashboard | board, report | A collection of widgets |
+| module | section, feature area | A top-level product area (Analysis, Data, Templates, …) |
+| cohort | segment, audience | A named group of users |
+| self-hosted | on-prem, on-premise | Klaritics only ships self-hosted |
+
+Module names are title case when naming the product feature (Event Taxonomy, Engagement Matrix). Lowercase when used generically ("build a chart analysis", "the funnel shows…").
 
 ## Style preferences
-
-{/* Add any project-specific style rules below */}
 
 - Use active voice and second person ("you")
 - Keep sentences concise — one idea per sentence
 - Use sentence case for headings
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references
+- **Never use a body `#` heading.** Mintlify renders the frontmatter `title` as the page `<h1>`. Body content starts at `##`
+- Never skip heading levels (`##` → `####`)
+- Every page needs `title`, `sidebarTitle`, and `description` in frontmatter. `description` is the SEO meta tag and the search-result snippet — write a real sentence, not a keyword list
+- Internal links are absolute, extension-less, and match the file path: `/analysis/funnels`
+- When you move or rename a page, add a `redirects` entry in `docs.json`
 
 ## Content boundaries
 
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+**Do not invent product behavior.** A large share of this site was originally generated from inference rather than from the product, and correcting that is ongoing work. See `CONTENT-GAPS.md` for the current status of every page.
+
+- Pages listed as **verified** in `CONTENT-GAPS.md` were written against the real product. Edit them freely
+- Pages listed as **unverified** are placeholder-quality. Do not deepen them, add specifics to them, or cite them as a source of truth. If asked to improve one, ask for the underlying product detail first
+- Do not describe UI labels, menu paths, default values, limits, or pricing you have not been shown
+- Do not document modules absent from the current release. `release-notes.mdx` is authoritative on what shipped
+- Do not document internal admin or debug tooling
+
+## Before committing
+
+Run these from the repo root:
+
+- `node -e "JSON.parse(require('fs').readFileSync('docs.json'))"` — `docs.json` stays valid
+- Confirm every internal link target resolves to a file, and every page appears in `docs.json` navigation exactly once
+- Confirm no page has a body `#` heading or a skipped heading level
+- `mint dev` and load the affected pages

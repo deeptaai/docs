@@ -9,15 +9,6 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
     "groups": [
       {
         "group": "Get Started",
@@ -39,13 +30,13 @@
         "group": "Analysis",
         "icon": "chart-line",
         "pages": [
-          "untitled-page-3",
-          "chart-analysis",
-          "untitled-page",
-          "untitled-page-2",
+          "analysis/chart-analysis",
+          "analysis/funnels",
           "analysis/retention",
           "analysis/cohorts",
           "analysis/user-flows",
+          "analysis/engagement-matrix",
+          "analysis/impact-analysis",
           "analysis/pivot-tables",
           "analysis/user-sessions"
         ]
@@ -75,7 +66,7 @@
         "group": "Data",
         "icon": "database",
         "pages": [
-          "untitled-page-4",
+          "data/event-taxonomy",
           "data/real-time-events",
           "data/real-time-users"
         ]
@@ -109,8 +100,8 @@
           "sdk/ios",
           "sdk/react-native",
           "sdk/flutter",
-          "sdk/event-naming",
-          "kmp"
+          "sdk/kmp",
+          "sdk/event-naming"
         ]
       },
       {
@@ -129,6 +120,32 @@
       }
     ]
   },
+  "redirects": [
+    {
+      "source": "/untitled-page",
+      "destination": "/analysis/engagement-matrix"
+    },
+    {
+      "source": "/untitled-page-2",
+      "destination": "/analysis/impact-analysis"
+    },
+    {
+      "source": "/untitled-page-3",
+      "destination": "/analysis/funnels"
+    },
+    {
+      "source": "/untitled-page-4",
+      "destination": "/data/event-taxonomy"
+    },
+    {
+      "source": "/chart-analysis",
+      "destination": "/analysis/chart-analysis"
+    },
+    {
+      "source": "/kmp",
+      "destination": "/sdk/kmp"
+    }
+  ],
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"

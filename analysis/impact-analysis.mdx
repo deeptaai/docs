@@ -1,5 +1,7 @@
 ---
 title: "Impact Analysis"
+sidebarTitle: "Impact Analysis"
+description: "Measure how user behavior changes around the first time users perform a treatment event in Klaritics, with lift and confidence scores across outcome events."
 ---
 
 Impact Analysis helps you understand how user behavior changes around the first time a user performs a specific action.
@@ -21,7 +23,7 @@ Impact Analysis is designed to help teams measure behavioral changes, quantify o
 
 ---
 
-# What Impact Analysis helps you understand
+## What Impact Analysis helps you understand
 
 Impact Analysis can be used to investigate questions such as:
 
@@ -40,7 +42,7 @@ Typical examples include:
 
 ---
 
-# Important: Impact Analysis does not prove causation
+## Important: Impact Analysis does not prove causation
 
 Impact Analysis is a behavioral analysis tool.
 
@@ -63,7 +65,7 @@ Use the results as evidence for investigating behavioral relationships rather th
 
 ---
 
-# Core concepts
+## Core concepts
 
 | Concept | Description |
 | :-- | :-- |
@@ -80,7 +82,7 @@ Use the results as evidence for investigating behavioral relationships rather th
 
 ---
 
-# How Impact Analysis works
+## How Impact Analysis works
 
 The analysis follows this basic flow:
 
@@ -96,7 +98,7 @@ The analysis follows this basic flow:
 
 ---
 
-# Create an Impact Analysis
+## Create an Impact Analysis
 
 ## 1. Start with the Treatment Event
 
@@ -114,7 +116,7 @@ The default Treatment Events section is empty.
 
 ---
 
-# 2. Add Outcome Events
+## 2. Add Outcome Events
 
 The **Outcome Events** section defines the behavior you want to evaluate after the Treatment Event.
 
@@ -140,7 +142,7 @@ The analysis then examines report-export behavior around the first time each use
 
 ---
 
-# Treatment and Outcome Event rules
+## Treatment and Outcome Event rules
 
 Impact Analysis supports multiple events, but there is an important relationship between the two selections.
 
@@ -179,7 +181,7 @@ This prevents configurations where multiple Treatment Events are combined with m
 
 If the configuration violates this rule, the product displays an error indicating that only one side of the relationship can contain multiple events.
 
-# 3. Choose how to measure impact
+## 3. Choose how to measure impact
 
 The **Measured As** option determines what the analysis measures for the Outcome Event.
 
@@ -193,7 +195,7 @@ Available options are:
 
 ---
 
-## Average
+### Average
 
 Average measures the average number of Outcome Event occurrences.
 
@@ -203,7 +205,7 @@ For example, if five users generated a total of four Outcome Events on a relativ
 
 This allows you to compare average Outcome Event activity before and after the Treatment Event.
 
-### Average chart
+#### Average chart
 
 The Y-axis displays average values.
 
@@ -216,7 +218,7 @@ The tooltip includes:
 
 ---
 
-## Active %
+### Active %
 
 Active % measures the percentage of users who performed the Outcome Event.
 
@@ -224,7 +226,7 @@ For example, if three of five users performed the Outcome Event on Day +1:
 
 **Active % = 3 ÷ 5 × 100 = 60%**
 
-### Active % chart
+#### Active % chart
 
 The Y-axis displays percentages.
 
@@ -237,7 +239,7 @@ The tooltip includes:
 
 ---
 
-## Frequency
+### Frequency
 
 Frequency shows how many users performed the Outcome Event a particular number of times during a relative day or week.
 
@@ -255,7 +257,7 @@ The chart plots these frequency buckets over relative time.
 
 The Y-axis represents the number of unique users in each frequency bucket.
 
-### Frequency tooltip
+#### Frequency tooltip
 
 The tooltip includes:
 
@@ -268,7 +270,7 @@ The tooltip includes:
 
 ---
 
-# 4. Apply filters
+## 4. Apply filters
 
 You can filter the Impact Analysis using the Filters section.
 
@@ -282,7 +284,7 @@ You can also select the data type of the filter. Filters allow you to narrow the
 
 ---
 
-# 5. Select the analysis time window
+## 5. Select the analysis time window
 
 Impact Analysis provides predefined time windows:
 
@@ -299,14 +301,14 @@ The selected date range determines the period from which users are identified fo
 
 ---
 
-# 6. Select the time granularity
+## 6. Select the time granularity
 
 Impact Analysis supports two granularities:
 
 - **Daily**
 - **Weekly**
 
-## Daily
+### Daily
 
 When Daily is selected, you can select dates individually using the calendar.
 
@@ -321,7 +323,7 @@ The chart then uses relative days:
 - ...
 - Day +7
 
-## Weekly
+### Weekly
 
 When Weekly is selected, the date selector aligns with complete weeks.
 
@@ -340,7 +342,7 @@ The chart uses relative weeks such as:
 
 ---
 
-# Understanding relative time
+## Understanding relative time
 
 Impact Analysis does not simply plot calendar dates.
 
@@ -359,7 +361,7 @@ This alignment allows users with different Treatment Event dates to be analyzed 
 
 ---
 
-# Day 0 and Week 0
+## Day 0 and Week 0
 
 **Day/Week 0 represents the first occurrence of the Treatment Event for each user.**
 
@@ -387,23 +389,23 @@ The Outcome Event behavior three days after the user's first Treatment Event.
 
 ---
 
-# Impact Analysis visualization
+## Impact Analysis visualization
 
 Once the required events are configured, the visualization uses a **Line chart**.
 
 The chart shows Outcome Event behavior across relative time.
 
-## X-axis
+### X-axis
 
 The X-axis represents relative time around the Treatment Event.
 
-### Daily
+#### Daily
 
 Example:
 
 `Day -7 → Day -1 → Day 0 → Day +1 → Day +7`
 
-### Weekly
+#### Weekly
 
 Example:
 
@@ -411,7 +413,7 @@ Example:
 
 ---
 
-## Y-axis
+### Y-axis
 
 The Y-axis depends on the selected **Measured As** option.
 
@@ -423,7 +425,7 @@ The Y-axis depends on the selected **Measured As** option.
 
 ---
 
-# Treatment Event reference line
+## Treatment Event reference line
 
 The chart contains a vertical reference line at Day/Week 0.
 
@@ -438,7 +440,7 @@ This makes it easier to visually compare behavior before and after the Treatment
 
 ---
 
-# Reading the chart
+## Reading the chart
 
 The chart can help you identify patterns such as:
 
@@ -458,11 +460,11 @@ These observations describe behavioral patterns. They should not be interpreted 
 
 ---
 
-# Chart tooltips
+## Chart tooltips
 
 The tooltip depends on the selected measurement.
 
-## Average
+### Average
 
 Displays:
 
@@ -481,7 +483,7 @@ Example:
 - 3 times
 - 2 users
 
-## Active %
+### Active %
 
 Displays:
 
@@ -499,7 +501,7 @@ Example:
 - Active %: 75%
 - 3 out of 4 users
 
-## Frequency
+### Frequency
 
 Displays:
 
@@ -519,11 +521,11 @@ Example:
 
 ---
 
-# Metric Table
+## Metric Table
 
 The metric table summarizes the impact results.
 
-## When Measured As is Average or Active %
+### When Measured As is Average or Active %
 
 The default columns are:
 
@@ -532,7 +534,7 @@ The default columns are:
 - Confidence Score
 - Day intervals
 
-## When Measured As is Frequency
+### When Measured As is Frequency
 
 The default columns are:
 
@@ -546,7 +548,7 @@ The exact values depend on the selected Treatment Event, Outcome Event, date ran
 
 ---
 
-# Lift
+## Lift
 
 **Lift** is provided in the metric table as an indication of the observed change associated with the analysis.
 
@@ -554,7 +556,7 @@ It helps quantify how the Outcome Event behavior differs around the Treatment Ev
 
 ---
 
-# Confidence Score
+## Confidence Score
 
 The metric table also provides a **Confidence Score**.
 
@@ -570,7 +572,7 @@ The same process applies to Active % and Frequency.
 
 ---
 
-# Interpreting Lift and Confidence Score
+## Interpreting Lift and Confidence Score
 
 This provides four interpretation patterns:
 
@@ -581,7 +583,7 @@ This provides four interpretation patterns:
 | High | Low | More data is needed |
 | Low | High | Impact exists, but business value may be small |
 
-# Why Day 0 matters for confidence calculations
+## Why Day 0 matters for confidence calculations
 
 Day 0 is the Treatment Event day.
 
@@ -601,7 +603,7 @@ For example:
 
 Day 0 is normally excluded from this particular before/after confidence calculation.
 
-# A complete analysis example
+## A complete analysis example
 
 A typical Impact Analysis can be configured as:
 
@@ -626,7 +628,7 @@ You can then examine:
 
 ---
 
-# Empty state
+## Empty state
 
 When no Treatment Event and no Outcome Event have been selected, the visualization area displays an onboarding state.
 
@@ -656,7 +658,7 @@ This represents the analysis and interpretation stage.
 
 ---
 
-# Export results
+## Export results
 
 The metric table can be downloaded using the **Export CSV** action.
 
@@ -664,7 +666,7 @@ The export provides the table data so the results can be used outside the Impact
 
 ---
 
-# Important limitations
+## Important limitations
 
 Keep the following points in mind when interpreting an Impact Analysis:
 
@@ -698,7 +700,7 @@ Confidence Score should be considered alongside Lift, user counts, and the obser
 
 ---
 
-# What you can do with Impact Analysis
+## What you can do with Impact Analysis
 
 With Impact Analysis, you can:
 
@@ -717,7 +719,7 @@ With Impact Analysis, you can:
 
 ---
 
-# In summary
+## In summary
 
 Impact Analysis helps you investigate how user behavior changes around a user's first interaction with a selected feature or action.
 

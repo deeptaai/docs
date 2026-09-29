@@ -5,3 +5,7 @@
 # Draft content
 drafts/
 *.draft.mdx
+
+# Internal notes — not published
+AGENTS.md
+CONTENT-GAPS.md

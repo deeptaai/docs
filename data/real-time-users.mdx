@@ -1,6 +1,7 @@
 ---
 title: "User Profiles"
 sidebarTitle: "User Profiles"
+description: "Inspect individual users in Klaritics. Filter the user list by properties and event behavior, then review a single user's properties, sessions, and activity timeline."
 ---
 
 ## Overview
@@ -41,14 +42,14 @@ The User Profiles experience has two main areas:
 1. **User List View** - Find users that match specific profile or event conditions.
 2. **User Profile Page** - Investigate an individual user's properties and event journey.
 
-#### User List View
+### User List View
 
 The User List View contains:
 
 - Filters Section
 - Users Table
 
-#### User Profile Page
+### User Profile Page
 
 The User Profile Page contains:
 
@@ -87,7 +88,7 @@ These filters can be used to identify a specific group of users before opening t
 
 Global Filters allow you to find users based on user-level attributes.
 
-#### Available Properties
+### Available Properties
 
 The property selector includes:
 
@@ -104,7 +105,7 @@ Examples include:
 
 Properties can be selected using a searchable dropdown.
 
-#### Applying a Global Filter
+### Applying a Global Filter
 
 A typical filter consists of:
 
@@ -118,7 +119,7 @@ Multiple global filters can be applied.
 
 When multiple global filters are used, they are combined using **AND** logic.
 
-#### Example
+### Example
 
 Suppose you configure:
 
@@ -200,7 +201,7 @@ Supported operators are:
 | `≠` | Not equal to |
 | `≤` | Less than or equal to |
 
-#### Examples
+### Examples
 
 **At least one occurrence**
 
@@ -218,7 +219,7 @@ The condition determines which users are returned to the Users Table.
 
 Event-based filtering can be restricted to a specific time period.
 
-#### Predefined Time Ranges
+### Predefined Time Ranges
 
 Predefined ranges include Last 7 days and Last 30 days. You can also select a **Custom Date Range**.
 
@@ -232,7 +233,7 @@ You can add multiple events to the same event-based query.
 
 Three logical operators are supported.
 
-#### AND
+### AND
 
 The user must perform **all** selected events.
 
@@ -242,7 +243,7 @@ Example:
 
 The resulting users must have performed both events.
 
-#### OR
+### OR
 
 The user must perform **at least one** of the selected events.
 
@@ -252,7 +253,7 @@ Example:
 
 The resulting users can have performed either event.
 
-#### THEN
+### THEN
 
 **THEN** represents a sequential event flow.
 
@@ -329,14 +330,14 @@ The table can be configured using the following available columns:
 
 You can control which columns are visible using the column settings.
 
-#### Show or Hide Columns
+### Show or Hide Columns
 
 Use column settings to:
 
 - Show available columns
 - Hide columns that are not needed
 
-#### Column Sorting
+### Column Sorting
 
 Table columns support:
 
@@ -435,19 +436,19 @@ Each session includes:
 
 The Activity Timeline supports several interactions.
 
-#### Scroll
+### Scroll
 
 You can scroll through the user's event history.
 
-#### Load More
+### Load More
 
 Additional events can be loaded when more activity is available.
 
-#### Search Events
+### Search Events
 
 The timeline includes a search option for events.
 
-#### Select an Event
+### Select an Event
 
 Selecting an event opens its details in the Properties Panel.
 
@@ -520,7 +521,7 @@ The panel is scrollable to accommodate large property sets.
 
 A common workflow is to start with a group of users and then investigate an individual user.
 
-#### Step 1: Find the Users
+### Step 1: Find the Users
 
 Use **Global Filters** to find users based on properties.
 
@@ -528,7 +529,7 @@ For example:
 
 > Country = India<br />Platform = Android
 
-#### Step 2: Add Event Behavior
+### Step 2: Add Event Behavior
 
 Use **Users Who Did** to identify users based on their activity.
 
@@ -536,7 +537,7 @@ For example:
 
 > `HomePageLaunched` → Total Events ≥ 1 → Last 30 days
 
-#### Step 3: Review the Users Table
+### Step 3: Review the Users Table
 
 Review the matching users and their:
 
@@ -547,11 +548,11 @@ Review the matching users and their:
 - Country
 - Platform
 
-#### Step 4: Open a User
+### Step 4: Open a User
 
 Select an individual user to investigate their behavior.
 
-#### Step 5: Review User Information
+### Step 5: Review User Information
 
 Check:
 
@@ -559,15 +560,15 @@ Check:
 - Current user properties
 - First and last trigger timestamps
 
-#### Step 6: Review the Timeline
+### Step 6: Review the Timeline
 
 Inspect the user's events in reverse chronological order and across sessions.
 
-#### Step 7: Select an Event
+### Step 7: Select an Event
 
 Select an event that requires investigation.
 
-#### Step 8: Inspect Event Details
+### Step 8: Inspect Event Details
 
 Use the Properties Panel to inspect:
 

@@ -1,16 +1,18 @@
 ---
 title: "Chart Analysis"
+sidebarTitle: "Chart Analysis"
+description: "Build flexible event-based analyses in Klaritics. Select events, choose a measurement, apply filters and breakdowns, compare time periods, and visualize the results."
 ---
 
 Build flexible event-based analyses in Klaritics to understand user activity, measure trends, analyze properties, compare time periods, and segment results.
 
-Insights lets you select events, define how they should be measured, apply filters and breakdowns, select a time window, and visualize the results. Advanced analysis also allows you to measure event frequency, aggregate event properties, build per-user property metrics, and create formulas from event-level measurements.
+Chart Analysis lets you select events, define how they should be measured, apply filters and breakdowns, select a time window, and visualize the results. Advanced analysis also allows you to measure event frequency, aggregate event properties, build per-user property metrics, and create formulas from event-level measurements.
 
 ---
 
-## What Insights answers
+## What Chart Analysis answers
 
-A well-configured Insight helps you answer questions such as:
+A well-configured chart analysis helps you answer questions such as:
 
 - How many users performed an event?
 - How many times did an event occur?
@@ -29,7 +31,7 @@ A well-configured Insight helps you answer questions such as:
 
 | Concept | Definition |
 | --- | --- |
-| **Event** | An action or behavior recorded in the product that can be analyzed in Insights. |
+| **Event** | An action or behavior recorded in the product that can be analyzed in Chart Analysis. |
 | **Metric** | A measurable value created from an event and a selected measurement. |
 | **Measurement** | Defines what is calculated from the selected event or property. |
 | **Filter** | Restricts the data included in the analysis. |
@@ -40,13 +42,13 @@ A well-configured Insight helps you answer questions such as:
 | **Formula** | A calculation that combines event-level measurements. |
 | **Visualization** | Determines how the metric result is displayed. |
 
-The Insight output as a configurable metric result with filters, breakdowns, a time window, and a visualization.
+The chart analysis output as a configurable metric result with filters, breakdowns, a time window, and a visualization.
 
 ---
 
-# How Insights works
+## How Chart Analysis works
 
-Insights follows a simple analysis flow:
+Chart Analysis follows a simple analysis flow:
 
 **Select Events → Choose Measurement → Configure Events → Apply Filters → Add Breakdown → Select Time Window → Choose Visualization → Analyze Results**
 
@@ -54,9 +56,9 @@ You can start with a simple event metric and progressively refine the analysis u
 
 ---
 
-# Build an Insight
+## Build a chart analysis
 
-## 1. Select an event
+### 1. Select an event
 
 Start by selecting the event you want to analyze.
 
@@ -74,11 +76,11 @@ You can also configure an event as a **First-Time Event** where supported.
 
 ---
 
-## 2. Choose a measurement
+### 2. Choose a measurement
 
 After selecting an event, choose what you want to measure.
 
-Insights supports the following measurement types:
+Chart Analysis supports the following measurement types:
 
 | Measurement | Description |
 | --- | --- |
@@ -94,13 +96,13 @@ The first three measurements form the core event measurements, while the other m
 
 ---
 
-# Measurement types
+## Measurement types
 
-## Unique Users
+### Unique Users
 
 **Unique Users** counts the distinct users who performed the selected event.
 
-### Example
+#### Example
 
 **Event:** `Application Submitted`
 
@@ -112,11 +114,11 @@ This means 8,500 distinct users performed the event within the selected analysis
 
 ---
 
-## Total Events
+### Total Events
 
 **Total Events** counts all occurrences of the selected event.
 
-### Example
+#### Example
 
 If 1,000 users performed `Video Played` and the event occurred 4,500 times:
 
@@ -124,11 +126,11 @@ If 1,000 users performed `Video Played` and the event occurred 4,500 times:
 
 ---
 
-## Total Sessions
+### Total Sessions
 
 **Total Sessions** counts sessions containing the selected event.
 
-### Example
+#### Example
 
 **Event:** `Product Viewed`
 
@@ -138,7 +140,7 @@ The result represents the number of sessions in which the selected event occurre
 
 ---
 
-# Frequency per User
+### Frequency per User
 
 **Frequency per User** measures how frequently users perform an event.
 
@@ -148,7 +150,7 @@ It supports:
 - **Median**
 - **Distribution**
 
-### Example
+#### Example
 
 Suppose users perform `Video Played` different numbers of times during the selected period.
 
@@ -160,7 +162,7 @@ You can view the average or median frequency, or analyze the distribution of use
 
 ---
 
-# Aggregate Property
+### Aggregate Property
 
 Use **Aggregate Property** when you want to measure a property associated with an event rather than simply counting the event.
 
@@ -175,7 +177,7 @@ Supported aggregation options include:
 - **MEDIAN**
 - **MODE**
 
-### Example
+#### Example
 
 Suppose the `Purchase Completed` event has a `Revenue` property.
 
@@ -193,7 +195,7 @@ This answers:
 
 ---
 
-# Aggregate Property per User
+### Aggregate Property per User
 
 **Aggregate Property per User** lets you first calculate a property value for each user and then aggregate those user-level results.
 
@@ -201,7 +203,7 @@ The calculation has two stages:
 
 **Property → Per-user aggregation → Across-user aggregation**
 
-### Per-user aggregations
+#### Per-user aggregations
 
 You can use:
 
@@ -211,7 +213,7 @@ You can use:
 - Maximum
 - Minimum
 
-### Across-user aggregations
+#### Across-user aggregations
 
 You can then use:
 
@@ -222,7 +224,7 @@ You can then use:
 - Minimum
 - Distribution
 
-### Example
+#### Example
 
 Suppose you want to calculate the average revenue generated per user.
 
@@ -240,7 +242,7 @@ Conceptually:
 
 ---
 
-# Event-Level Custom Formula
+### Event-Level Custom Formula
 
 Use an **Event-Level Custom Formula** when you need to combine event-level measurements.
 
@@ -255,7 +257,7 @@ Supported arithmetic scenarios include:
 
 Formulas are validated before execution, and invalid formulas should return clear validation feedback.
 
-### Example
+#### Example
 
 Suppose you have:
 
@@ -267,9 +269,9 @@ A formula can combine these measurements to create another event-level calculati
 
 ---
 
-# Configure events
+## Configure events
 
-## Filter an event
+### Filter an event
 
 You can apply a filter directly to a selected event.
 
@@ -283,17 +285,17 @@ Only matching event data is included in the calculation.
 
 ---
 
-## Remove an event
+### Remove an event
 
 You can remove an event from the metric configuration.
 
-The Insight is then recalculated using the updated configuration.
+The analysis is then recalculated using the updated configuration.
 
 ---
 
-## OR operator
+### OR operator
 
-Insights supports the **OR** operator for supported event conditions.
+Chart Analysis supports the **OR** operator for supported event conditions.
 
 For example:
 
@@ -305,11 +307,11 @@ The **AND operator is not currently included** in the supplied product scope.
 
 ---
 
-# Filter the analysis
+## Filter the analysis
 
 Filters restrict the data included in the analysis.
 
-Insights supports:
+Chart Analysis supports:
 
 - **All Properties**
 - **User Properties**
@@ -317,7 +319,7 @@ Insights supports:
 
 ---
 
-## Property filters
+### Property filters
 
 Use property filters to focus the analysis on a specific population or property value.
 
@@ -329,7 +331,7 @@ or
 
 **Platform = Android**
 
-### Example
+#### Example
 
 To analyze Android users who completed a payment:
 
@@ -341,7 +343,7 @@ To analyze Android users who completed a payment:
 
 ---
 
-## Event property filters
+### Event property filters
 
 Event property filters apply to the selected event.
 
@@ -357,7 +359,7 @@ This allows the metric to focus on matching event occurrences.
 
 ---
 
-## Cohort filters
+### Cohort filters
 
 You can use an existing cohort to restrict the analysis to a defined group of users.
 
@@ -369,7 +371,7 @@ The metric then analyzes the selected event for users belonging to that cohort.
 
 ---
 
-# Add a breakdown
+## Add a breakdown
 
 Breakdowns divide the result into groups so that you can compare segments.
 
@@ -395,7 +397,7 @@ The breakdown makes it possible to compare the metric across supported segments.
 
 ---
 
-# Time window
+## Time window
 
 Select a time window to determine which period of data is included in the analysis.
 
@@ -409,9 +411,9 @@ Predefined time windows include:
 - **Last 12 months**
 - **Custom Date Range**
 
-# Compare time periods
+## Compare time periods
 
-Insights allows you to compare two analysis periods.
+Chart Analysis allows you to compare two analysis periods.
 
 For example:
 
@@ -423,7 +425,7 @@ This allows you to compare how the selected metric changes between the two perio
 
 ---
 
-# Visualizations
+## Visualizations
 
 Choose the visualization that best represents the question you are answering.
 
@@ -442,7 +444,7 @@ These visualization types are supported by the supplied specification.
 
 ---
 
-# Time granularity
+## Time granularity
 
 For supported time-based visualizations, you can use time granularity to group the metric over time.
 
@@ -455,9 +457,9 @@ Time granularity is supported for:
 
 ---
 
-# Analyze your results
+## Analyze your results
 
-Once your Insight is configured, review the resulting metric and refine the analysis as needed.
+Once your chart analysis is configured, review the resulting metric and refine the analysis as needed.
 
 You can change:
 
@@ -471,11 +473,11 @@ You can change:
 - Visualization
 - Time granularity where supported
 
-Configuration changes should be reflected without requiring you to rebuild the entire Insight.
+Configuration changes should be reflected without requiring you to rebuild the entire analysis.
 
 ---
 
-# Example: Analyze application completion
+## Example: Analyze application completion
 
 Suppose you want to understand application completion among users.
 
@@ -507,11 +509,11 @@ Suppose you want to understand application completion among users.
 
 ### What this tells you
 
-The Insight shows the number of unique Android users who completed an application during the selected period, segmented by region.
+The chart analysis shows the number of unique Android users who completed an application during the selected period, segmented by region.
 
 ---
 
-# Example: Analyze purchase revenue
+## Example: Analyze purchase revenue
 
 Suppose you want to understand the total revenue generated from completed purchases.
 
@@ -541,7 +543,7 @@ This calculates the total value of the selected Revenue property across matching
 
 ---
 
-# Example: Analyze revenue per user
+## Example: Analyze revenue per user
 
 Suppose you want to understand the average revenue generated by each user.
 
@@ -571,7 +573,7 @@ This two-stage calculation is supported through Aggregate Property per User.
 
 ---
 
-# Example: Analyze event frequency
+## Example: Analyze event frequency
 
 Suppose you want to understand how frequently users perform a core product action.
 
@@ -601,7 +603,7 @@ You can also use Median or Distribution to understand the frequency pattern.
 
 ---
 
-# Example: Compare two event metrics
+## Example: Compare two event metrics
 
 Suppose you want to compare two event-level measurements.
 
@@ -619,27 +621,27 @@ The formula is validated before execution.
 
 ---
 
-# Result actions
+## Result actions
 
-Insights provides additional actions for working with users represented by a result.
+Chart Analysis provides additional actions for working with users represented by a result.
 
-## View Users
+### View Users
 
 View the users contributing to a supported metric result.
 
-## Create Cohort
+### Create Cohort
 
 Create a cohort from the users represented by the result.
 
-## Download Users
+### Download Users
 
 Download the users represented by the result.
 
 These actions allow you to continue analysis beyond the metric itself.
 
-# Empty states
+## Empty states
 
-Insights displays an empty state when the selected configuration does not return data.
+Chart Analysis displays an empty state when the selected configuration does not return data.
 
 For example:
 
@@ -649,15 +651,15 @@ The purpose of the empty state is to clearly communicate that the current config
 
 ---
 
-# Loading state
+## Loading state
 
 When Klaritics is calculating the selected metric, a loading state indicates that the analysis is in progress.
 
 ---
 
-# Error handling
+## Error handling
 
-Insights provides clear feedback for invalid or unsupported configurations.
+Chart Analysis provides clear feedback for invalid or unsupported configurations.
 
 Examples include:
 
@@ -670,7 +672,7 @@ Invalid formulas should not be executed and should provide an explanation of the
 
 ---
 
-# What you can do
+## What you can do
 
 ### Build
 
@@ -706,7 +708,7 @@ View users, create cohorts, or download users from supported metric results.
 
 ---
 
-# Common analysis patterns
+## Common analysis patterns
 
 | Question | Suggested configuration |
 | --- | --- |
@@ -724,9 +726,9 @@ View users, create cohorts, or download users from supported metric results.
 
 ---
 
-# In summary
+## In summary
 
-Insights provides a flexible way to explore product behavior from event data.
+Chart Analysis provides a flexible way to explore product behavior from event data.
 
 You can:
 

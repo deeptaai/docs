@@ -36,10 +36,10 @@ Klaritics is designed to run inside your own infrastructure. Self-hosting gives 
     Install the Klaritics application on your infrastructure. You will receive deployment artifacts and configuration guidance as part of your setup package.
   </Step>
   <Step title="Get your credentials">
-    After deployment, retrieve your `app_id` and `server_host` from the Klaritics admin interface. These identify your instance and tell the SDKs where to send data.
+    After deployment, retrieve your `project_id` and `server_host` from the Klaritics admin interface. These identify your instance and tell the SDKs where to send data.
   </Step>
   <Step title="Configure your SDKs">
-    Point the [Klaritics SDK](/sdk/overview) at your `server_host` instead of a cloud endpoint. Use your `app_id` to authenticate events. See [Quickstart](/quickstart) for a step-by-step walkthrough.
+    Point the [Klaritics SDK](/sdk/overview) at your `server_host` instead of a cloud endpoint. Use your `project_id` to authenticate events. See [Quickstart](/quickstart) for a step-by-step walkthrough.
   </Step>
   <Step title="Verify the integration">
     Trigger events from your application and confirm they appear in [Real-time Events](/data/real-time-events).
@@ -47,7 +47,7 @@ Klaritics is designed to run inside your own infrastructure. Self-hosting gives 
 </Steps>
 
 <Warning>
-  Keep your `server_host` and `app_id` secure. Treat them as sensitive configuration values and manage them through your internal secrets tooling.
+  Keep your `server_host` and `project_id` secure. Treat them as sensitive configuration values and manage them through your internal secrets tooling.
 </Warning>
 
 ## Next steps

@@ -1,55 +1,55 @@
-# Mintlify Starter Kit
+# Klaritics documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Source for the Klaritics product guides, published with [Mintlify](https://mintlify.com).
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+Klaritics is a self-hosted product analytics platform. These guides cover the analytics modules, dashboards, SDK integration, and self-hosted deployment.
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+## Deployment
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+**Pushing to `main` deploys to production.** The Mintlify GitHub app watches this repo and rebuilds the site on every push to the default branch. Work on a branch, preview locally, and merge once verified.
 
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
+## Local preview
 
 ```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
-
-## Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
 npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
 mint dev
 ```
 
-View your local preview at `http://localhost:3000`.
+Then open `http://localhost:3000`. Run `mint dev` from the repo root, where `docs.json` lives.
 
-## Publishing changes
+If the dev server misbehaves, run `mint update` to get the latest CLI. A page that 404s usually means you are not in a directory with a valid `docs.json`.
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+## Repo layout
 
-## Need help?
+```
+docs.json                 Navigation, redirects, theme, branding
+index.mdx                 Landing page
+quickstart.mdx            Deploy → instrument → first dashboard
+release-notes.mdx         Version history (authoritative on what shipped)
 
-### Troubleshooting
+analysis/                 Chart Analysis, Funnels, Retention, Cohorts, User Flows,
+                          Engagement Matrix, Impact Analysis, Pivot Tables, User Sessions
+data/                     Event Taxonomy, Real-Time Events, User Profiles
+dashboards/               Saved dashboards: create, lay out, share, export
+widgets/                  Chart, metric, table, and custom widgets
+templates/                Pre-built dashboards
+alerts/                   Widget alerting
+integrations/             Third-party cohort import
+user-management/          Roles and users
+sdk/                      Web, Android, iOS, React Native, Flutter, Kotlin Multiplatform
+deployment/               Self-hosted deployment
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+AGENTS.md                 Writing conventions and terminology — read before editing
+CONTENT-GAPS.md           Per-page status: which pages are verified vs. placeholder
+```
 
-### Resources
+## Contributing
+
+Read `AGENTS.md` first. It records the terminology rules (`project_id` not `app_id`, "Chart Analysis" not "Insights"), the heading conventions Mintlify requires, and the pre-commit checks.
+
+Check `CONTENT-GAPS.md` before editing a page. Some pages are placeholder-quality and should not be deepened without the underlying product detail.
+
+## Resources
+
 - [Mintlify documentation](https://mintlify.com/docs)
+- [Klaritics](https://klaritics.com)
