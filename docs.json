@@ -109,7 +109,6 @@
           "sdk/kmp",
           "sdk/ios",
           "sdk/react-native",
-          "sdk/kmp",
           "sdk/flutter",
           "sdk/event-naming"
         ]
