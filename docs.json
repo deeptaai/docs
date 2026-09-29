@@ -106,7 +106,6 @@
           "sdk/overview",
           "sdk/web",
           "sdk/android",
-          "sdk/kmp",
           "sdk/ios",
           "sdk/react-native",
           "sdk/flutter",
