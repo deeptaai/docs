@@ -134,7 +134,7 @@ A user belongs to the Marketing Team and the Leadership Team, inheriting `Market
 
 ### Conflict resolution
 
-When a user inherits multiple roles, permission conflicts can occur. Klaritics resolves them using the **most permissive** strategy: the highest level of access available among the assigned roles is granted.
+When a user inherits multiple roles, permission conflicts can occur. Klaritics always resolves them the same way: **the highest level of access among the assigned roles is granted.**
 
 ```text
 Role A  →  View dashboards
@@ -142,6 +142,10 @@ Role B  →  Edit dashboards
 
 Final permission  →  Edit dashboards
 ```
+
+<Note>
+  There is no alternative resolution mode to configure. The most permissive role always wins.
+</Note>
 
 ---
 

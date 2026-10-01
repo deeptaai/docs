@@ -1,6 +1,6 @@
 # Content gaps
 
-Per-page status for the Klaritics docs. Updated 2026-10-01 after the second PRD pass.
+Per-page status for the Klaritics docs. Updated 2026-10-01 after the second PRD pass and the follow-up clarifications.
 
 **Rule:** do not deepen, add specifics to, or cite an unverified page. Get the product detail first, then rewrite.
 
@@ -34,15 +34,16 @@ Written against the real product or a PRD. Safe to edit and cite.
 
 ---
 
-## Open questions from the PRDs
+## PRD decisions and open questions
 
-These are specific things the PRDs name but do not define. Each one is a place where content was deliberately left thin rather than invented.
+Things the PRDs name but do not define. Most are now decided; the record is kept so the reasoning survives, and so nobody re-fills a gap that was closed deliberately.
 
 ### Stickiness — "Change Over Time"
 
-The Stickiness PRD §8 says the **Shown as** dropdown has two options, Stickiness and Change Over Time, with Stickiness as the default. Change Over Time is never defined anywhere else in the document — no calculation, no visualization, no example.
+**Resolved: removed.** The PRD listed Change Over Time as a second **Shown as** option, but it is not implemented. All references were removed from `analysis/stickiness.mdx`, including the Shown as control itself, since Stickiness was its only working value.
 
-`analysis/stickiness.mdx` currently notes that the option exists and nothing more. **Needed:** what Change Over Time computes and how it renders.
+Re-document the control if and when Change Over Time ships.
+
 
 ### Create Chart or Dashboard — category contents
 
@@ -57,9 +58,10 @@ Navigation mirrors this. There is no separate page per chart visualization type,
 
 ### IAM PRD gaps
 
-- §3 refers to "the sheet with all the permissions associated with each role" — **the permissions matrix sheet was not provided.** `settings/roles.mdx` describes the four default roles at the level the PRD gives, with no per-permission detail.
-- §9 states the platform "supports two possible resolution strategies" for conflicting inherited roles, then defines only Option 1 (Most Permissive). **Option 2 is missing.**
+- **Permissions matrix sheet — deferred by decision.** The PRD §3 refers to a sheet listing every permission per role; it was not provided and is intentionally **not** documented yet. `settings/roles.mdx` describes the four default roles at the level the PRD gives. To be added later.
+- **Conflict resolution — resolved.** The PRD described "two possible resolution strategies" and defined only one. There is in fact only one: the highest permission among the assigned roles wins. `settings/roles.mdx` states this as the single rule, with no configurable alternative.
 - Section numbering jumps from 5 to 8, and the custom role flow jumps from Step 3 to Step 5. Content for the missing sections may exist elsewhere.
+
 
 ### Dashboard & Chart Management PRD contradiction
 
@@ -75,11 +77,12 @@ The summary table lists five dashboards including Flow Analysis, but the intro s
 
 Generated content with no PRD behind it. Every specific is an assumption.
 
-### `deployment/self-hosted.mdx` — highest priority
+### `deployment/self-hosted.mdx` — content incoming
 
 The install path for a self-hosted product in 57 lines, with no installable detail. "You will receive deployment artifacts and configuration guidance as part of your setup package" stands in for the entire procedure.
 
-Needed: container images and registry, a real compose/Helm manifest, system requirements, datastore dependencies and versions, ports and TLS expectations, where `project_id` and `server_host` come from after install, and the upgrade/rollback procedure.
+**Status: the owner is supplying this.** When it arrives it needs container images and registry, a real compose/Helm manifest, system requirements, datastore dependencies and versions, ports and TLS expectations, where `project_id` and `server_host` come from after install, and the upgrade/rollback procedure.
+
 
 ### `settings/alerts.mdx`
 
@@ -100,9 +103,9 @@ Both give a confident step-by-step build flow that was never observed. Compare e
 
 Present in the UI screenshot, absent from the docs, with no PRD:
 
-- **Warehouse** (Settings) — nothing is known about it
-- **User Settings** (Settings)
-- **Overview** — the project-level page. Its chart-permission behavior is documented in `dashboards/sharing.mdx`, but the page itself is not.
+- **Warehouse** (Settings) — **content incoming from the owner.**
+- **User Settings** (Settings) — **content incoming from the owner.**
+- **Overview** — the project-level page. Its chart-permission behavior is documented in `charts/pin-to-dashboard.mdx` and `dashboards/overview.mdx`, but the page's own features are not.
 
 ---
 
