@@ -1,45 +1,369 @@
 ---
 title: "User Sessions"
 sidebarTitle: "User Sessions"
-description: "Explore individual user sessions, events, and properties in Klaritics to understand behavior at the single-user level. Pin session summaries to dashboards."
+description: "Analyze engagement at the session level in Klaritics. Measure session counts, duration, distribution, and events performed within sessions, with session cards as independent query series."
 ---
 
-User Sessions in Klaritics lets you inspect the event stream for individual users. You can review the sequence of actions a user took, the properties attached to each event, and the timing between steps. This is useful for support, debugging, and understanding the real experience behind aggregate metrics.
+User Sessions analyzes engagement and behavior at the **session level**, rather than only at the user or event level. A session is a continuous period of user activity within your application or website.
 
-## When to use User Sessions
+Use it to answer questions such as:
 
-Use User Sessions when you want to:
+- How long do users spend in the product?
+- How many sessions do users perform?
+- Which sessions are most engaged?
+- How many events occur inside a session?
+- Which session lengths lead to conversions?
 
-- Reconstruct the steps a specific user took before a problem or conversion
-- Verify that events and properties are being sent correctly
-- Understand edge cases that aggregate charts can hide
+---
 
-## Explore a session
+## How a session is defined
 
-<Steps>
-  <Step title="Search for a user">
-    Find the user by user ID, email, or another identifying property.
-  </Step>
-  <Step title="Select a session">
-    Review the list of sessions for that user, ordered by time. Each session represents a contiguous period of activity.
-  </Step>
-  <Step title="Inspect the event stream">
-    Walk through the events in chronological order. Expand any event to see its full property payload.
-  </Step>
-  <Step title="Filter by event or property">
-    Narrow the stream to a specific event name or property value to focus on the actions that matter.
-  </Step>
-</Steps>
+By default, a session starts when the user becomes active and ends after a defined inactivity timeout.
 
-## Save and share
+| Rule | Behavior |
+| :-- | :-- |
+| **Default timeout** | 30 minutes, configurable |
+| **Custom definition** | A session may instead start with one event and end with another |
+| **Session ID** | All events in the same session share the same Session ID |
+| **Validity** | Events without a valid session ID are excluded |
 
-Save a filtered session view or a user query so you can return to it later. Pin session summaries to dashboards as charts so your team can monitor patterns such as average events per session or sessions with specific events. You can also set alerts on a session chart to be notified when a qualifying session pattern is detected.
+A session is counted as valid when `session_id` is neither `none` nor `-1`.
 
-<Tip>
-  Combine User Sessions with [Funnels](/analysis/funnels) to move from aggregate conversion analysis to individual user verification.
-</Tip>
+---
+
+## The two analysis modes
+
+The side panel is the primary configuration area. The first choice you make there is the **count selector**, which determines everything downstream.
+
+<CardGroup cols={2}>
+  <Card title="Count of Sessions" icon="clock">
+    Analyze session-level metrics, using Session ID as the aggregation entity. **Default.**
+  </Card>
+
+  <Card title="Count of Events Within a Session" icon="list-check">
+    Analyze how often events occur inside sessions.
+  </Card>
+</CardGroup>
+
+Switching modes dynamically updates the session card configuration, the available metric options, the Measured As options, supported visualizations, chart behavior, aggregation logic, and the summarization table.
+
+<Note>
+  Existing filters and breakdowns are preserved wherever they still apply. If a selected metric becomes invalid after switching modes, it resets to the default metric, and incompatible visualizations reset automatically.
+</Note>
+
+---
+
+## Session cards
+
+A session card defines one query configuration, and **each card acts as an independent query series** in the visualization.
+
+| Action | Behavior |
+| :-- | :-- |
+| **+ Add Session Card** | Adds a new empty card below the existing ones and renders a new comparison series |
+| **Duplicate** | Copies the entire card configuration and places the copy below the original |
+| **Remove** | Removes the card and its graph series. If only one card remains, an empty state is shown |
+
+Each card maintains independent filters and query logic.
+
+**Example**
+
+```text
+Card 1  →  Sessions longer than 5 minutes
+Card 2  →  Sessions containing the Purchase event
+```
+
+In the **Count of Events Within a Session** mode, event selection is mandatory on each card, and each card also keeps its own event selection and breakdowns. The visualization does not render until an event is selected:
+
+```text
+Select an event to analyze event activity within sessions.
+```
+
+The event dropdown supports recent events, frequently used events, and categorized event listing.
+
+---
+
+## Measured As
+
+<Tabs>
+  <Tab title="Count of Sessions">
+    Six measurement types are available. **Total Sessions** is the default.
+
+    ### Total Sessions
+
+    Graphs the total number of valid sessions across all users, by counting total valid session IDs within the selected interval.
+
+    ### Time per User
+
+    Graphs the average time spent in sessions per active user.
+
+    ```text
+    Time per User = Sum of all session lengths in the interval
+                    ÷ Total active users in the interval
+    ```
+
+    ### Average Length
+
+    Graphs the average session duration.
+
+    ```text
+    Average Length = Sum of all session lengths in the interval
+                     ÷ Total sessions in that interval
+    ```
+
+    ### Avg per User
+
+    Graphs the average number of sessions per active user.
+
+    ```text
+    Avg per User = Total valid sessions in an interval
+                   ÷ Total active users in the same interval
+    ```
+
+    ### Total Time
+
+    Graphs the total cumulative session duration across all sessions.
+
+    ### Distribution
+
+    Displays the distribution of session lengths as a histogram. See [Distribution](#distribution) below.
+
+    <Note>
+      **Time per User**, **Average Length**, and **Total Time** all expose a **Counting In** unit selector supporting Months, Weeks, Days, Hours, Minutes, and Seconds. Changing the unit dynamically converts all displayed values, and updates the tooltip and summarization table.
+    </Note>
+  </Tab>
+
+  <Tab title="Count of Events Within a Session">
+    Three measurement types are available. **Average Events per Session** is the default.
+
+    ### Total Event Count
+
+    Graphs the total number of times the selected event occurred inside sessions, counting all matching occurrences grouped inside valid sessions.
+
+    ### Average Events per Session
+
+    Graphs the average number of times the selected event occurs per session.
+
+    ```text
+    Average Events per Session = Total occurrences of the event
+                                 ÷ Total qualifying sessions
+    ```
+
+    For example, with 100 total purchases across 20 sessions, Average Purchases per Session is **5**.
+
+    ### Distribution
+
+    Displays how event occurrences are distributed across sessions, revealing how frequently events occur per session, whether events are concentrated among power users, and overall engagement intensity.
+  </Tab>
+</Tabs>
+
+---
+
+## Distribution
+
+Distribution uses configurable buckets.
+
+| Configuration | Description |
+| :-- | :-- |
+| **Minimum Range** | Inclusive lower limit |
+| **Maximum Range** | Exclusive upper limit |
+| **Interval** | Bucket size |
+| **Unit** | Hours, Minutes, Seconds *(session length only)* |
+
+**Example — session length**
+
+A minimum of 1 minute, maximum of 30 minutes, and interval of 5 minutes generates:
+
+```text
+1–5 mins   5–10 mins   10–15 mins   15–20 mins   20–25 mins   25–30 mins
+```
+
+**Example — events per session**
+
+A minimum of 1, maximum of 20, and interval of 5 generates:
+
+```text
+1–5 events   5–10 events   10–15 events   15–20 events
+```
+
+<Warning>
+  For Distribution, the visualization is fixed to a Histogram / Column chart. The chart type selector is removed, and stacking cannot be enabled.
+</Warning>
+
+### Distribution tooltip
+
+The tooltip shows the bucket range, number of sessions, percentage of sessions, cumulative percentage, and the breakdown value if one is applied.
+
+Assuming 100 total sessions:
+
+| Bucket | Session count | % of sessions | Cumulative % |
+| :-- | --: | --: | --: |
+| 0–5 mins | 20 | 20% | 20% |
+| 5–10 mins | 30 | 30% | 50% |
+| 10–15 mins | 25 | 25% | 75% |
+| 15–20 mins | 15 | 15% | 90% |
+| 20+ mins | 10 | 10% | 100% |
+
+---
+
+## Filters
+
+Two levels of filtering apply: filters **on the session card**, and higher-level segmentation in **Filter By**.
+
+### Card filters
+
+<AccordionGroup>
+  <Accordion title="Contains Event">
+    Analyze sessions containing specific events.
+
+    | Field | Description |
+    | :-- | :-- |
+    | **Event Name** | Event selector |
+    | **Event Occurrence Count** | Numeric occurrence count |
+    | **Operator** | `>` `<` `=` `>=` `<=` `!=` |
+    | **Event Properties** | Multi-property selection |
+
+    The system counts how many times the selected event occurred inside a session.
+
+    | Configuration | Included sessions |
+    | :-- | :-- |
+    | `Purchase > 2` | Sessions containing more than 2 purchases |
+    | `Search = 1` | Sessions containing exactly one search |
+    | `Video Play <= 5` | Sessions containing 5 or fewer video plays |
+
+    Event property filtering supports multiple properties combined with AND conditions, for example a Purchase event where `Product Category = Electronics` and `Price > 1000`.
+  </Accordion>
+
+  <Accordion title="Session Duration">
+    Analyze sessions based on how long they lasted.
+
+    | Field | Description |
+    | :-- | :-- |
+    | **Operator** | `>` `<` `=` `>=` `<=` `!=` |
+    | **Duration Value** | Numeric value |
+    | **Duration Unit** | Days, Hours, Minutes, Seconds |
+
+    | Configuration | Result |
+    | :-- | :-- |
+    | `Duration > 5 mins` | Sessions longer than 5 minutes |
+    | `Duration <= 30 sec` | Short sessions |
+    | `Duration = 1 hour` | Sessions exactly 1 hour long |
+  </Accordion>
+
+  <Accordion title="Event Properties">
+    Available in the **Count of Events Within a Session** mode. Filters the selected event using event-level properties.
+
+    | Field | Description |
+    | :-- | :-- |
+    | **Event Property** | Selected property |
+    | **Operator** | Equals, Contains, `>`, `<` |
+    | **Property Value** | Value input |
+
+    Only matching event occurrences are included in the analysis.
+  </Accordion>
+</AccordionGroup>
+
+Changing any filter automatically refreshes the visualization, the summarization table, and breakdown results.
+
+### Filter By
+
+Higher-level segmentation applies to both modes:
+
+- **Cohort** — restrict to users inside selected cohorts, such as Premium Users, Retained Users, or Paid Subscribers
+- **User Properties** — Country, Device, Browser, OS, App Version, Campaign, Language
+
+---
+
+## Breakdown
+
+Breakdown segments results into multiple grouped series. When a breakdown is applied, charts render separate series and the summarization table groups results accordingly.
+
+| Mode | Supported breakdowns |
+| :-- | :-- |
+| **Count of Sessions** | Multiple user property breakdowns |
+| **Count of Events Within a Session** | User properties and event properties |
+
+Common breakdowns include Country, Device Type, Browser, Platform, and App Version. In the events mode this produces analyses such as Purchase by Country, Search by Device, or Video Plays by Platform.
+
+---
+
+## Visualization
+
+Six chart types are supported:
+
+```text
+Line        Stacked Line
+Column      Stacked Column
+Bar         Stacked Bar
+```
+
+Distribution is the exception — it is fixed to Histogram / Column.
+
+### Time granularity
+
+Granularity controls interval grouping for time-series visualizations: **Hour**, **Day**, **Week**, **Month**, **Quarter**.
+
+<Note>
+  Time granularity is not shown for Bar and Stacked Bar charts.
+</Note>
+
+### Tooltips
+
+For Total Sessions and Total Event Count, the tooltip shows the selected interval, the total count, the percentage increase or decrease compared to the previous interval, and the breakdown value if applied.
+
+### Chart interactions
+
+Clicking a graph point or bar opens **View Users**, from which you can:
+
+- **Export CSV** — downloads the currently visible chart data, including applied filters, breakdown values, intervals, and metric values
+- **Save Cohort** — creates a cohort from the currently selected segment, such as users with sessions longer than 10 minutes, or users with more than 5 sessions per week
+
+---
+
+## Compare
+
+Compare the selected period against a historical one:
+
+- Previous Day
+- Previous 7 Days
+- Previous 30 Days
+- Previous 3 Months
+- Previous 12 Months
+- Custom Comparison
+
+The visualization renders a comparison series, displays the delta percentage, and supports a comparison tooltip.
+
+---
+
+## Date selector
+
+| Preset ranges |
+| :-- |
+| Today |
+| Yesterday |
+| Last 7 Days |
+| Last 30 Days |
+| Last 90 Days |
+| Last 12 Months |
+| Custom Range |
+
+---
+
+## Summarization table
+
+The summarization table is a tabular representation of the visualization data. It contains a breakdown selector, lets you switch between breakdown values, and displays row averages.
+
+---
+
+## Refresh and pinning
+
+**Refresh Data** reruns the analytics query, invalidates cached responses, and refreshes the visualization, summarization table, and breakdown results. A loading state is shown during the refresh.
+
+You can pin the visualization to the **Overview** page, an **existing dashboard**, or a **new dashboard**. See [Pin a chart to a dashboard](/charts/pin-to-dashboard).
+
+---
 
 ## Next steps
 
-- [Funnels](/analysis/funnels) to measure conversion across all users
-- [Engagement Matrix](/analysis/engagement-matrix) to segment users by engagement depth
+- [Stickiness](/analysis/stickiness) to measure repeat engagement across days
+- [User Profiles](/data/real-time-users) to inspect an individual user's sessions
+- [Pivot Tables](/analysis/pivot-tables) for multi-dimensional breakdowns

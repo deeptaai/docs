@@ -1,45 +1,318 @@
 ---
 title: "Pivot Tables"
 sidebarTitle: "Pivot Tables"
-description: "Slice event data across multiple dimensions in a tabular view with Klaritics Pivot Tables. Pin results to dashboards and configure alerts on key cells."
+description: "Build multi-dimensional analysis grids in Klaritics. Configure events as columns, user properties as hierarchical rows, then sort, compare periods, and drill into cells."
 ---
 
-Pivot Tables in Klaritics let you slice event data across multiple dimensions in a clean, tabular format. Instead of a single chart, you can place one dimension on rows, another on columns, and choose the metric to aggregate. This is useful when you need to compare many segments at once or export structured results.
+Pivot Tables are an interactive analytics grid for multi-dimensional analysis without writing SQL. Configure what you want in columns and rows, and the table computes the rest.
 
-## When to use Pivot Tables
+It replaces the usual cycle of depending on a data team, waiting on static reports, and running a separate query for every slice.
 
-Use Pivot Tables when you want to:
+---
 
-- Compare metrics across two dimensions at once, such as feature usage by country and device
-- Export structured data for external reporting
-- Find the highest and lowest performing segments in a grid view
+## How a pivot is configured
 
-## Build a pivot table
+| You configure | Becomes |
+| :-- | :-- |
+| **Columns** | Events |
+| **Rows** | Breakdowns |
+| **Cohorts** | Comparisons across users |
+| **Filters** | Global constraints |
+
+### Core concepts
+
+| Concept | Description |
+| :-- | :-- |
+| **Events** | Core actions, such as Signup or Purchase |
+| **User Properties** | Attributes of users |
+| **Rows (Breakdown)** | Dimensions used for grouping |
+| **Columns** | Events, segments, and compare |
+| **Values** | Aggregated outputs |
+
+---
+
+## Columns
+
+Select one or multiple events. **Each definition becomes a column**, and the system treats each column as an independent query.
+
+Per column you can apply event-level filters, rename the column, and duplicate it.
+
+### What the table looks like
+
+<AccordionGroup>
+  <Accordion title="Single event, no breakdown">
+    Column → `Purchase`
+
+    | Purchase |
+    | --: |
+    | 215 |
+  </Accordion>
+
+  <Accordion title="Multiple events, no breakdown">
+    Columns → `Signup`, `Purchase`
+
+    | Signup | Purchase |
+    | --: | --: |
+    | 550 | 215 |
+  </Accordion>
+
+  <Accordion title="Single event with breakdown">
+    Column → `Purchase`, Breakdown → `Country`
+
+    | Country | Purchase |
+    | :-- | --: |
+    | India | 120 |
+    | USA | 95 |
+  </Accordion>
+
+  <Accordion title="Multiple events with breakdown">
+    Columns → `Signup`, `Purchase`, Breakdown → `Country`
+
+    | Country | Signup | Purchase |
+    | :-- | --: | --: |
+    | India | 300 | 120 |
+    | USA | 250 | 95 |
+  </Accordion>
+
+  <Accordion title="Multiple events with multiple breakdowns">
+    Columns → `Signup`, `Purchase`, Breakdown → `Country → City`
+
+    | Country | City | Signup | Purchase |
+    | :-- | :-- | --: | --: |
+    | India | Hyderabad | 150 | 60 |
+    | India | Bangalore | 150 | 60 |
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Breakdowns
+
+Breakdowns define the rows of the pivot table, and show **user properties only**. Multiple breakdowns are supported and nest hierarchically, such as `Country → City`.
+
+The first breakdown is the primary grouping; subsequent breakdowns are nested levels. Breakdowns apply to all columns, so rows are generated uniformly.
+
+### Grouped and ungrouped views
+
+With `Country → City`, the same data renders either way:
+
+<Tabs>
+  <Tab title="Ungrouped">
+    | Country | City | Purchase |
+    | :-- | :-- | --: |
+    | India | Hyderabad | 60 |
+    | India | Bangalore | 40 |
+    | USA | New York | 50 |
+    | USA | Chicago | 45 |
+  </Tab>
+
+  <Tab title="Grouped">
+    | Country | City | Purchase |
+    | :-- | :-- | --: |
+    | India | Hyderabad | 60 |
+    |  | Bangalore | 40 |
+    | USA | New York | 50 |
+    |  | Chicago | 45 |
+  </Tab>
+</Tabs>
+
+---
+
+## Global filters
+
+Global filters apply to the entire pivot table. The dataset is filtered **before** aggregation, so all columns reflect the filtered dataset.
+
+Global filters support user properties, event properties, and cohorts only.
+
+---
+
+## Compare
+
+Compare the current period against a past one. When you enable compare and select a comparison period, the system computes past values and adds an adjacent column.
+
+```text
+% Change = ((Current − Past) / Past) × 100
+```
+
+Values can be displayed as **Absolute** or **Percentage**.
+
+---
+
+## Sorting
+
+Sorting behaves differently depending on whether group segments are enabled.
+
+<Tabs>
+  <Tab title="Without group segments">
+    A single sort is applied across **all** rows.
+
+    The sort dropdown includes all event columns and all breakdown levels. With breakdown `Country → City` and events `Event A`, `Event B`, the options are:
+
+    ```text
+    Event A    Event B    Country    City
+    ```
+
+    Choose a field and a direction, Ascending or Descending.
+
+    | Data type | Sort behavior |
+    | :-- | :-- |
+    | Numeric | Sorted by value |
+    | String | Alphabetical |
+
+    The entire table reorders based on the selected field, and all rows shift globally.
+  </Tab>
+
+  <Tab title="With group segments">
+    Group segments become available only when **more than one breakdown** is added. Grouping follows the breakdown hierarchy.
+
+    Multiple sorting rules are allowed, applied **per breakdown level**. Each breakdown gets its own dropdown offering the event columns plus Alphabetical:
+
+    ```text
+    Country sorting  →  Event A, Event B, Alphabetical
+    City sorting     →  Event A, Event B, Alphabetical
+    ```
+
+    | If sorted on | Effect |
+    | :-- | :-- |
+    | Country | The entire country list is sorted |
+    | City | Cities are sorted **within** each country |
+
+    Sorting respects the hierarchy: parent order is unaffected by child sorting.
+
+    Enabling group segments also enables a **Reset** option, which returns sorting to the default.
+  </Tab>
+</Tabs>
+
+---
+
+## Cell actions
+
+Four actions are available on cells, and availability depends on the table's structure.
+
+| Action | Description |
+| :-- | :-- |
+| **Filter** | Filters the entire table by the selected row, and applies it in the configuration panel |
+| **Exclude** | Excludes the row from the table, and applies it in the configuration panel |
+| **View Users** | Opens the user list, with the option to create a cohort. Clicking a user opens their profile |
+| **View Events** | Opens the events listing page with the event |
+
+<Note>
+  **View Events** is a planned capability and is currently disabled in all scenarios until the real-time event pages are ready.
+</Note>
+
+### Availability rules
+
+The logic resolves in four steps.
 
 <Steps>
-  <Step title="Choose the metric">
-    Select the event and aggregation, such as count, unique users, or sum of a property.
+  <Step title="Is a breakdown present?">
+    **No** — Filter and Exclude are unavailable. View Users and View Events operate at column level.
+
+    **Yes** — Filter and Exclude are available on both event columns and breakdown columns.
   </Step>
-  <Step title="Set row and column dimensions">
-    Pick the user or event properties for rows and columns. For example, rows by plan type and columns by month.
+  <Step title="Evaluate each event column">
+    A column containing **one** event allows View Users and View Events.
+
+    A column containing **multiple** events does not.
   </Step>
-  <Step title="Apply filters">
-    Limit the data to a specific time range, platform, or audience so the table stays focused.
+  <Step title="Evaluate the breakdown column">
+    With **multiple** columns, the breakdown column never allows View Users or View Events.
+
+    With **one** column containing **one** event, it allows both.
+
+    With **one** column containing **multiple** events, it allows neither.
   </Step>
-  <Step title="Review and sort">
-    Scan the grid to identify top and bottom performers. Sort rows or columns to bring the most important segments to the top.
+  <Step title="Apply the special case">
+    If there is only one column and it has multiple events, View Users and View Events are disabled **everywhere**.
   </Step>
 </Steps>
 
-## Save and share
+### Worked cases
 
-Save the pivot table configuration and pin it to a dashboard as a chart. You can also set alerts on the chart so Klaritics notifies you when a cell value crosses a threshold you define.
+<AccordionGroup>
+  <Accordion title="One column with multiple events">
+    Definition → multiple events, with a breakdown.
 
-<Tip>
-  Pivot Tables work well with [Cohorts](/analysis/cohorts) as filters, letting you compare behavior across custom user groups in a single grid.
-</Tip>
+    | Column type | Filter | Exclude | View Users | View Events |
+    | :-- | :--: | :--: | :--: | :--: |
+    | Event column | ✓ | ✓ | ✗ | ✗ |
+    | Breakdown column | ✓ | ✓ | ✗ | ✗ |
+
+    **Rule:** a single column with multiple events disables View Users and View Events everywhere.
+  </Accordion>
+
+  <Accordion title="Multiple columns, all single events">
+    Def A → `Signup`, Def B → `Purchase`, Breakdown → `Country`.
+
+    | Column | View Users | View Events |
+    | :-- | :--: | :--: |
+    | Signup | ✓ | ✓ |
+    | Purchase | ✓ | ✓ |
+    | Country *(breakdown)* | ✗ | ✗ |
+
+    Filter and Exclude are available on all of them.
+
+    **Rule:** with multiple columns, the breakdown column never allows View Users or View Events.
+  </Accordion>
+
+  <Accordion title="Multiple columns, mixed single and multi-event">
+    Def A → `Signup` (1 event), Def B → `Purchase + Cart` (multi-event), Breakdown → `Country`.
+
+    | Column | View Users | View Events |
+    | :-- | :--: | :--: |
+    | Signup | ✓ | ✓ |
+    | Purchase + Cart | ✗ | ✗ |
+    | Country *(breakdown)* | ✗ | ✗ |
+
+    **Rule:** event columns behave independently; the breakdown column is always restricted.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Row visibility
+
+Three options control how many rows are shown: **Top N**, **Custom**, and **View All**. Rows are trimmed after sorting.
+
+By default the table shows the top 12 or bottom 12 rows depending on the sort direction — ascending shows bottom values, otherwise top values.
+
+---
+
+## Totals
+
+| Type | Placement |
+| :-- | :-- |
+| **Overall Total** | Bottom of the table |
+| **Segment Subtotals** | At breakdown level |
+
+Segment subtotals are shown at the *n−1* level. With three breakdowns configured, subtotals appear down to the second breakdown.
+
+Totals are computed after aggregation and rendered separately.
+
+---
+
+## Processing order
+
+Understanding the execution order explains why filters and sorting behave the way they do.
+
+```text
+1. Apply global filters
+2. Apply event filters
+3. Resolve breakdown mode
+4. Apply segmentation
+5. Compute aggregations
+6. Apply compare logic
+7. Apply sorting
+8. Apply row limits
+9. Render table
+```
+
+**Refresh** reruns this entire pipeline against the latest data.
+
+---
 
 ## Next steps
 
-- [Cohorts](/analysis/cohorts) to build custom segments for pivot rows and columns
 - [Chart Analysis](/analysis/chart-analysis) to visualize a single dimension as a chart
+- [User Sessions](/analysis/user-sessions) for session-level breakdowns
+- [Cohorts](/analysis/cohorts) to build the user groups you filter by

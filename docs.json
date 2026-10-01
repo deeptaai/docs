@@ -50,14 +50,20 @@
         "group": "Behavior Analytics",
         "icon": "chart-line",
         "pages": [
-          "analysis/chart-analysis",
           "analysis/funnels",
           "analysis/retention",
+          "analysis/pivot-tables",
+          "analysis/user-sessions",
           "analysis/stickiness",
           "analysis/engagement-matrix",
-          "analysis/impact-analysis",
-          "analysis/pivot-tables",
-          "analysis/user-sessions"
+          "analysis/impact-analysis"
+        ]
+      },
+      {
+        "group": "Charts",
+        "icon": "chart-simple",
+        "pages": [
+          "analysis/chart-analysis"
         ]
       },
       {
@@ -73,9 +79,11 @@
       },
       {
         "group": "Saved Charts",
-        "icon": "chart-simple",
+        "icon": "bookmark",
         "pages": [
-          "charts/overview"
+          "charts/overview",
+          "charts/manage-charts",
+          "charts/pin-to-dashboard"
         ]
       },
       {
@@ -84,7 +92,7 @@
         "pages": [
           "dashboards/overview",
           "dashboards/create-dashboard",
-          "dashboards/manage-layouts",
+          "dashboards/manage-dashboards",
           "dashboards/sharing",
           "dashboards/permissions"
         ]
@@ -142,6 +150,10 @@
       "destination": "/analysis/chart-analysis"
     },
     {
+      "source": "/dashboards/manage-layouts",
+      "destination": "/dashboards/manage-dashboards"
+    },
+    {
       "source": "/dashboards/share-and-export",
       "destination": "/dashboards/sharing"
     },
@@ -183,7 +195,7 @@
     },
     {
       "source": "/widgets/chart-widgets",
-      "destination": "/charts/overview"
+      "destination": "/analysis/chart-analysis"
     },
     {
       "source": "/widgets/custom-widgets",
@@ -191,7 +203,7 @@
     },
     {
       "source": "/widgets/metric-widgets",
-      "destination": "/charts/overview"
+      "destination": "/analysis/chart-analysis"
     },
     {
       "source": "/widgets/overview",
@@ -199,7 +211,7 @@
     },
     {
       "source": "/widgets/table-widgets",
-      "destination": "/charts/overview"
+      "destination": "/analysis/pivot-tables"
     }
   ],
   "logo": {

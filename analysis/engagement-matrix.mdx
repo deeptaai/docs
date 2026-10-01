@@ -321,48 +321,50 @@ The selected Median or Average values create the horizontal and vertical divider
 
 ## Understand the four quadrants
 
-The matrix contains four quadrants.
+The matrix contains four quadrants. Where an event lands tells you what kind of feature it is.
 
-| Position | Engagement pattern | Quadrant |
-| --- | --- | --- |
-| **Top Right** | High Active Users + High Frequency | **Core Features** |
-| **Top Left** | Low Active Users + High Frequency | **Power Features** |
-| **Bottom Right** | High Active Users + Low Frequency | **Utility Features** |
-| **Bottom Left** | Low Active Users + Low Frequency | **Underperforming Features** |
+```text
+            High frequency
+                  │
+  Power Features  │  Core Features
+  (deep, narrow)  │  (deep, broad)
+                  │
+ ─────────────────┼─────────────────  High breadth →
+                  │
+ Underperforming  │ Utility Features
+  (shallow,       │ (shallow, broad)
+   narrow)        │
+```
 
-### Core Features
+<CardGroup cols={2}>
+  <Card title="Core Features" icon="star">
+    **High Active Users + High Frequency**
 
-**High Active Users + High Frequency**
+    Used by a large share of active users, and performed frequently.
+  </Card>
 
-These events are used by a large share of active users and are performed frequently.
+  <Card title="Power Features" icon="bolt">
+    **Low Active Users + High Frequency**
 
-Identifies this quadrant as representing **core features**.
+    Lower breadth but higher frequency — power-user features.
+  </Card>
 
-### Power Features
+  <Card title="Utility Features" icon="wrench">
+    **High Active Users + Low Frequency**
 
-**Low Active Users + High Frequency**
+    Used by many active users but performed infrequently.
+  </Card>
 
-These events have lower breadth but higher frequency.
+  <Card title="Underperforming Features" icon="circle-minus">
+    **Low Active Users + Low Frequency**
 
-Identifies this quadrant as representing **power-user features**.
+    Lower breadth *and* lower frequency relative to the other plotted events.
+  </Card>
+</CardGroup>
 
-### Utility Features
-
-**High Active Users + Low Frequency**
-
-These events are used by many active users but have lower frequency.
-
-Identifies this quadrant as representing **utility features**.
-
-### Underperforming Features
-
-**Low Active Users + Low Frequency**
-
-These events have both lower breadth and lower frequency relative to the other plotted events.
-
-Identifies this quadrant as representing **underperforming features**.
-
-The quadrant is a relative classification based on the selected divider calculation; it does not by itself explain why an event has its position.
+<Warning>
+  The quadrant is a **relative** classification based on the selected divider calculation. It does not by itself explain why an event sits where it does.
+</Warning>
 
 ---
 

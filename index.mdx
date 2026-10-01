@@ -1,78 +1,169 @@
 ---
 title: "Klaritics: Self-Hosted Product Analytics Platform"
 sidebarTitle: "Introduction"
-description: "Klaritics is a self-hosted product analytics platform for user management, analysis, dashboards, templates, integrations, and real-time alerts."
+description: "Klaritics is a self-hosted product analytics platform. Instrument your apps, analyze behavior with funnels, retention, and stickiness, and share dashboards — all inside your own infrastructure."
 ---
 
-Klaritics is a self-hosted product analytics platform that provides end-to-end analytics across user management, data, analysis, dashboards, templates, integrations, and alerts. Deploy the full platform inside your own infrastructure and analyze product usage without sending data to a third party.
-
-## What you can do with Klaritics
+Klaritics is a product analytics platform that runs **entirely inside your own infrastructure**. Your event data never leaves your environment, and there is no third-party vendor between you and your users' behavior.
 
 <CardGroup cols={2}>
-  <Card title="Analyze user behavior" icon="chart-line" href="/analysis/chart-analysis">
-    Build charts, funnels, retention, cohorts, and stickiness analyses over your event data.
+  <Card title="Quickstart" icon="rocket" href="/quickstart" horizontal>
+    Deploy, instrument, and see your first event.
   </Card>
 
-  <Card title="Build dashboards" icon="chart-bar" href="/dashboards/overview">
-    Pin analytical charts to saved dashboards and share them with your team.
-  </Card>
-
-  <Card title="Instrument your apps" icon="code" href="/sdk/overview">
-    Send events from Web, Android, iOS, React Native, Kotlin Multiplatform, and Flutter SDKs.
-  </Card>
-
-  <Card title="Self-host end-to-end" icon="server" href="/deployment/self-hosted">
-    Run the entire platform in your own environment with full data ownership.
+  <Card title="Install an SDK" icon="code" href="/sdk/overview" horizontal>
+    Web, Android, iOS, React Native, Flutter, KMP.
   </Card>
 </CardGroup>
 
-## Core modules
-
-Klaritics ships with a complete set of analytics modules out of the box.
-
-<CardGroup cols={2}>
-  <Card title="Product Analytics" icon="gauge" href="/product-analytics/overview">
-    Product Overview, Onboarding, Feature Engagement, and Retention dashboards.
-  </Card>
-
-  <Card title="Analysis" icon="chart-line" href="/analysis/chart-analysis">
-    Chart Analysis, Funnels, Retention, Stickiness, Cohorts, Pivot Tables, User Sessions, Engagement Matrix, and Impact Analysis.
-  </Card>
-
-  <Card title="Dashboards" icon="chart-bar" href="/dashboards/overview">
-    Saved dashboards built from pinned analytical charts.
-  </Card>
-
-  <Card title="Data" icon="database" href="/data/event-taxonomy">
-    Event Taxonomy, Real-time Events, and Real-time Users.
-  </Card>
-
-  <Card title="Templates" icon="layer-group" href="/templates/overview">
-    Flow Analysis, Feature Adoption, Product KPIs, and User Activity.
-  </Card>
-
-  <Card title="Settings" icon="gear" href="/settings/roles">
-    Roles, users, alerts, and Third Party Cohorts.
-  </Card>
-</CardGroup>
+---
 
 ## How Klaritics works
 
 <Steps>
-  <Step title="Instrument your product">
-    Add the Klaritics SDK for [Web](/sdk/web), [Android](/sdk/android), [iOS](/sdk/ios), [React Native](/sdk/react-native), [Kotlin Multiplatform](/sdk/kmp), or [Flutter](/sdk/flutter) and start sending events.
+  <Step title="Instrument your product" icon="code">
+    Add a Klaritics SDK and start sending events. Every SDK uses the same pattern: supply your `project_id` and `server_host`, then log events.
+
+    <CardGroup cols={3}>
+      <Card title="Web" href="/sdk/web" />
+      <Card title="Android" href="/sdk/android" />
+      <Card title="iOS" href="/sdk/ios" />
+      <Card title="React Native" href="/sdk/react-native" />
+      <Card title="Flutter" href="/sdk/flutter" />
+      <Card title="Kotlin MP" href="/sdk/kmp" />
+    </CardGroup>
   </Step>
-  <Step title="Define your event taxonomy">
-    Organize incoming events and attributes in the [Event Taxonomy](/data/event-taxonomy) module.
+
+  <Step title="Organize what you collect" icon="database">
+    Events arrive and appear in [Real-Time Events](/data/real-time-events) within moments. Use [Event Taxonomy](/data/event-taxonomy) to name, categorize, and control the visibility of every event you track.
   </Step>
-  <Step title="Build analyses and charts">
-    Create chart analyses, funnels, retention, cohorts, and other analyses, then pin them to dashboards.
+
+  <Step title="Ask questions of the data" icon="chart-line">
+    Build a funnel, measure retention, check how many days a week users come back, or compare feature breadth against depth. Each saved analysis becomes a **chart**.
   </Step>
-  <Step title="Share dashboards and set alerts">
-    Save dashboards for your team and configure alerts on any chart.
+
+  <Step title="Assemble and share" icon="users">
+    Pin charts to dashboards or the project Overview, then share them as Private, Restricted, or Project-wide. Set alerts so you hear about changes without looking.
   </Step>
 </Steps>
 
+---
+
+## What you can build
+
+Klaritics groups everything you can create into three categories, reached from **Create Chart or Dashboard**.
+
+<Tabs>
+  <Tab title="Behavior Analytics">
+    Analyses built around how users actually behave over time.
+
+    | Analysis | Answers |
+    | :-- | :-- |
+    | [Funnels](/analysis/funnels) | Where do users drop out of a sequence? |
+    | [Retention](/analysis/retention) | Do users come back after a first action? |
+    | [Stickiness](/analysis/stickiness) | How many days per week or month do users return? |
+    | [Engagement Matrix](/analysis/engagement-matrix) | Which features are broad, deep, both, or neither? |
+    | [Impact Analysis](/analysis/impact-analysis) | What changes after a user first does something? |
+    | [Pivot Tables](/analysis/pivot-tables) | How does a metric slice across several dimensions? |
+    | [User Sessions](/analysis/user-sessions) | How long and how often do users engage per session? |
+
+    <Note>
+      **User Paths** and **Compass** appear in this category but are not available in the current release.
+    </Note>
+  </Tab>
+
+  <Tab title="Charts">
+    [Chart Analysis](/analysis/chart-analysis) builds a flexible metric from your events — choose a measurement, filter it, break it down, and compare periods.
+
+    Eight visualizations are available:
+
+    ```text
+    Line     Stacked Line     Bar     Stacked Bar
+    Column   Stacked Column   Pie     Metric
+    ```
+  </Tab>
+
+  <Tab title="Default Templates">
+    Pre-built dashboards that need only an event or two to become useful.
+
+    <CardGroup cols={2}>
+      <Card title="Flow Analysis" href="/templates/flow-analysis">
+        Multi-step journeys and drop-off.
+      </Card>
+      <Card title="Feature Adoption" href="/templates/feature-adoption">
+        Discovery, engagement, retention for one feature.
+      </Card>
+      <Card title="Product KPIs" href="/templates/product-kpis">
+        Headline growth and engagement metrics.
+      </Card>
+      <Card title="User Activity" href="/templates/user-activity">
+        Active users, first-time usage, distribution.
+      </Card>
+    </CardGroup>
+  </Tab>
+</Tabs>
+
+---
+
+## Product Analytics dashboards
+
+Beyond ad-hoc analysis, Klaritics ships four configurable dashboards. Define your key events once, and all four populate.
+
+<CardGroup cols={2}>
+  <Card title="Product Overview" icon="gauge" href="/product-analytics/product-overview">
+    How is my product doing overall?
+  </Card>
+
+  <Card title="Onboarding" icon="route" href="/product-analytics/onboarding">
+    Are new users able to get started easily?
+  </Card>
+
+  <Card title="Feature Engagement" icon="puzzle-piece" href="/product-analytics/feature-engagement">
+    Which features are users actually using?
+  </Card>
+
+  <Card title="Retention" icon="rotate" href="/product-analytics/retention">
+    Are users coming back after using the product?
+  </Card>
+</CardGroup>
+
+---
+
+## Governing access
+
+Klaritics separates two layers of access control.
+
+| Layer | Controls | Where |
+| :-- | :-- | :-- |
+| **Roles** | What a person can do across the platform | [Settings → Users & Permissions](/settings/roles) |
+| **Resource permissions** | Who can open, edit, or share a specific dashboard or chart | [Permissions](/dashboards/permissions) |
+
+<Warning>
+  Dashboards and charts carry **independent** permissions. Being able to edit a dashboard does not grant access to the charts pinned to it.
+</Warning>
+
+---
+
+## Self-hosted by design
+
+<CardGroup cols={2}>
+  <Card title="Data ownership" icon="shield">
+    Event data never leaves your environment. You control storage, backups, and access.
+  </Card>
+
+  <Card title="Privacy and compliance" icon="lock">
+    Meet internal policy and regulatory requirements without external SaaS commitments.
+  </Card>
+
+  <Card title="Operational control" icon="server">
+    Manage uptime, scaling, and upgrades on your own schedule.
+  </Card>
+
+  <Card title="No third-party sharing" icon="eye-slash">
+    No data egress to external analytics vendors.
+  </Card>
+</CardGroup>
+
 <Note>
-  Klaritics v1.0.0 ships all modules listed above. Compass, Session Engagement, User Flows, and Session Replays are on the roadmap and are not part of this release. See the [release notes](/release-notes) for details.
+  Compass, Session Engagement, User Paths, and Session Replays are on the roadmap and are not part of the current release. See the [release notes](/release-notes).
 </Note>

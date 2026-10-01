@@ -1,34 +1,68 @@
 ---
-title: "Create a Dashboard in Klaritics"
-sidebarTitle: "Create Dashboard"
-description: "Build a new dashboard in Klaritics by creating an empty board, pinning charts from your analyses, arranging the layout, and saving."
+title: "Create a Dashboard"
+sidebarTitle: "Create a Dashboard"
+description: "Who can create a dashboard in Klaritics, what state it starts in, and how charts are added to it from your analyses or a template."
 ---
 
-Creating a dashboard in Klaritics lets you assemble the most important analytical charts into a single view. Start with an empty board, pull in visualizations from your saved analyses, arrange them to tell a clear story, and save the layout for your team.
+Creating a dashboard assembles the charts that matter into a single view.
 
-## Create a new dashboard
+---
+
+## Who can create one
+
+Only a user with **Full Access** for dashboards can create a dashboard.
+
+| Dashboard project permission | Can create |
+| :-- | :--: |
+| Full Access | ✓ |
+| Editor | ✗ |
+| Viewer | ✗ |
+
+Editor works with existing dashboards that have been shared with them, rather than creating new ones.
+
+---
+
+## What happens on creation
 
 <Steps>
-  <Step title="Start a new dashboard">
-    Go to **Dashboards \> Saved Dashboards** and click **New Dashboard**. Give it a descriptive name, such as "Q3 Activation Metrics" or "Weekly Product Health".
+  <Step title="The dashboard is created Private">
+    A newly created dashboard is **Private** by default. Only you can see it until you share it.
   </Step>
-  <Step title="Pin charts from analyses">
-    Open any analysis you have already built, such as a chart, funnel, or retention report. Click **Pin to Dashboard** and select the dashboard you just created. Repeat for each chart you want to include.
+  <Step title="You are assigned ownership">
+    The creator becomes the owner, which is what allows duplication and deletion later.
   </Step>
-  <Step title="Arrange the layout">
-    Drag charts to reposition them. Resize each chart by dragging its corners so the most important metrics get the most space.
+  <Step title="Add charts">
+    Pin existing charts you have access to. You can only add charts you are allowed to access.
   </Step>
-  <Step title="Save the dashboard">
-    Click **Save** to store the layout. Your dashboard is now available to anyone you share it with.
+  <Step title="Share it">
+    Move the dashboard to Restricted or Project-wide when it is ready for others. See [Sharing](/dashboards/sharing).
   </Step>
 </Steps>
 
-<Tip>
-  You can pin the same analysis to multiple dashboards. This is useful when a single metric matters across different team views.
-</Tip>
+---
+
+## Adding charts
+
+There are two routes onto a dashboard:
+
+<CardGroup cols={2}>
+  <Card title="Pin from an analysis" icon="thumbtack" href="/charts/pin-to-dashboard">
+    Configure an analysis, then pin its visualization to Overview, an existing dashboard, or a new one.
+  </Card>
+
+  <Card title="Save a template" icon="layer-group" href="/templates/overview">
+    Configure a template and use **Save as Dashboard**. The result lands in Saved Dashboards.
+  </Card>
+</CardGroup>
+
+<Note>
+  The same chart can be pinned to more than one dashboard. This is useful when a single metric matters across different team views.
+</Note>
+
+---
 
 ## Next steps
 
-- [Manage dashboard layouts](/dashboards/manage-layouts)
-- [Share and export dashboards](/dashboards/sharing)
-- [Learn about chart types](/charts/overview)
+- [Manage dashboards](/dashboards/manage-dashboards)
+- [Sharing](/dashboards/sharing)
+- [Saved Charts](/charts/overview)

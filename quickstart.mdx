@@ -1,83 +1,119 @@
 ---
 title: "Quickstart: Get Started with Klaritics"
 sidebarTitle: "Quickstart"
-description: "Deploy Klaritics, install a Klaritics SDK, send your first event, and build your first dashboard in a few steps."
+description: "Deploy Klaritics on your own infrastructure, install an SDK, send your first event, and turn it into a chart and dashboard."
 ---
 
-This quickstart walks through deploying Klaritics on your own infrastructure, integrating an SDK, sending your first event, and building a dashboard.
+This walks through going from nothing to a working dashboard: deploy Klaritics, instrument an app, send an event, and build something from it.
 
-<Steps>
-  <Step title="Deploy Klaritics">
-    Follow the [self-hosted deployment guide](/deployment/self-hosted) to run Klaritics in your environment. You will end up with a `project_id` and a `server_host` URL for your deployment.
-  </Step>
-  <Step title="Install a Klaritics SDK">
-    Pick the platform you want to instrument:
+<Note>
+  You need two values throughout: a **`project_id`** identifying your project, and a **`server_host`** pointing at your deployment. Both come from your Klaritics instance once it is running.
+</Note>
 
-    <CardGroup cols={3}>
-      <Card title="Web" icon="globe" href="/sdk/web">
-      </Card>
+---
 
-      <Card title="Android" icon="mobile" href="/sdk/android">
-      </Card>
+## 1. Deploy Klaritics
 
-      <Card title="iOS" icon="mobile" href="/sdk/ios">
-      </Card>
+Klaritics runs inside your own infrastructure. Follow the [self-hosted deployment guide](/deployment/self-hosted) to stand up your environment.
 
-      <Card title="React Native" icon="mobile" href="/sdk/react-native">
-      </Card>
+You finish this step with a `project_id` and a `server_host` URL.
 
-      <Card title="Flutter" icon="mobile" href="/sdk/flutter">
-      </Card>
+---
 
-      <Card title="Kotlin Multiplatform" icon="mobile" href="/sdk/kmp">
-      </Card>
-    </CardGroup>
+## 2. Install an SDK
 
-    Each SDK is initialized with your `project_id` and `server_host`.
-  </Step>
-  <Step title="Initialize the SDK">
-    Example for the Web SDK:
+Pick the platform you want to instrument. Every SDK follows the same pattern, so the concepts carry across.
 
+<CardGroup cols={3}>
+  <Card title="Web" icon="globe" href="/sdk/web" />
+  <Card title="Android" icon="android" href="/sdk/android" />
+  <Card title="iOS" icon="apple" href="/sdk/ios" />
+  <Card title="React Native" icon="react" href="/sdk/react-native" />
+  <Card title="Flutter" icon="mobile" href="/sdk/flutter" />
+  <Card title="Kotlin Multiplatform" icon="code" href="/sdk/kmp" />
+</CardGroup>
+
+---
+
+## 3. Initialize and send an event
+
+<Tabs>
+  <Tab title="Web">
     ```js
     import Klaritics from "@deeptaai/klaritics-web-sdk";
-    
-    Klaritics.init("YOUR_APP_ID", {
+
+    Klaritics.init("YOUR_PROJECT_ID", {
       server_host: "https://YOUR_SERVER_HOST"
     });
-    ```
-  </Step>
-  <Step title="Send your first event">
-    ```js
+
     Klaritics.logEvent("ADD_TO_CART", {
       userId: "user@example.com",
       value: 1299,
       item: "Sony Head Phone 1201"
     });
     ```
+  </Tab>
 
-    Open the [Real-time Events](/data/real-time-events) view in Klaritics to confirm the event was received.
+  <Tab title="Other platforms">
+    The initialization shape is the same everywhere — a project identifier plus a server host — with platform-specific setup covered in each guide:
+
+    [Android](/sdk/android) · [iOS](/sdk/ios) · [React Native](/sdk/react-native) · [Flutter](/sdk/flutter) · [Kotlin Multiplatform](/sdk/kmp)
+  </Tab>
+</Tabs>
+
+<Tip>
+  Name events for what happened in your product — `ADD_TO_CART`, `ProductClicked` — and keep the naming consistent from the start. See [Event naming](/sdk/event-naming); the `$` prefix is reserved.
+</Tip>
+
+---
+
+## 4. Confirm the event arrived
+
+Open [Real-Time Events](/data/real-time-events) and look for your event. It shows the incoming event stream along with the properties attached to each one, so you can verify the payload is what you expected before building anything on top of it.
+
+If nothing appears, check that `server_host` is reachable from the client and that `project_id` matches your project.
+
+---
+
+## 5. Turn it into something useful
+
+<Steps>
+  <Step title="Build an analysis">
+    Create a [Chart Analysis](/analysis/chart-analysis) from your event, or jump straight to a [Funnel](/analysis/funnels) if you have two or more steps to measure. Saving the analysis produces a **chart**.
   </Step>
-  <Step title="Build a dashboard">
-    Create a [chart analysis](/analysis/chart-analysis) from your event, pin it to a [saved dashboard](/dashboards/create-dashboard). Configure [alerts](/settings/alerts) on the chart to get notified when metrics change.
+  <Step title="Pin it">
+    [Pin the chart](/charts/pin-to-dashboard) to the project Overview, an existing dashboard, or a new one.
+  </Step>
+  <Step title="Share it">
+    Set the dashboard to Restricted or Project-wide so your team can see it. See [Sharing](/dashboards/sharing).
+  </Step>
+  <Step title="Set an alert">
+    Configure [alerts](/settings/alerts) on the chart so changes reach you without checking.
   </Step>
 </Steps>
 
-## Next steps
+<Tip>
+  In a hurry? Skip the manual build and apply a [template](/templates/overview). Pick Product KPIs, supply one active event, and you have a populated dashboard immediately.
+</Tip>
+
+---
+
+## Where to go next
 
 <CardGroup cols={2}>
+  <Card title="Organize your events" icon="database" href="/data/event-taxonomy">
+    Name, categorize, and control visibility in Event Taxonomy.
+  </Card>
+
+  <Card title="Product Analytics" icon="gauge" href="/product-analytics/overview">
+    Four configurable dashboards covering health, onboarding, engagement, and retention.
+  </Card>
+
+  <Card title="Invite your team" icon="users" href="/settings/users">
+    Add teammates and assign roles.
+  </Card>
+
   <Card title="Explore the SDKs" icon="code" href="/sdk/overview">
-    Read the full SDK integration guide for every supported platform.
-  </Card>
-
-  <Card title="Set up your taxonomy" icon="database" href="/data/event-taxonomy">
-    Organize the events and attributes coming into Klaritics.
-  </Card>
-
-  <Card title="Try a template" icon="layer-group" href="/templates/overview">
-    Start from a Product Analytics, Flow Analysis, Feature Adoption, or Product KPIs template.
-  </Card>
-
-  <Card title="Manage users and roles" icon="users" href="/user-management/roles">
-    Invite teammates and control access with roles.
+    Full integration guides for every platform.
   </Card>
 </CardGroup>

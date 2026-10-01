@@ -1,0 +1,81 @@
+---
+title: "Manage Charts"
+sidebarTitle: "Manage Charts"
+description: "View, edit, share, duplicate, and delete saved charts in Klaritics. Which actions appear depends on your effective chart permission."
+---
+
+Each chart in the listing shows the actions your **effective chart permission** allows.
+
+| Effective permission | Available actions |
+| :-- | :-- |
+| **Full Access** | View, Edit, Share, Duplicate, Delete |
+| **Editor** | View, Edit, Share |
+| **Viewer** | View |
+
+See [Permissions](/dashboards/permissions) for how effective permission is calculated.
+
+---
+
+## Create
+
+Only a user with **Full Access** for charts can create one. Viewer cannot create charts, and Editor works with existing charts rather than creating new ones.
+
+A newly created chart is **Private** by default, and the creator is assigned ownership.
+
+---
+
+## View
+
+You can view chart data and the visualization based on your access, and view the chart configuration in read-only mode. You cannot modify the chart.
+
+---
+
+## Edit
+
+Editing lets you change:
+
+- Chart title
+- Chart description
+- Chart configuration
+- Filters
+- Dimensions and measures
+- Visualization settings
+
+The exact editable properties follow the chart's own creation and edit behavior.
+
+<Warning>
+  Editing a dashboard does not grant permission to edit the charts on it. Chart edit rights come only from your chart permission.
+</Warning>
+
+---
+
+## Share
+
+A chart can be shared as Private, Restricted, or Project-wide. Two ceilings always apply: you cannot grant more than your own effective permission, and the recipient cannot receive more than their project-level permission.
+
+See [Sharing](/dashboards/sharing) for the full model and the sharing matrix.
+
+---
+
+## Duplicate
+
+Only a user with Full Access can duplicate a chart. The duplicate:
+
+- Receives a new chart ID
+- Is owned by the duplicating user
+- Is **Private** by default
+- Does **not** inherit the original chart's sharing permissions
+
+---
+
+## Delete
+
+Deleting requires confirmation. On confirmation, the chart is removed from the project.
+
+---
+
+## Next steps
+
+- [Pin a chart to a dashboard](/charts/pin-to-dashboard)
+- [Sharing](/dashboards/sharing)
+- [Permissions](/dashboards/permissions)

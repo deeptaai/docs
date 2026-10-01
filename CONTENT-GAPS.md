@@ -1,6 +1,6 @@
 # Content gaps
 
-Per-page status for the Klaritics docs. Updated 2026-10-01 after the PRD pass.
+Per-page status for the Klaritics docs. Updated 2026-10-01 after the second PRD pass.
 
 **Rule:** do not deepen, add specifics to, or cite an unverified page. Get the product detail first, then rewrite.
 
@@ -17,12 +17,15 @@ Written against the real product or a PRD. Safe to edit and cite.
 | `analysis/engagement-matrix.mdx` | Product |
 | `analysis/impact-analysis.mdx` | Product |
 | `analysis/stickiness.mdx` | Stickiness PRD, incl. all 14 formula images |
+| `analysis/user-sessions.mdx` | User Sessions PRD |
+| `analysis/pivot-tables.mdx` | Pivot Table PRD |
 | `data/event-taxonomy.mdx` | Product |
 | `data/real-time-events.mdx` | Product |
 | `data/real-time-users.mdx` | Product |
 | `dashboards/permissions.mdx` | Dashboard & Chart Management PRD |
 | `dashboards/sharing.mdx` | Dashboard & Chart Management PRD |
-| `charts/overview.mdx` | Dashboard & Chart Management PRD |
+| `charts/*.mdx` (3) | Dashboard & Chart Management PRD |
+| `dashboards/overview.mdx`, `create-dashboard.mdx`, `manage-dashboards.mdx` | Dashboard & Chart Management PRD |
 | `settings/roles.mdx` | IAM PRD |
 | `settings/users.mdx` | IAM PRD |
 | `product-analytics/*.mdx` (5) | Product Analytics Dashboards PRD |
@@ -43,15 +46,14 @@ The Stickiness PRD §8 says the **Shown as** dropdown has two options, Stickines
 
 ### Create Chart or Dashboard — category contents
 
-The CTA groups chart types into three categories:
+**Resolved.** The three categories are:
 
-1. **Behavior Analytics** — Funnel, Retention, Engagement Matrix, …
-2. **Charts** — Line, Stacked Line, Bar, Metric, …
-3. **Default Templates** — Flow Analysis, Feature Adoption, …
+1. **Behavior Analytics** — Funnels, Retention, User Paths *(not released)*, Pivot Tables, User Sessions, Stickiness, Engagement Matrix, Compass *(not released)*, Impact Analysis
+2. **Charts** — Line, Stacked Line, Bar, Stacked Bar, Pie, Metric, Column, Stacked Column. This category is Chart Analysis; the eight entries are its visualization types, documented in `analysis/chart-analysis.mdx`.
+3. **Default Templates** — Flow Analysis, Feature Adoption, Product KPIs, User Activity
 
-Only partial lists are known. **Needed:** the complete contents of all three, specifically where Chart Analysis, Stickiness, Impact Analysis, Pivot Tables, User Sessions, and Cohorts belong. Docs navigation currently approximates this with a Behavior Analytics group and a Default Templates group.
+Navigation mirrors this. There is no separate page per chart visualization type, since they are options within Chart Analysis rather than distinct analyses.
 
-The **Charts** category (Line, Stacked Line, Bar, Metric, Pie, Stacked Bar) has no documentation pages at all and no PRD. Several template pages reference "Line Chart creation page", "Pie Chart creation page", and so on, with nothing to link to.
 
 ### IAM PRD gaps
 
@@ -87,13 +89,10 @@ Claims three condition types and hedges Step 5 with "if available". No PRD. Need
 
 Describes connecting an external source and syncing on a schedule, with imported cohorts read-only. **No third-party system is ever named.** Needed: which integrations exist, how auth is configured, real sync mechanism and cadence.
 
-### `dashboards/overview.mdx`, `create-dashboard.mdx`, `manage-layouts.mdx`
 
-Pre-date the PRD work. The permission and sharing behavior they imply is now covered correctly in `permissions.mdx` and `sharing.mdx`, but the creation and layout flows themselves are still inferred. Needed: the real create-dashboard flow and what layout operations exist.
+### `analysis/retention.mdx`, `analysis/cohorts.mdx`
 
-### `analysis/retention.mdx`, `cohorts.mdx`, `pivot-tables.mdx`, `user-sessions.mdx`
-
-Each gives a confident step-by-step build flow that was never observed. Compare any of them against `analysis/funnels.mdx` or `analysis/stickiness.mdx` for the depth difference. Retention in particular claims day/week/month cohort granularity.
+Both give a confident step-by-step build flow that was never observed. Compare either against `analysis/funnels.mdx` or `analysis/stickiness.mdx` for the depth difference. Retention in particular claims day/week/month cohort granularity, and is referenced by the Product Analytics and Feature Adoption pages, which makes getting it right more urgent.
 
 ---
 
@@ -112,8 +111,9 @@ Present in the UI screenshot, absent from the docs, with no PRD:
 Held deliberately. Do not write pages for these until they ship.
 
 - **Session Engagement** — a complete template PRD exists (5 charts, User Sessions measures), but the feature is not in v1.0.0. The PRD is ready to turn into a page when it ships.
-- **User Flows** — page deleted; `/analysis/user-flows` now redirects to Funnels. Listed as roadmap in `release-notes.mdx`.
-- **Compass**, **Session Replays** — roadmap, no PRD.
+- **User Paths** (previously documented as "User Flows") — page deleted; `/analysis/user-flows` now redirects to Funnels. Listed as roadmap in `release-notes.mdx`. It belongs to the Behavior Analytics category when it ships.
+- **Compass** — belongs to Behavior Analytics when it ships. Roadmap, no PRD.
+- **Session Replays** — roadmap, no PRD.
 
 ---
 
@@ -121,7 +121,7 @@ Held deliberately. Do not write pages for these until they ship.
 
 ### No screenshots anywhere
 
-Zero `<Frame>`, `<img>`, or `![]()` across all 44 pages. `images/image.png` is orphaned.
+Zero `<Frame>`, `<img>`, or `![]()` across all 46 pages. `images/image.png` is orphaned.
 
 This costs most on pages describing visual output: the Engagement Matrix quadrant chart, funnel visualizations, the Impact Analysis Day 0 reference line, the Stickiness distribution curve, and every Product Analytics dashboard. The template pages in particular name exact chart labels and titles that a reader cannot match to anything.
 

@@ -41,28 +41,25 @@ The Events page contains four main areas:
 
 ## KPI Cards
 
-The Events page displays event-level summary metrics:
+The Events page displays four event-level summary metrics.
 
-- **Total Events**
-- **Active Events**
-- **Inactive Events**
-- **Dropped Events**
+<CardGroup cols={2}>
+  <Card title="Total Events" icon="layer-group">
+    The total number of events in the Event Taxonomy.
+  </Card>
 
-### Total Events
+  <Card title="Active Events" icon="circle-check">
+    Unique events that received at least one event in the **last 30 days**.
+  </Card>
 
-The total number of events in the Event Taxonomy.
+  <Card title="Inactive Events" icon="circle-pause">
+    Unique events that received **no** events in the last 30 days.
+  </Card>
 
-### Active Events
-
-The number of unique events that received at least one event in the last 30 days.
-
-### Inactive Events
-
-The number of unique events that received no events in the last 30 days.
-
-### Dropped Events
-
-The number of unique events that have been dropped.
+  <Card title="Dropped Events" icon="circle-xmark">
+    Unique events that have been dropped.
+  </Card>
+</CardGroup>
 
 ---
 
@@ -181,28 +178,36 @@ The default columns are:
 
 Event Visibility describes whether and how an event can be used in reports.
 
-### Visible
+| Status | Selectable in new reports | Existing reports | Incoming data |
+| :-- | :--: | :-- | :-- |
+| **Visible** | ✓ | Work normally | Stored |
+| **Hidden** | ✗ | Continue to function | Stored |
+| **Dropped** | ✗ | Historical data remains | **Not stored** |
 
-The event is available for selection in charts and reports.
+<Tabs>
+  <Tab title="Visible">
+    The event is available for selection in charts and reports.
+  </Tab>
 
-### Hidden
+  <Tab title="Hidden">
+    A hidden event is not available for selection in new charts or reports.
 
-A hidden event is not available for selection in new charts or reports.
+    Existing reports that already use the event continue to function.
+  </Tab>
 
-Existing reports that already use the event continue to function.
+  <Tab title="Dropped">
+    Dropped events are blocked at the **ingestion level**. When an event is dropped:
 
-### Dropped
+    - New incoming data is not stored
+    - Historical data remains available
+    - The event cannot be used in new reports
+    - The action can be reversed using **Undrop**
 
-Dropped events are blocked at the ingestion level.
-
-When an event is dropped:
-
-- New incoming data is not stored.
-- Historical data remains available.
-- The event cannot be used in new reports.
-- The action can be reversed using **Undrop**.
-
-When attempting to drop an event, a confirmation/concern dialog is displayed.
+    <Warning>
+      Dropping an event stops data collection for it. A confirmation dialog is displayed before the change takes effect.
+    </Warning>
+  </Tab>
+</Tabs>
 
 ---
 

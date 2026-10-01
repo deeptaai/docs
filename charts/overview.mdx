@@ -1,18 +1,52 @@
 ---
 title: "Saved Charts"
 sidebarTitle: "Overview"
-description: "Browse, open, edit, share, duplicate, and delete saved charts in Klaritics. The chart listing shows only the charts your permissions allow you to access."
+description: "Saved Charts is the listing of every chart you can access in a Klaritics project. Charts are independent of dashboards and carry their own permissions."
 ---
 
-Saved Charts is the listing of every chart you are allowed to access in a project. A chart is an analysis you have saved — a funnel, a retention curve, a chart analysis, an engagement matrix, and so on.
+A **chart** is a saved analysis. Every analysis type in Klaritics produces one — a funnel, a retention curve, a stickiness distribution, a pivot table, an engagement matrix.
 
-Charts are independent resources. They can be pinned to dashboards, but they do not belong to them: deleting a dashboard leaves its charts untouched.
+**Saved Charts** is the listing of every chart you are allowed to access in a project.
+
+---
+
+## Where charts come from
+
+Charts are created from the **Create Chart or Dashboard** action, which groups what you can build into three categories.
+
+<CardGroup cols={3}>
+  <Card title="Behavior Analytics" icon="chart-line" href="/analysis/funnels">
+    Funnels, Retention, Pivot Tables, User Sessions, Stickiness, Engagement Matrix, Impact Analysis.
+  </Card>
+
+  <Card title="Charts" icon="chart-simple" href="/analysis/chart-analysis">
+    Line, Stacked Line, Bar, Stacked Bar, Column, Stacked Column, Pie, Metric.
+  </Card>
+
+  <Card title="Default Templates" icon="layer-group" href="/templates/overview">
+    Flow Analysis, Feature Adoption, Product KPIs, User Activity.
+  </Card>
+</CardGroup>
+
+---
+
+## Charts are independent of dashboards
+
+This is the rule that explains most of the behavior in this section.
+
+Charts can be pinned to dashboards, but they do not belong to them. The two are separate resources with separate permissions, in both directions.
+
+<Note>
+  Deleting a dashboard does **not** delete the charts it contained. They remain in Saved Charts until you delete them explicitly.
+</Note>
+
+Being able to edit a dashboard does not let you edit the charts on it, and chart-level permissions are always checked before chart data is exposed.
 
 ---
 
 ## What the listing shows
 
-The chart listing displays only the charts the current user is allowed to access, based on visibility:
+The listing displays only the charts you are allowed to access, based on each chart's visibility.
 
 | Visibility | Who sees the chart |
 | :-- | :-- |
@@ -22,58 +56,22 @@ The chart listing displays only the charts the current user is allowed to access
 
 ---
 
-## Actions
-
-Each chart shows actions based on your effective chart permission.
-
-| Effective permission | Available actions |
-| :-- | :-- |
-| **Full Access** | View, Edit, Share, Duplicate, Delete |
-| **Editor** | View, Edit, Share |
-| **Viewer** | View |
-
-### View
-
-You can view chart data and the visualization based on your access, and view the chart configuration in read-only mode. You cannot modify the chart.
-
-### Edit
-
-You can edit the chart title and description, and modify the chart configuration, filters, dimensions and measures, and visualization settings. The exact editable properties follow the chart's own creation and edit behavior.
-
-### Share
-
-A chart can be shared as Private, Restricted, or Project-wide. See [Sharing](/dashboards/sharing) for the full model, including the limits on what you can grant.
-
-### Duplicate
-
-Only a user with Full Access can duplicate a chart. The duplicate receives a new chart ID, is owned by the duplicating user, is Private by default, and does not inherit the original chart's sharing permissions.
-
-### Delete
-
-Deleting requires confirmation. On confirmation, the chart is removed from the project.
-
----
-
-## Creating charts
-
-Only a user with **Full Access** for charts can create a chart. Viewer cannot create charts, and Editor works with existing charts rather than creating new ones.
-
-Charts are created from the **Create Chart or Dashboard** action.
-
----
-
-## Charts and dashboards are independent
-
-Chart access is independent of dashboard access, in both directions. Being able to edit a dashboard does not let you edit the charts on it, and chart-level permissions are always checked before chart data is exposed.
-
-<Note>
-  Deleting a dashboard does not delete the charts it contained. They remain in Saved Charts until deleted explicitly.
-</Note>
-
----
-
 ## Next steps
 
-- [Dashboard and chart permissions](/dashboards/permissions)
-- [Share dashboards and charts](/dashboards/sharing)
-- [Saved Dashboards](/dashboards/overview)
+<CardGroup cols={2}>
+  <Card title="Manage charts" icon="pen" href="/charts/manage-charts">
+    View, edit, share, duplicate, and delete.
+  </Card>
+
+  <Card title="Pin to a dashboard" icon="thumbtack" href="/charts/pin-to-dashboard">
+    Put a chart on Overview or a dashboard.
+  </Card>
+
+  <Card title="Permissions" icon="shield" href="/dashboards/permissions">
+    How effective permission is resolved.
+  </Card>
+
+  <Card title="Saved Dashboards" icon="chart-bar" href="/dashboards/overview">
+    Collections of pinned charts.
+  </Card>
+</CardGroup>

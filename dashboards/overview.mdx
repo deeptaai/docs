@@ -1,35 +1,70 @@
 ---
-title: "Saved Dashboards Overview in Klaritics"
+title: "Saved Dashboards"
 sidebarTitle: "Overview"
-description: "Saved Dashboards in Klaritics let you collect and organize analytical charts in one place. Build, browse, and monitor the metrics that matter to your team."
+description: "Saved Dashboards collect pinned charts into a single view in Klaritics. Dashboards and charts are independent resources with independent permissions."
 ---
 
-Saved Dashboards are the central hub for product analytics in Klaritics. A dashboard is a collection of charts you pin from various analyses, such as charts, funnels, retention curves, and metric cards. Once built, a dashboard gives your team a single screen to monitor product health, track experiments, and share insights.
+A **dashboard** is a collection of charts you have pinned from your analyses. It gives your team a single screen to monitor product health, track experiments, and share insights.
 
-## What you can do with dashboards
+**Saved Dashboards** is the listing of every dashboard you are allowed to access in a project.
 
-- **Pin charts** from any analysis and arrange them visually
-- **Resize and reorder** charts to highlight the most important metrics
-- **Share dashboards** with teammates based on their roles
-- **Export results** for presentations or offline review
-- **Configure alerts** on individual charts so you are notified when metrics change
+---
 
-## Dashboard building blocks
+## Saved Dashboards and Overview are different
 
-Dashboards are made of charts. Charts are visual representations of analyses you create elsewhere in Klaritics. You can learn more about chart types and how to configure them in the Charts section.
+Klaritics has two places a chart can live, and they behave differently.
 
-<CardGroup cols={2}>
-  <Card title="Charts" icon="layout-grid" href="/charts/overview">
-    Learn about chart, metric, table, and custom charts you can pin to dashboards.
-  </Card>
+| | Saved Dashboards | Overview |
+| :-- | :-- | :-- |
+| **Scope** | A dashboard you create and share | A common project-level page |
+| **Who sees it** | Owner and whoever it is shared with | All project users |
+| **Card visibility** | Follows dashboard permissions | Visible to everyone |
+| **Chart interaction** | Follows chart permissions | Follows chart permissions |
 
-  <Card title="Alerts" icon="bell" href="/alerts/overview">
-    Set up notifications on dashboard charts so you never miss a significant change.
-  </Card>
-</CardGroup>
+On Overview, every project user sees the chart **card**, even with no access to the chart itself. Opening and editing are still permission-controlled, and chart data is never exposed to someone without access. See [Pin a chart to a dashboard](/charts/pin-to-dashboard).
+
+---
+
+## Dashboards are independent of charts
+
+A dashboard holds references to charts; it does not own them. Permissions for the two are evaluated separately, in both directions.
+
+<Warning>
+  Access to a dashboard does **not** grant access to the charts on it. A user who can edit a dashboard may still be unable to open a chart pinned to it.
+</Warning>
+
+Deleting a dashboard does not delete its charts. They remain in [Saved Charts](/charts/overview).
+
+---
+
+## What the listing shows
+
+The listing displays only the dashboards you are allowed to access, based on each dashboard's visibility.
+
+| Visibility | Who sees the dashboard |
+| :-- | :-- |
+| **Private** | Owner only |
+| **Restricted** | Owner and explicitly shared users |
+| **Project-wide** | Project users, subject to their dashboard project-level permission |
+
+---
 
 ## Next steps
 
-- [Create a dashboard](/dashboards/create-dashboard)
-- [Manage dashboard layouts](/dashboards/manage-layouts)
-- [Share and export dashboards](/dashboards/sharing)
+<CardGroup cols={2}>
+  <Card title="Create a dashboard" icon="plus" href="/dashboards/create-dashboard">
+    Who can create one, and what happens on creation.
+  </Card>
+
+  <Card title="Manage dashboards" icon="pen" href="/dashboards/manage-dashboards">
+    View, edit, lay out, duplicate, and delete.
+  </Card>
+
+  <Card title="Sharing" icon="users" href="/dashboards/sharing">
+    Private, Restricted, and Project-wide.
+  </Card>
+
+  <Card title="Permissions" icon="shield" href="/dashboards/permissions">
+    How effective permission is resolved.
+  </Card>
+</CardGroup>

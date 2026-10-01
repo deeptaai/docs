@@ -1,0 +1,60 @@
+---
+title: "Pin a Chart to a Dashboard"
+sidebarTitle: "Pin to Dashboard"
+description: "Pin a Klaritics chart to the Overview page, an existing dashboard, or a new dashboard, and understand how permissions follow the chart rather than the dashboard."
+---
+
+Once an analysis is configured, you can pin its visualization so it is visible alongside other charts.
+
+---
+
+## Three destinations
+
+<CardGroup cols={3}>
+  <Card title="Overview" icon="house">
+    The project-level page every project user can see.
+  </Card>
+
+  <Card title="Existing dashboard" icon="chart-bar">
+    Add the chart to a dashboard you already have.
+  </Card>
+
+  <Card title="New dashboard" icon="plus">
+    Create a dashboard and add the chart to it.
+  </Card>
+</CardGroup>
+
+---
+
+## Pinning does not change permissions
+
+Pinning places a chart somewhere. It does not grant anyone access to it.
+
+A chart's permissions travel with the chart, not with the dashboard it sits on. Someone who can open a dashboard may still be unable to open a chart pinned to it, and Klaritics shows a permission-restricted state rather than exposing the data.
+
+---
+
+## Pinning to Overview
+
+Overview behaves differently from a dashboard, because it is a common project-level page.
+
+A chart pinned to Overview has its **card** visible to all project users. What happens when they interact with it still depends on their chart permission.
+
+| Chart permission | Sees the card | Can open | Can edit |
+| :-- | :--: | :--: | :--: |
+| Full Access | ✓ | ✓ | ✓ |
+| Editor | ✓ | ✓ | ✓ |
+| Viewer | ✓ | ✓ | ✗ |
+| No Access | ✓ | ✗ | ✗ |
+
+<Warning>
+  Overview visibility is project-level. A user with no access to the chart still sees the card, but cannot open or edit it, and the chart data is never exposed.
+</Warning>
+
+---
+
+## Next steps
+
+- [Saved Dashboards](/dashboards/overview)
+- [Manage charts](/charts/manage-charts)
+- [Permissions](/dashboards/permissions)

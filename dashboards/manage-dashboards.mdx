@@ -1,0 +1,91 @@
+---
+title: "Manage Dashboards"
+sidebarTitle: "Manage Dashboards"
+description: "View, edit, lay out, duplicate, and delete Klaritics dashboards. Available actions follow your effective dashboard permission."
+---
+
+Each dashboard in the listing shows the actions your **effective dashboard permission** allows.
+
+| Effective permission | View | Edit | Share | Duplicate | Delete |
+| :-- | :--: | :--: | :--: | :--: | :--: |
+| **Full Access** | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Editor** | ✓ | ✓ | ✓ | ✗ | ✗ |
+| **Viewer** | ✓ | ✗ | ✗ | ✗ | ✗ |
+
+See [Permissions](/dashboards/permissions) for how effective permission is calculated.
+
+---
+
+## View
+
+Opening a dashboard in view mode makes the configuration **read-only**. You cannot:
+
+- Change the dashboard title
+- Change the description
+- Add charts
+- Remove charts
+- Modify the dashboard layout
+- Modify chart configuration through the dashboard
+
+You consume the dashboard's content according to your **chart** permissions — which are evaluated separately from your dashboard permission.
+
+---
+
+## Edit
+
+Edit mode lets you change:
+
+- Dashboard title
+- Dashboard description
+- Which charts are on the dashboard — add existing charts you have access to, or remove charts
+- The dashboard layout
+
+<Warning>
+  You can edit an existing chart from within a dashboard **only if** you hold the required chart permission for that chart.
+</Warning>
+
+**Example**
+
+A user holds `Dashboard 1 = Editor` and `Chart 1 = Viewer`. They can edit Dashboard 1 — retitle it, rearrange it, add and remove charts — but cannot edit Chart 1.
+
+<Note>
+  Adding an existing chart to a dashboard requires access to that chart. Creating a **new** chart requires chart Full Access.
+</Note>
+
+---
+
+## Duplicate
+
+Only a user with Full Access can duplicate a dashboard. The duplicate:
+
+- Receives a new unique dashboard ID
+- Uses a default name such as `Dashboard 1 - Copy`
+- Is owned by the user who performed the duplication
+- Is **Private** by default
+- Does **not** inherit the original dashboard's sharing permissions
+
+Duplicating is useful when forking a dashboard for a different team, time period, or experiment. The same principle applies when duplicating charts.
+
+---
+
+## Delete
+
+Deleting shows a confirmation dialog that clearly identifies the dashboard being deleted. On confirmation, the dashboard is removed from the project.
+
+<Warning>
+  Deleting a dashboard does **not** delete the charts it contained. Those charts remain available in [Saved Charts](/charts/overview) unless you delete them explicitly.
+</Warning>
+
+---
+
+## Enforcement
+
+Action visibility in the UI is not the only control. Every permission-sensitive operation is validated at the backend and API level using the same model, so a Viewer cannot call an edit API, an Editor cannot call the delete API, and a private dashboard cannot be reached through a manually constructed URL.
+
+---
+
+## Next steps
+
+- [Sharing](/dashboards/sharing)
+- [Permissions](/dashboards/permissions)
+- [Manage charts](/charts/manage-charts)
