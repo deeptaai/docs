@@ -1,2 +1,6 @@
 # Internal source documents. This repository is public — PRDs stay local.
 PRDs/
+
+# Identifying-strings list for screenshot scrubbing — names the very people and
+# customer the scrubbing protects. Never commit.
+tools/scrub-names.local.js

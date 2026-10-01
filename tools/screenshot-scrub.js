@@ -41,15 +41,19 @@
   const initialsOf = (n) => n.split(" ").map(w => w[0]).join("").toUpperCase();
 
   // ------------------------------------------------- known identifying strings
-  // Free-text occurrences the key-based rules can't catch (prose, headings, URLs).
-  const NAMED = [
-    ["Firstname Lastname", "Alex Morgan"], ["Firstname", "Alex"], ["Lastname", "Morgan"],
-    ["Second Teammate", "Jordan Ellis"], ["Second", "Jordan"], ["Teammate", "Ellis"],
-    ["Third Teammate", "Sam Rivera"], ["Third", "Sam"], ["Colleague", "Rivera"],
-    ["user@yourcompany.com", "alex@example.com"], ["user", "alex"],
-    ["yourcompany.com", "example.com"], ["yourinstance.example.net", "example.com"],
-    ["Customer Name", "Acme Inc"], ["Customer", "Acme"], ["Customer Programme", "Core Program"],
-  ].sort((a, b) => b[0].length - a[0].length);
+  // Free-text occurrences the key-based rules cannot catch (prose, headings, URLs).
+  //
+  // This list is NOT stored here: it would publish the very names it exists to
+  // hide. Load `scrub-names.local.js` (gitignored) in the console FIRST, which
+  // sets window.__SCRUB_NAMES. See scrub-names.example.js for the shape.
+  const NAMED = (window.__SCRUB_NAMES || []).slice().sort((a, b) => b[0].length - a[0].length);
+  if (!NAMED.length) {
+    console.warn(
+      "[scrub] window.__SCRUB_NAMES is empty. Key-based rules still apply, but " +
+      "organization, people and customer-specific strings in free text will NOT " +
+      "be replaced. Load scrub-names.local.js first."
+    );
+  }
   const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const RE = NAMED.map(([f, t]) => [new RegExp(esc(f), "gi"), t]);
   const named = (s) => RE.reduce((a, [re, t]) => a.replace(re, t), s);

@@ -25,12 +25,16 @@ sweep is kept as a second line of defense for anything not delivered as JSON.
 ## Usage
 
 1. Log into the instance in Chrome and select the project to capture.
-2. Paste the contents of `screenshot-scrub.js` into the DevTools console.
-3. Trigger a data refresh (Refresh Data, or re-navigate) so all data flows
+2. Copy `scrub-names.example.js` to `scrub-names.local.js` and fill in the real
+   organization, people and customer strings. That file is **gitignored** and
+   must stay so — it names exactly what the scrubbing is meant to hide.
+3. Paste `scrub-names.local.js` into the DevTools console **first**, then
+   `screenshot-scrub.js`. The script warns if the list is empty.
+4. Trigger a data refresh (Refresh Data, or re-navigate) so all data flows
    through the patched transport.
-4. Verify on screen before capturing. **Always look at the actual pixels** —
+5. Verify on screen before capturing. **Always look at the actual pixels** —
    do not trust the script blindly.
-5. Capture at a 1512x950 window, in both light and dark themes.
+6. Capture at a 1512x950 window, in both light and dark themes.
 
 ## Conventions
 
