@@ -16,12 +16,14 @@ Get these right — the docs have been inconsistent about them before.
 | Use | Not | Note |
 | --- | --- | --- |
 | Chart Analysis | Insights | Same module. "Insights" was an earlier internal name and must not appear in the docs |
+| chart | widget, card, tile | A saved analysis. "Widget" is not a product term — the UI says Saved Charts, Chart Listing, Create Chart |
 | `project_id` | `app_id` | The credential every SDK initializes with |
 | `server_host` | endpoint, base URL | The URL of the customer's self-hosted instance |
-| widget | card, tile | An analysis pinned to a dashboard |
-| saved dashboard | board, report | A collection of widgets |
-| module | section, feature area | A top-level product area (Analysis, Data, Templates, …) |
-| cohort | segment, audience | A named group of users |
+| saved dashboard | board, report | A collection of pinned charts |
+| module | section, feature area | A top-level product area (Product Analytics, Data, Templates, …) |
+| cohort | segment, audience | A named group of users. Note "segment" *is* a distinct concept in Product Analytics dashboards |
+| Full Access / Editor / Viewer | admin, owner | The three dashboard and chart permission levels |
+| Settings → Users & Permissions | Access Control | Where roles and users live. The IAM PRD's "Access Control" path is outdated |
 | self-hosted | on-prem, on-premise | Klaritics only ships self-hosted |
 
 Module names are title case when naming the product feature (Event Taxonomy, Engagement Matrix). Lowercase when used generically ("build a chart analysis", "the funnel shows…").
@@ -42,6 +44,8 @@ Module names are title case when naming the product feature (Event Taxonomy, Eng
 ## Content boundaries
 
 **Do not invent product behavior.** A large share of this site was originally generated from inference rather than from the product, and correcting that is ongoing work. See `CONTENT-GAPS.md` for the current status of every page.
+
+Source PRDs live in `PRDs/` (gitignored from Mintlify). When a PRD names a feature but does not define it — the Stickiness "Change Over Time" option is the current example — say the option exists and stop there. Do not fill the gap by inference; add it to `CONTENT-GAPS.md` instead.
 
 - Pages listed as **verified** in `CONTENT-GAPS.md` were written against the real product. Edit them freely
 - Pages listed as **unverified** are placeholder-quality. Do not deepen them, add specifics to them, or cite them as a source of truth. If asked to improve one, ask for the underlying product detail first

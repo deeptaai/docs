@@ -1,0 +1,377 @@
+---
+title: "Stickiness"
+sidebarTitle: "Stickiness"
+description: "Measure how consistently users repeat an event in Klaritics. Analyze weekly or monthly active days with cumulative and non-cumulative distributions to find habitual users."
+---
+
+Stickiness measures how frequently users engage with a specific event over a selected time interval.
+
+Most analyses answer *how many users performed an event*. Stickiness answers a different question:
+
+> How consistently and repeatedly are users performing the event?
+
+Use Stickiness to understand habit formation, engagement quality, retention behavior, the split between casual and power users, and how consistently a feature is adopted.
+
+---
+
+## What Stickiness answers
+
+Stickiness helps you answer:
+
+- How many days per week or per month do users perform this event?
+- What share of users are habitual rather than occasional?
+- Is engagement depth improving or declining over time?
+- How does repeat usage compare across features?
+- How strong is retention for this behavior?
+
+Stickiness is one of the strongest indicators of product-market fit, habit formation, engagement quality, and retention strength. Teams commonly apply it to messaging apps measuring daily conversations, SaaS platforms measuring recurring workflows, collaboration tools measuring repeated interactions, and social platforms measuring return frequency.
+
+---
+
+## Core concepts
+
+| Concept | Definition |
+| :-- | :-- |
+| **Event** | The user action being analyzed, such as `Send Message`. |
+| **Active Day** | A day on which a user performed the selected event at least once. |
+| **Stickiness** | The number of distinct days a user performed an event within a selected interval. |
+| **Interval** | The window the analysis measures across: Weekly or Monthly. |
+| **Bucket** | A group of users who share the same number of active days. |
+
+<Warning>
+  Multiple events on the same day count as only **one** active day. A user who performs the event ten times on Tuesday has one active day, not ten.
+</Warning>
+
+---
+
+## Configuration options
+
+| Configuration | Options |
+| :-- | :-- |
+| **Event** | The event to analyze |
+| **Interval** | Weekly / Monthly |
+| **Shown as** | Stickiness |
+| **Computed as** | Non-Cumulative / Cumulative |
+| **Visualization** | Line chart / Bar chart / Table |
+| **Metric** | Unique Users |
+
+---
+
+## Intervals
+
+<Tabs>
+  <Tab title="Weekly">
+    **Window:** 7 calendar days
+
+    **Example:** Monday → Sunday
+
+    **Maximum bucket:** 7 days
+  </Tab>
+
+  <Tab title="Monthly">
+    **Window:** Calendar month
+
+    **Example:** April 1 → April 30, May 1 → May 31
+
+    **Maximum bucket:** 30 days, 31 days
+  </Tab>
+</Tabs>
+
+---
+
+## Build a Stickiness analysis
+
+<Steps>
+  <Step title="Select an event">
+    Choose the event to analyze. Stickiness supports a **single event only**. You can apply property filters to the selected event.
+  </Step>
+  <Step title="Choose the interval">
+    Select Weekly or Monthly. This determines the size of the measurement window and the maximum number of active days.
+  </Step>
+  <Step title="Set Shown as">
+    Select **Stickiness**. This is the default.
+  </Step>
+  <Step title="Set Computed as">
+    Select **Non-Cumulative** or **Cumulative**. Non-Cumulative is the default.
+  </Step>
+  <Step title="Apply filters">
+    Optionally narrow the analysis using event properties, user properties, or cohorts.
+  </Step>
+  <Step title="Select a date range">
+    Choose a preset or custom range. The range always snaps to complete interval boundaries.
+  </Step>
+  <Step title="Review the results">
+    Switch between the line chart, bar chart, and data table, then export if needed.
+  </Step>
+</Steps>
+
+---
+
+## Metric section
+
+The metric section contains the event selector along with the **Shown as** and **Computed as** dropdowns.
+
+### Event selection
+
+You can select a single event only, and you can apply properties to the selected event.
+
+### Shown as
+
+Two options are available: **Stickiness** and **Change Over Time**. Stickiness is selected by default.
+
+### Computed as
+
+Two options are available: **Non-Cumulative** and **Cumulative**. Non-Cumulative is selected by default.
+
+The two modes answer different questions:
+
+| Mode | Meaning |
+| :-- | :-- |
+| **Non-Cumulative** | Exactly N days |
+| **Cumulative** | At least N days |
+
+---
+
+## Filters
+
+Click the **Filter** option to open the properties popup. The following property types are available:
+
+- All properties
+- Event properties
+- User properties
+- Cohorts
+
+---
+
+## How Stickiness is calculated
+
+Both modes work from the same underlying data: the number of active days each user recorded in the interval.
+
+For the examples below, assume this dataset:
+
+| User | Active Days |
+| :-- | :-- |
+| U1 | 1 |
+| U2 | 2 |
+| U3 | 3 |
+| U4 | 5 |
+| U5 | 7 |
+
+### Non-Cumulative
+
+Non-Cumulative mode answers:
+
+> How many users performed the event on **exactly** N days?
+
+Each user belongs to exactly one bucket.
+
+```text
+Bucket Users(N) = COUNT(users where activeDays = N)
+```
+
+Applied to the dataset above, the weekly distribution is:
+
+| Active Days | Users |
+| :-- | :-- |
+| 1 day | 1 |
+| 2 days | 1 |
+| 3 days | 1 |
+| 5 days | 1 |
+| 7 days | 1 |
+
+Total users is the sum of every bucket:
+
+```text
+Total Users = Σ Bucket Users(n), for n = 1 to 7
+```
+
+Each bucket is then expressed as a percentage:
+
+```text
+Bucket Percentage = (Bucket Users / Total Users) × 100
+```
+
+For the 3-day bucket:
+
+```text
+1 / 5 × 100 = 20%
+```
+
+**Meaning:** 20% of users used the feature in exactly 3 days.
+
+#### Monthly example
+
+The same method applies across a calendar month. With this distribution:
+
+| Exact Days | Users |
+| :-- | :-- |
+| 1 day | 1,414 |
+| 14 days | 894 |
+| 15 days | 873 |
+| 20 days | 89 |
+
+Total users: **8,581**
+
+For 14-day users:
+
+```text
+894 / 8581 × 100 = 10.42%
+```
+
+**Meaning:** 10.42% of users used the feature on exactly 14 days.
+
+### Cumulative
+
+Cumulative mode answers:
+
+> How many users performed the event on **at least** N days?
+
+Users appear in multiple buckets.
+
+```text
+Cumulative Bucket(N) = Σ NonCumulative Bucket(i), for i = N to MaxDays
+```
+
+Using the same dataset:
+
+| Exact Days | Users |
+| :-- | :-- |
+| 1 | 1 |
+| 2 | 1 |
+| 3 | 1 |
+| 5 | 1 |
+| 7 | 1 |
+
+The cumulative counts become:
+
+| Bucket | Calculation | Users |
+| :-- | :-- | :-- |
+| ≥ 1 day | 1 + 1 + 1 + 1 + 1 | 5 |
+| ≥ 3 days | 1 + 1 + 1 | 3 |
+| ≥ 5 days | 1 + 1 | 2 |
+
+Percentages use the same shape of formula:
+
+```text
+Cumulative Percentage = (Cumulative Users / Total Users) × 100
+```
+
+For users with at least 3 active days:
+
+```text
+3 / 5 × 100 = 60%
+```
+
+**Meaning:** 60% of users used the feature at least 3 days.
+
+---
+
+## Visualization
+
+You can switch the visualization between a **Line chart** and a **Bar chart**. Both use the same axes:
+
+| Axis | Shows |
+| :-- | :-- |
+| **X-axis** | Time intervals. Weekly = 1–7 days. Monthly = 1–30 or 1–31 days. |
+| **Y-axis** | User Count % |
+
+---
+
+## Data table
+
+The data table displays these columns by default:
+
+- Interval date
+- Users count
+- Day-wise distribution
+
+All users' data is shown by default. Expanding the table reveals the data for each interval.
+
+The table includes a search bar that works on the **interval date** column, and results can be exported as CSV.
+
+---
+
+## Date range selection
+
+The date range selector adapts to the interval you selected, and always normalizes your selection to complete interval boundaries.
+
+<Tabs>
+  <Tab title="Weekly">
+    **Presets**
+
+    - Last 4 Weeks
+    - Last 8 Weeks
+    - Last 12 Weeks
+    - This Month
+    - This Quarter
+    - This Year
+
+    **Custom options:** Between, Last, Since, This
+
+    **Selection behavior**
+
+    Date selection must always align to complete weekly boundaries, and you cannot select dates that fall in the middle of a week. If you select a custom range, Klaritics adjusts it to the corresponding week start date and week end date.
+
+    **Example**
+
+    If the workspace week starts on Monday and you select `May 14, 2026`, the system converts it to:
+
+    ```text
+    May 11, 2026 → May 17, 2026
+    ```
+  </Tab>
+
+  <Tab title="Monthly">
+    **Presets**
+
+    - Last 3 Months
+    - Last 6 Months
+    - Last 12 Months
+    - This Quarter
+    - This Year
+
+    **Custom options:** Between, Last, Since, This
+
+    **Selection behavior**
+
+    Date selection must always align to complete monthly boundaries, and you cannot select dates that fall in the middle of a month. If you select a custom range, Klaritics adjusts it to the corresponding month start date and month end date.
+
+    **Example**
+
+    If you select `April 18, 2026`, the system converts it to:
+
+    ```text
+    April 1, 2026 → April 30, 2026
+    ```
+  </Tab>
+</Tabs>
+
+### Validation rules
+
+| Interval | Allowed selection | Auto adjustment |
+| :-- | :-- | :-- |
+| **Weekly** | Full weeks only | Snap to week start/end |
+| **Monthly** | Full months only | Snap to month start/end |
+
+<Note>
+  The date picker visually indicates whether selection is happening at week level or month level. Partial week and partial month selections are not permitted, and all charts, tables, and calculations use normalized interval boundaries only.
+</Note>
+
+---
+
+## In summary
+
+- Stickiness counts **distinct active days**, not event volume.
+- A day counts once no matter how many times the event fires.
+- **Non-Cumulative** splits users into exactly-N-day buckets; each user appears once.
+- **Cumulative** counts users with at least N active days; users appear in multiple buckets.
+- Weekly caps at 7 active days; Monthly caps at 30 or 31.
+- Date ranges always snap to whole weeks or whole months.
+
+---
+
+## Next steps
+
+- [Retention](/analysis/retention) to measure whether users return at all
+- [Engagement Matrix](/analysis/engagement-matrix) to compare breadth against depth across features
+- [Chart Analysis](/analysis/chart-analysis) to measure frequency per user for a single event

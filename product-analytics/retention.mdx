@@ -1,0 +1,100 @@
+---
+title: "Retention Dashboard"
+sidebarTitle: "Retention"
+description: "Track overall retention, Day 7 retention over time, and usage interval in Klaritics, with configurable retention events and daily or weekly intervals."
+---
+
+The Retention dashboard shows how many users come back to your product over time. In plain terms:
+
+> Are users coming back after using the product?
+
+It covers Day 1, Day 7, and Day 30 retention, cohort analysis, and returning versus churned users — for example, 100 users joined and 30 came back after 7 days. Use it to measure product stickiness and improve long-term engagement.
+
+---
+
+## KPI metric cards
+
+### Overall Retention
+
+The percentage of users that perform an event and return to perform that event on or after a specific day. Tracks how many users return across:
+
+```text
+Day 0 → Day 1 → Day 2 → ... → Day N
+```
+
+By default, the selected event is **Any Event**.
+
+### Day 7 Retention Over Time
+
+The percentage of users that perform an event and return to perform that event on or after Day 7.
+
+### Usage Interval
+
+The percentage of active users that have performed Any Event with a median frequency of X days.
+
+### Explore further
+
+An option is provided to continue in the chart creation interface. Clicking it redirects you to the [Retention](/analysis/retention) creation page.
+
+---
+
+## Breakdown and metrics table
+
+Break metrics down by specific dimensions to identify behavior differences across segments. You can select any available property.
+
+The retention data table is shown for the selected event.
+
+---
+
+## Configuration
+
+Click **Configurations** to open the Product Analytics Configuration page and land on the Retention Analysis creation page.
+
+### Retention events
+
+> Which event best represents a user returning to and engaging with your product?
+
+Select events using the event selector, with event filter support. Default value is **Any Event**, and you can select **two** events.
+
+### Retention interval
+
+> What is the retention interval you are interested in?
+
+| Type | Options |
+| :-- | :-- |
+| **Daily Retention** | Day 1, Day 7, Day 14, Day 30 |
+| **Weekly Retention** | Week 1, Week 2, Week 3, Week 4 |
+
+Default selection: **Day 7, Week 1**. The selected intervals determine which retention metrics appear on the dashboard.
+
+### Default segment
+
+> Apply a default segment
+
+A segment selector, defaulting to **All Users**. The chosen segment applies across dashboards, and all analytics queries use it unless changed.
+
+### Saving
+
+**Save** stores all configuration changes.
+
+<Warning>
+  At least one event must be selected before the configuration can be saved.
+</Warning>
+
+**Discard Changes** reverts all unsaved changes.
+
+Configuration changes impact KPI metrics, charts, retention calculations, and the retention table.
+
+---
+
+## Filters and controls
+
+Filter the dashboard by **user properties** or **session properties**. Segments, the data freshness indicator, date range, and time granularity work as described in the [Product Analytics overview](/product-analytics/overview).
+
+---
+
+## Next steps
+
+- [Retention analysis](/analysis/retention) to build a standalone retention report
+- [Stickiness](/analysis/stickiness) to measure how many days users repeat an event
+- [Product Analytics overview](/product-analytics/overview)

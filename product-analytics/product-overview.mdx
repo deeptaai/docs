@@ -1,0 +1,145 @@
+---
+title: "Product Overview Dashboard"
+sidebarTitle: "Product Overview"
+description: "A high-level view of Klaritics product health: active users, new users, and Day 7 retention, with a trend chart that follows the selected KPI."
+---
+
+The Product Overview dashboard is a high-level summary of product performance. In plain terms, it answers:
+
+> How is my product doing overall?
+
+It covers active users, new users, session duration, retention, and trends over time — useful for a quick daily check of product health by product managers and leadership.
+
+---
+
+## KPI metric cards
+
+Three cards display the high-level metrics.
+
+| Card | Definition | Metric type | Purpose |
+| :-- | :-- | :-- | :-- |
+| **Overall Active Users** | Total number of unique users who performed any tracked event during the selected time range | Unique users | Measures overall product activity |
+| **Overall New Users** | Number of users who interacted with the product for the first time during the selected period | Unique users | Measures user acquisition growth |
+| **Day 7 New User Retention** | Percentage of users who return 7 days after their first interaction | — | Measures product stickiness |
+
+---
+
+## Trend chart
+
+The trend chart visualizes how the selected key metric evolves over time. It updates dynamically based on which KPI card is selected; **Overall Active Users** is selected by default.
+
+### Axes
+
+| Axis | Shows |
+| :-- | :-- |
+| **X-axis** | Date |
+| **Y-axis** | Unique user count |
+
+### Hover
+
+Hovering over the chart displays:
+
+- Date
+- Metric
+- User count
+- Percentage change compared to the previous day, as an increase or decrease
+
+### Click actions
+
+Clicking a data point lets you:
+
+- View Users
+- Download Users
+- Create Cohort
+
+### Visualization options
+
+Switch chart type using the dropdown selector:
+
+- Line Chart
+- Stacked Line Chart
+- Bar Chart
+- Stacked Bar Chart
+- Pie Chart
+
+### Empty state
+
+If no data is available for the selected configuration:
+
+```text
+Oops! No data matches your current chart setup.
+```
+
+---
+
+## Breakdown and metrics table
+
+Break metrics down by specific dimensions to identify behavior differences across segments. You can select any available property for the breakdown.
+
+The metrics table displays numerical values for:
+
+| Metric | Description |
+| :-- | :-- |
+| **Overall Active Users** | Unique active users |
+| **Overall New Users** | New users acquired |
+
+---
+
+## Configuration
+
+Click **Configurations** to open the Product Overview configuration page.
+
+### Active user definition
+
+> Which event best represents a user actively engaging with your product?
+
+Select an event using the event selector, with event filter support. This defines what counts as an active user, and is used in **Overall Active Users** and **Weekly Active Users**.
+
+### New user definition
+
+> What event represents a new user action on your Product?
+
+Select an event, with optional filter support. Default value is `New User - Day 0`. This defines how new users are identified, and is used in **Overall New Users** and retention calculations.
+
+### Retention interval
+
+> What is the retention interval you are interested in?
+
+A start and end event section lets you choose the events.
+
+| Type | Options |
+| :-- | :-- |
+| **Daily Retention** | Day 1, Day 7, Day 14, Day 30 |
+| **Weekly Retention** | Week 1, Week 2, Week 3, Week 4 |
+
+Default selection: **Day 7, Week 1**. The selected intervals determine which retention metrics appear on the dashboard.
+
+### Breakdown
+
+> How do you want to break down the Product Overview Dashboard?
+
+A multi-select dropdown defines the default breakdown dimensions, applied to all charts in the dashboard.
+
+### Default segment
+
+> Apply a default segment
+
+A segment selector, defaulting to **All Users**. The chosen segment applies across dashboards, and all analytics queries use it unless changed.
+
+### Saving
+
+**Save** stores all configuration changes and updates the dashboard immediately.
+
+<Warning>
+  At least one event must be selected for both the **active user** and **new user** definitions before the configuration can be saved.
+</Warning>
+
+**Discard Changes** reverts all unsaved changes.
+
+---
+
+## Next steps
+
+- [Onboarding](/product-analytics/onboarding)
+- [Retention](/product-analytics/retention)
+- [Product Analytics overview](/product-analytics/overview)

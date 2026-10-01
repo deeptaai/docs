@@ -1,0 +1,117 @@
+---
+title: "Product Analytics"
+sidebarTitle: "Overview"
+description: "Four pre-built Klaritics dashboards covering product health, onboarding, feature engagement, and retention, each driven by events you define once in Configurations."
+---
+
+Product Analytics gives you four dashboards covering different aspects of product performance. Each one is pre-built: you define which events represent your product's key actions, and the dashboards populate from there.
+
+<CardGroup cols={2}>
+  <Card title="Product Overview" icon="gauge" href="/product-analytics/product-overview">
+    Overall product health — active users, new users, and retention trends.
+  </Card>
+
+  <Card title="Onboarding" icon="route" href="/product-analytics/onboarding">
+    How new users get started, and where they drop off.
+  </Card>
+
+  <Card title="Feature Engagement" icon="puzzle-piece" href="/product-analytics/feature-engagement">
+    Which features users actually use, and how often.
+  </Card>
+
+  <Card title="Retention" icon="rotate" href="/product-analytics/retention">
+    Whether users come back, and how usage intervals are distributed.
+  </Card>
+</CardGroup>
+
+---
+
+## What each dashboard is for
+
+| Dashboard | Purpose | Answers |
+| :-- | :-- | :-- |
+| **Product Overview** | Overall product health | How is my product doing overall? |
+| **Onboarding** | New user journey | Are new users able to get started easily? |
+| **Feature Engagement** | Feature usage | Which features are users actually using? |
+| **Retention** | User return behavior | Are users coming back after using the product? |
+
+---
+
+## Controls shared across the dashboards
+
+All four dashboards share the same set of global controls.
+
+### Filters
+
+Filter the entire dashboard by user properties or event properties. All metrics and charts update dynamically when filters are applied.
+
+### Segments
+
+Segments let you analyze specific groups of users — new users, paying users, users from a particular campaign. You can create your own segments.
+
+### Data freshness indicator
+
+Displays the time of the last data update, so you know how recent the numbers are.
+
+```text
+Data from 3 min ago
+```
+
+### Date range
+
+| Option |
+| :-- |
+| Today |
+| Yesterday |
+| Last 7 days |
+| Last 30 days |
+| Custom date range |
+
+### Time granularity
+
+Granularity defines how data points appear in the chart. Product Overview, Onboarding, and Retention support Hourly, Daily, Weekly, Monthly, and Quarterly. Feature Engagement supports Daily, Weekly, Monthly, and Quarterly.
+
+---
+
+## Configurations
+
+Each dashboard is driven by events you choose. Click **Configurations** to open the Product Analytics Configuration page, which has a left navigation panel containing:
+
+- Product Overview *(selected by default)*
+- Onboarding Analysis
+- Feature Engagement
+- Retention Analysis
+
+Configuration changes take effect on save and impact KPI metrics, charts, retention calculations, and breakdown tables.
+
+---
+
+## Data refresh
+
+Dashboards refresh automatically when any of the following change:
+
+- Filters
+- Segments
+- Date range
+- Breakdown dimension
+
+---
+
+## Empty state
+
+When no data matches the current setup, the dashboard shows:
+
+```text
+Oops! No data matches your current chart setup.
+```
+
+This happens when filters exclude all data, when the events are not yet being tracked, or when the date range contains no events.
+
+---
+
+## Next steps
+
+- [Product Overview](/product-analytics/product-overview)
+- [Onboarding](/product-analytics/onboarding)
+- [Feature Engagement](/product-analytics/feature-engagement)
+- [Retention](/product-analytics/retention)

@@ -19,47 +19,22 @@
         ]
       },
       {
-        "group": "User Management",
+        "group": "Cohorts",
         "icon": "users",
         "pages": [
-          "user-management/roles",
-          "user-management/users"
-        ]
-      },
-      {
-        "group": "Analysis",
-        "icon": "chart-line",
-        "pages": [
-          "analysis/chart-analysis",
-          "analysis/funnels",
-          "analysis/retention",
           "analysis/cohorts",
-          "analysis/user-flows",
-          "analysis/engagement-matrix",
-          "analysis/impact-analysis",
-          "analysis/pivot-tables",
-          "analysis/user-sessions"
+          "settings/third-party-cohorts"
         ]
       },
       {
-        "group": "Dashboards",
-        "icon": "chart-bar",
+        "group": "Product Analytics",
+        "icon": "gauge",
         "pages": [
-          "dashboards/overview",
-          "dashboards/create-dashboard",
-          "dashboards/manage-layouts",
-          "dashboards/share-and-export"
-        ]
-      },
-      {
-        "group": "Widgets",
-        "icon": "puzzle-piece",
-        "pages": [
-          "widgets/overview",
-          "widgets/chart-widgets",
-          "widgets/metric-widgets",
-          "widgets/table-widgets",
-          "widgets/custom-widgets"
+          "product-analytics/overview",
+          "product-analytics/product-overview",
+          "product-analytics/onboarding",
+          "product-analytics/feature-engagement",
+          "product-analytics/retention"
         ]
       },
       {
@@ -72,22 +47,55 @@
         ]
       },
       {
-        "group": "Templates",
-        "icon": "layer-group",
+        "group": "Behavior Analytics",
+        "icon": "chart-line",
         "pages": [
-          "templates/overview",
-          "templates/product-analytics",
-          "templates/flow-analysis",
-          "templates/feature-adoption",
-          "templates/product-kpis"
+          "analysis/chart-analysis",
+          "analysis/funnels",
+          "analysis/retention",
+          "analysis/stickiness",
+          "analysis/engagement-matrix",
+          "analysis/impact-analysis",
+          "analysis/pivot-tables",
+          "analysis/user-sessions"
         ]
       },
       {
-        "group": "Alerts & Integrations",
-        "icon": "bell",
+        "group": "Default Templates",
+        "icon": "layer-group",
         "pages": [
-          "alerts/overview",
-          "integrations/third-party-cohorts"
+          "templates/overview",
+          "templates/flow-analysis",
+          "templates/feature-adoption",
+          "templates/product-kpis",
+          "templates/user-activity"
+        ]
+      },
+      {
+        "group": "Saved Charts",
+        "icon": "chart-simple",
+        "pages": [
+          "charts/overview"
+        ]
+      },
+      {
+        "group": "Saved Dashboards",
+        "icon": "chart-bar",
+        "pages": [
+          "dashboards/overview",
+          "dashboards/create-dashboard",
+          "dashboards/manage-layouts",
+          "dashboards/sharing",
+          "dashboards/permissions"
+        ]
+      },
+      {
+        "group": "Settings",
+        "icon": "gear",
+        "pages": [
+          "settings/roles",
+          "settings/users",
+          "settings/alerts"
         ]
       },
       {
@@ -122,6 +130,34 @@
   },
   "redirects": [
     {
+      "source": "/alerts/overview",
+      "destination": "/settings/alerts"
+    },
+    {
+      "source": "/analysis/user-flows",
+      "destination": "/analysis/funnels"
+    },
+    {
+      "source": "/chart-analysis",
+      "destination": "/analysis/chart-analysis"
+    },
+    {
+      "source": "/dashboards/share-and-export",
+      "destination": "/dashboards/sharing"
+    },
+    {
+      "source": "/integrations/third-party-cohorts",
+      "destination": "/settings/third-party-cohorts"
+    },
+    {
+      "source": "/kmp",
+      "destination": "/sdk/kmp"
+    },
+    {
+      "source": "/templates/product-analytics",
+      "destination": "/product-analytics/overview"
+    },
+    {
       "source": "/untitled-page",
       "destination": "/analysis/engagement-matrix"
     },
@@ -138,12 +174,32 @@
       "destination": "/data/event-taxonomy"
     },
     {
-      "source": "/chart-analysis",
-      "destination": "/analysis/chart-analysis"
+      "source": "/user-management/roles",
+      "destination": "/settings/roles"
     },
     {
-      "source": "/kmp",
-      "destination": "/sdk/kmp"
+      "source": "/user-management/users",
+      "destination": "/settings/users"
+    },
+    {
+      "source": "/widgets/chart-widgets",
+      "destination": "/charts/overview"
+    },
+    {
+      "source": "/widgets/custom-widgets",
+      "destination": "/charts/overview"
+    },
+    {
+      "source": "/widgets/metric-widgets",
+      "destination": "/charts/overview"
+    },
+    {
+      "source": "/widgets/overview",
+      "destination": "/charts/overview"
+    },
+    {
+      "source": "/widgets/table-widgets",
+      "destination": "/charts/overview"
     }
   ],
   "logo": {

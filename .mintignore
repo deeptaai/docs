@@ -6,6 +6,7 @@
 drafts/
 *.draft.mdx
 
-# Internal notes — not published
+# Internal notes and sources — not published
 AGENTS.md
 CONTENT-GAPS.md
+PRDs/

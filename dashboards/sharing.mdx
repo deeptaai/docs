@@ -1,0 +1,177 @@
+---
+title: "Share Dashboards and Charts"
+sidebarTitle: "Sharing"
+description: "Share Klaritics dashboards and charts as Private, Restricted, or Project-wide, and understand how sharing limits interact with each recipient's project-level permission."
+---
+
+Sharing controls who can see a dashboard or chart, and what they can do with it once they can. Every dashboard and chart has one of three visibility states.
+
+---
+
+## Visibility states
+
+<CardGroup cols={3}>
+  <Card title="Private" icon="lock">
+    Only the owner has access to the resource.
+  </Card>
+
+  <Card title="Restricted" icon="users">
+    The owner shares with specific users, each assigned their own permission.
+  </Card>
+
+  <Card title="Project-wide" icon="globe">
+    The resource is available to users across the project.
+  </Card>
+</CardGroup>
+
+Newly created dashboards and charts are **Private** by default, and the creator is assigned ownership.
+
+---
+
+## Restricted sharing
+
+A user with share capability can share a resource with specific users. The sharer searches for eligible users by email or another supported identifier, and assigns each one:
+
+- Full Access
+- Editor
+- Viewer
+
+---
+
+## Project-wide sharing
+
+When the owner selects Project-wide, the resource becomes available to users across the project. The available project-wide access levels are **Viewer** and **Editor**.
+
+<Warning>
+  Project-wide access always respects each user's project-level permission. Setting a dashboard to Project-wide Editor does not elevate a Viewer user to Editor.
+</Warning>
+
+**Example 1 — Dashboard set to Project-wide = Editor**
+
+| User | Project permission | Effective permission |
+| :-- | :-- | :-- |
+| User A | Full Access | Editor |
+| User B | Editor | Editor |
+| User C | Viewer | Viewer |
+
+**Example 2 — Dashboard set to Project-wide = Viewer**
+
+| User | Project permission | Effective permission |
+| :-- | :-- | :-- |
+| User A | Full Access | Viewer |
+| User B | Editor | Viewer |
+| User C | Viewer | Viewer |
+
+---
+
+## Two rules constrain every share
+
+### The sharer's ceiling
+
+A sharer can only grant permissions at or below their own effective permission.
+
+An Editor can grant Editor and Viewer, but cannot grant Full Access.
+
+### The recipient's ceiling
+
+A recipient cannot receive a resource-level permission higher than their project-level permission.
+
+If the recipient's project permission is Viewer, the highest resource-level permission available is Viewer.
+
+### Sharing matrix
+
+| Sharer's effective permission | Recipient project permission | Available sharing options |
+| :-- | :-- | :-- |
+| Full Access | Full Access | Full Access, Editor, Viewer |
+| Full Access | Editor | Editor, Viewer |
+| Full Access | Viewer | Viewer |
+| Editor | Full Access | Editor, Viewer \* |
+| Editor | Editor | Editor, Viewer |
+| Editor | Viewer | Viewer |
+| Viewer | Full Access | Viewer \* |
+| Viewer | Editor | Viewer \* |
+| Viewer | Viewer | Viewer \* |
+
+\* Viewer users do not have the share action in the recommended model, so these combinations should not normally occur through the UI.
+
+---
+
+## Listing visibility
+
+The dashboard listing shows only the dashboards a user has access to. The same rules apply to the chart listing.
+
+| Visibility | Who sees it in the listing |
+| :-- | :-- |
+| **Private** | Owner only |
+| **Restricted** | Owner and explicitly shared users |
+| **Project-wide** | Project users, subject to their project-level permission |
+
+---
+
+## The Overview page is different
+
+Overview is a common project-level page, so a chart pinned to Overview has its **card** visible to all project users. Interaction with that chart is still permission-controlled.
+
+| Chart permission | Sees the card | Can open | Can edit |
+| :-- | :--: | :--: | :--: |
+| Full Access | ✓ | ✓ | ✓ |
+| Editor | ✓ | ✓ | ✓ |
+| Viewer | ✓ | ✓ | ✗ |
+| No Access | ✓ | ✗ | ✗ |
+
+<Note>
+  Overview visibility is project-level, while chart interaction and data access remain permission-controlled. A user with no access to the chart still sees the card, but cannot open or edit it, and the chart data is not exposed.
+</Note>
+
+---
+
+## Worked scenarios
+
+<AccordionGroup>
+  <Accordion title="Both users have Full Access">
+    User 1 and User 2 both hold Full Access for dashboards and charts.
+
+    User 1 creates Dashboard 1 containing Chart 1. Both default to Private.
+
+    User 1 shares `Dashboard 1 → User 2 → Full Access`. User 2 can now view, edit, retitle, add and remove charts, share, and duplicate Dashboard 1.
+
+    User 2 does **not** automatically receive Chart 1 permission. While Chart 1 remains Private, User 2 cannot edit it. Once User 1 shares `Chart 1 → User 2 → Full Access`, User 2 can edit the chart.
+  </Accordion>
+
+  <Accordion title="Recipient is an Editor">
+    User 2 holds Editor for both dashboards and charts.
+
+    User 1 shares `Dashboard 1 → User 2 → Editor`. User 2 can view, edit, retitle, add and remove charts, and share Dashboard 1. User 2 cannot edit Chart 1 until it is shared separately.
+
+    User 1 can offer only Editor or Viewer for this dashboard. Full Access is unavailable because User 2's project-level dashboard permission is Editor.
+  </Accordion>
+
+  <Accordion title="Recipient is a Viewer">
+    User 2 holds Viewer for both dashboards and charts.
+
+    User 1 shares `Dashboard 1 → User 2 → Viewer`. User 2 can see Dashboard 1 in the listing, open it, and view permitted content.
+
+    User 2 cannot edit the dashboard, change its title or description, delete charts, or share it. User 2 cannot view Chart 1 until that chart is separately shared with Viewer access.
+  </Accordion>
+
+  <Accordion title="Different dashboard and chart permissions">
+    User 2 holds Editor for dashboards and Viewer for charts.
+
+    User 1 shares `Dashboard 1 → User 2 → Editor` and `Chart 1 → User 2 → Viewer`.
+
+    | Resource | User 2 access |
+    | :-- | :-- |
+    | Dashboard 1 | Editor |
+    | Chart 1 | Viewer |
+
+    User 2 can edit Dashboard 1 but can only view Chart 1, because the chart project-level permission is Viewer.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next steps
+
+- [Dashboard and chart permissions](/dashboards/permissions) for how effective permission is resolved
+- [Create a dashboard](/dashboards/create-dashboard)
+- [Saved Charts](/charts/overview)

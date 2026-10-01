@@ -1,47 +1,96 @@
 ---
-title: "Product KPIs Template: Headline Metrics Dashboard"
+title: "Product KPIs Template"
 sidebarTitle: "Product KPIs"
-description: "The Product KPIs template in Klaritics gives you a single dashboard of headline product metrics so you can monitor performance at a glance."
+description: "The default landing dashboard in Klaritics: DAU, device type, frequency, country, new user conversion, and N-week retention from a single active event."
 ---
 
-The Product KPIs template distills your product's performance into a single, scannable dashboard. It is designed for teams who need a quick daily or weekly read on the metrics that matter most, without digging through multiple reports.
+The Product KPIs template is the default landing dashboard for the analytics platform. It provides a high-level overview of product health, growth, activation, retention, and engagement in a configurable, interactive format.
 
-## What is included
+It is designed for product managers, growth teams, founders, analysts, and marketers who need a quick read on:
 
-This template creates a compact dashboard of headline metrics:
+- Product growth trends
+- User engagement
+- Retention health
+- Activation performance
+- Conversion effectiveness
 
-- **Active user counts** including daily, weekly, and monthly active users.
-- **Key event totals** for your most important product actions.
-- **Growth indicators** such as new user signups and return user rates.
-- **Engagement signals** to show whether users are staying active over time.
+The dashboard acts as a starter template and updates dynamically based on the selected events, date ranges, and filters.
 
-## When to use it
+---
 
-<CardGroup cols={2}>
-  <Card title="Daily standups" icon="users">
-    Project the dashboard during team syncs for a shared view of product health.
-  </Card>
+## Configuration panel
 
-  <Card title="Executive reporting" icon="briefcase">
-    Share a clean, high-level view with leadership who need metrics without detail.
-  </Card>
+| Input | Description |
+| :-- | :-- |
+| **Any Active Event** | Mandatory, single-select |
+| **Filters** | User properties and event properties |
 
-  <Card title="Goal tracking" icon="target">
-    Align the dashboard with quarterly or monthly objectives and review progress.
-  </Card>
+Inputs are fully editable, and changes trigger real-time updates in the charts.
 
-  <Card title="Quick investigations" icon="search">
-    When a metric looks off, use this dashboard as your starting point before drilling deeper.
-  </Card>
-</CardGroup>
+---
 
-## Customizing the template
+## Charts
 
-The template gives you a solid default layout. You can swap in your own key events, adjust date ranges, resize widgets for emphasis, and add [Alerts](/alerts/overview) so you are notified when a headline metric moves outside your expected range.
+Clicking a chart title opens the corresponding creation page, pre-filled with your selected event and a Last 30 Days date range.
+
+### DAU Chart
+
+Displays the number of Daily Active Users on each day.
+
+- **Label:** Uniques *(top-right)*
+- **Title:** "Daily Active Users (DAU): How many users are engaging daily?"
+- **Opens:** Line Chart creation with measure **Uniques**
+
+### Device Type Chart
+
+Displays the number of users coming from which devices.
+
+- **Label:** Uniques
+- **Title:** "Device Type: What devices are your new users on?"
+- **Opens:** Pie Chart creation with measure **Uniques**, breakdown **Device Type**
+
+### Frequency Chart
+
+Displays the number of times the user did the event.
+
+- **Label:** Uniques
+- **Title:** "Engagement: How often are users performing your event?"
+- **Opens:** Bar Chart creation with measure **Uniques**
+
+### Country Chart
+
+Displays the number of users in each country.
+
+- **Label:** Uniques
+- **Title:** "User Traffic: Where are users from?"
+- **Opens:** Pie Chart creation with measure **Uniques**, breakdown **Country**
+
+### New Users Conversion
+
+Displays the number of new users who did the selected event.
+
+- **Label:** Conversion Rate
+- **Title:** "Funnel Conversion: How many users are converting to an end event?"
+- **Opens:** [Funnels](/analysis/funnels) creation with New Users as Event A and your selected event as Event B, measure **Conversion Rate**
+
+### New Users Retention
+
+Displays the number of new users retained by performing the selected event.
+
+- **Label:** Retention
+- **Title:** "N-Week Retention: What percentage of my users are coming back after N weeks?"
+- **Opens:** [Retention](/analysis/retention) creation with New Users as Event A and your selected event as Event B, measure **Retention**
+
+---
+
+## Data states and saving
+
+Data states and the **Save as Dashboard** behavior are the same across all templates. See the [Templates overview](/templates/overview) for both.
+
+---
 
 ## Next steps
 
-- [Product Analytics Template](/templates/product-analytics)
-- [Dashboards Overview](/dashboards/overview)
-- [Alerts Overview](/alerts/overview)
-- [Impact Analysis](/analysis/impact-analysis)
+- [Product Overview dashboard](/product-analytics/product-overview) for a configurable product health view
+- [User Activity](/templates/user-activity)
+- [Templates overview](/templates/overview)

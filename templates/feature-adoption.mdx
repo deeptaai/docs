@@ -1,47 +1,118 @@
 ---
-title: "Feature Adoption Template: Track New Feature Usage"
+title: "Feature Adoption Template"
 sidebarTitle: "Feature Adoption"
-description: "The Feature Adoption template in Klaritics helps you track how new features are adopted after release with pre-built adoption and engagement widgets."
+description: "A Klaritics starter dashboard measuring how users discover, engage with, and are retained by a single feature, grouped into engagement and retention sections."
 ---
 
-The Feature Adoption template is designed for product teams shipping new capabilities. It gives you a focused dashboard to measure how quickly users discover, try, and continue using a new feature after launch.
+The Feature Adoption template measures how effectively users discover, engage with, and are retained by a specific product feature.
 
-## What is included
+With it you can select a Feature Discovery Event, apply filters, analyze engagement and retention insights, and save the dashboard for future use.
 
-This template creates a dashboard with widgets tailored to adoption tracking:
+---
 
-- **First-time usage** showing how many users tried the feature for the first time each day.
-- **Adoption rate** as a percentage of your active user base.
-- **Repeat usage** to see if users come back after their first try.
-- **Trend comparison** against previous feature launches or baseline behavior.
+## Configuration panel
 
-## When to use it
+| Input | Description |
+| :-- | :-- |
+| **Feature Discovery Event** | Mandatory, single-select |
+| **Filters** | User properties and event properties |
 
-<CardGroup cols={2}>
-  <Card title="Post-launch tracking" icon="rocket">
-    Apply this template immediately after a feature release to monitor uptake.
-  </Card>
+Inputs are fully editable, and changes trigger real-time updates in the charts.
 
-  <Card title="A/B rollout validation" icon="split">
-    Compare adoption between segments or rollout groups.
-  </Card>
+---
 
-  <Card title="Feature retirement decisions" icon="trash">
-    Use repeat usage trends to decide whether a feature is worth maintaining.
-  </Card>
+## Section 1 — User engagement
 
-  <Card title="Marketing alignment" icon="megaphone">
-    Share adoption metrics with marketing to measure campaign impact.
-  </Card>
-</CardGroup>
+These charts answer: *"Are users finding and using the feature?"*
 
-## Customizing the template
+### Daily Feature Discovery
 
-After applying the template, map the widgets to the specific events that represent your new feature. You can also add [Cohorts](/analysis/cohorts) to compare adoption across user segments, or set up [Alerts](/alerts/overview) to notify you when adoption crosses a threshold.
+**"How many users find my feature each day?"**
+
+Shows how many unique users discover the feature daily.
+
+| Setting | Value |
+| :-- | :-- |
+| Measure | Unique Users |
+| Event | Feature Discovery Event |
+| Interval | Daily |
+| Date range | Last 30 Days |
+
+Opens a **Line Chart** analysis with the Unique Users measure and your selected event.
+
+### Feature Usage Frequency
+
+**"How often do users get value from your feature?"**
+
+Shows how frequently users interact with the feature.
+
+| Setting | Value |
+| :-- | :-- |
+| Measure | Frequency Distribution |
+| Event | Feature Discovery Event |
+
+Opens a **Bar Chart** analysis with the Frequency Distribution measure.
+
+### Platform Distribution
+
+**"Which platforms do users experience my feature on?"**
+
+Identifies which platforms drive feature usage.
+
+| Setting | Value |
+| :-- | :-- |
+| Measure | Unique Users |
+| Breakdown | Platform |
+| Event | Feature Discovery Event |
+
+Opens a **Pie Chart** analysis with the Platform breakdown.
+
+---
+
+## Section 2 — User retention
+
+These charts answer: *"Does the feature bring users back?"*
+
+### Retention After Feature Use
+
+**"How many users return after getting value?"**
+
+Measures whether users continue engaging after using the feature.
+
+| Setting | Value |
+| :-- | :-- |
+| Event 1 | Feature Discovery Event |
+| Event 2 | Any Active Event, or a configurable activity event |
+| Measure | Retention Rate |
+| Mode | Day-wise retention |
+| Date range | Last 30 Days |
+
+Opens a [Retention](/analysis/retention) analysis with the events and configuration pre-filled.
+
+### Average Feature Usage per User
+
+**"How many times does a user explore my feature on average?"**
+
+Shows how deeply users engage with the feature over time.
+
+| Setting | Value |
+| :-- | :-- |
+| Measure | Average Frequency per User |
+| Event | Feature Discovery Event |
+| Interval | Time-based |
+
+Opens a **Line Chart** analysis with the Average Frequency measure.
+
+---
+
+## Data states and saving
+
+Data states and the **Save as Dashboard** behavior are the same across all templates. See the [Templates overview](/templates/overview) for both.
+
+---
 
 ## Next steps
 
-- [Product Analytics Template](/templates/product-analytics)
-- [Cohorts Analysis](/analysis/cohorts)
-- [Alerts Overview](/alerts/overview)
-- [Product KPIs Template](/templates/product-kpis)
+- [Feature Engagement dashboard](/product-analytics/feature-engagement) for multi-feature comparison
+- [Retention](/analysis/retention)
+- [Templates overview](/templates/overview)

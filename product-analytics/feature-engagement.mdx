@@ -1,0 +1,108 @@
+---
+title: "Feature Engagement Dashboard"
+sidebarTitle: "Feature Engagement"
+description: "Define features from events in Klaritics and measure unique users, adoption as a percentage of active users, and average events per user."
+---
+
+The Feature Engagement dashboard shows how users interact with specific features in your product. In plain terms:
+
+> Which features are users actually using?
+
+It analyzes two things:
+
+- **Feature adoption** — which users are engaging with a feature
+- **Feature frequency** — how often a feature is used
+
+Use it to identify popular features and to improve or remove unused ones.
+
+---
+
+## Before a feature is defined
+
+When no features are defined, the dashboard shows an empty state prompting you to create features by selecting events. All dashboard actions remain disabled until at least one feature is configured.
+
+You can start feature creation from either the **Select Event** button or the **Configurations** button. Both redirect to the Product Analytics Configurations page and land you on the Feature Engagement creation page.
+
+---
+
+## Create a feature
+
+The **Select Event** button opens the Feature Creation modal, where you define a feature from one or more events.
+
+| Option | Description |
+| :-- | :-- |
+| **Feature Name** | Input field defining the name of the feature |
+| **Event Selection** | Select one event associated with the feature, and apply filters to refine event conditions |
+| **Event Operations** | Add, remove, or duplicate events |
+| **Logical Conditions** | Combine multiple events using **AND** or **OR** |
+
+Actions available in the modal are **Save Changes** and **Discard Changes**.
+
+<Note>
+  Features can also be created directly from the Configurations page using the **Create Feature** button, which opens the same modal.
+</Note>
+
+### After creation
+
+You can create multiple features. All created features are listed on the Feature Engagement creation page, and each supports **Edit** and **Delete**.
+
+Once at least one feature exists, the dashboard becomes active and its visualizations and interactions are enabled.
+
+---
+
+## Metrics
+
+Three KPI metric cards are available. **Unique Users** is selected by default, showing the line visualization.
+
+### Unique Users
+
+The number of distinct users who triggered the selected feature event. Counts unique Distinct IDs, based on the selected date range and filters.
+
+### Adoption (% of Active Users)
+
+```text
+Adoption = (Users who used feature / Active users) × 100
+```
+
+The percentage of active users engaging with the feature. Indicates feature **reach**.
+
+### Frequency (Avg Events per User)
+
+```text
+Frequency = Total feature events / Unique users
+```
+
+The average number of times users use the feature. Indicates **depth** of engagement.
+
+### Explore further
+
+An option is provided to continue in the chart creation interface. Clicking it redirects you to the [Engagement Matrix](/analysis/engagement-matrix) creation page.
+
+---
+
+## Metric table
+
+| Column | Description |
+| :-- | :-- |
+| **Feature Name** | Name of the feature |
+| **Unique Users** | Number of users who used the feature |
+| **Adoption** | Percentage of active users using the feature |
+| **Frequency** | Average usage per user |
+| **Created By** | Feature creator |
+| **Last Modified By** | Last editor |
+
+---
+
+## Filters and controls
+
+Filter the dashboard by **user properties** or **session properties**. Segments, the data freshness indicator, and date range work as described in the [Product Analytics overview](/product-analytics/overview).
+
+Time granularity on this dashboard supports **Daily**, **Weekly**, **Monthly**, and **Quarterly**.
+
+---
+
+## Next steps
+
+- [Engagement Matrix](/analysis/engagement-matrix) to compare breadth against depth across features
+- [Feature Adoption template](/templates/feature-adoption) for a single-feature starter dashboard
+- [Product Analytics overview](/product-analytics/overview)

@@ -1,0 +1,105 @@
+---
+title: "Onboarding Dashboard"
+sidebarTitle: "Onboarding"
+description: "Define an onboarding funnel in Klaritics and see step-wise counts, conversion rates, and where new users drop off before completing their first action."
+---
+
+The Onboarding dashboard shows how new users start using your product and where they drop off. In plain terms:
+
+> Are new users able to get started easily?
+
+It covers the signup flow, the first-time user journey, and drop-offs across onboarding steps — for example:
+
+```text
+App Open → Signup → Profile Setup → First Action
+```
+
+Use it to improve the first-time user experience and reduce drop-offs during signup.
+
+---
+
+## Before a funnel is defined
+
+If no funnel has been defined, the dashboard shows an empty state prompting you to configure onboarding steps:
+
+```text
+Define Onboarding Funnel   [ Select Event ]
+```
+
+All other dashboard actions are disabled until a funnel exists. Clicking either **Select Event** or **Configurations** takes you to the Product Analytics Configurations page, landing on the Onboarding Analysis page.
+
+---
+
+## Define the funnel steps
+
+On the Onboarding Analysis page, you define onboarding steps by selecting events. Each step represents a single event, and steps are ordered sequentially.
+
+<Steps>
+  <Step title="Select an event">
+    Use the event selector to search for and select an event. Each step supports optional filters via **+ Filter by**.
+  </Step>
+  <Step title="Add more steps">
+    Use **+ Add Event** to add a new step. New steps are appended to the end of the list.
+  </Step>
+  <Step title="Save the configuration">
+    Saving stores the funnel configuration and updates the Onboarding dashboard.
+  </Step>
+</Steps>
+
+<Warning>
+  A funnel must contain at least **two** events. The save button stays disabled while fewer than two events are selected, and the funnel cannot be visualized below that threshold.
+</Warning>
+
+**Discard Changes** reverts unsaved changes and restores the last saved configuration.
+
+---
+
+## Funnel visualization
+
+Once events are selected, the funnel appears alongside KPI metric cards for **Overall Conversion**, **Step-Wise Count**, and **Conversion**.
+
+By default the Overall Conversion metric card is selected and the funnel visualization is shown. Selecting a step-wise metric card switches the display to a line graph. You can also change the visualization between **Funnel** and **Line Graph** directly.
+
+### Click actions
+
+Clicking a data point lets you:
+
+- View Users
+- Download Users
+- Create Cohort
+
+### Explore further
+
+An option is provided to continue in the chart creation interface. Clicking it redirects you to the [Funnels](/analysis/funnels) creation page.
+
+---
+
+## Breakdown and metric table
+
+Break metrics down by specific dimensions to identify behavior differences across segments.
+
+By default the breakdown options are **Country**, **Device**, and **Platform**, and you can select any other property as well.
+
+The metric table displays step-wise count and conversion rate:
+
+| Metric | Description |
+| :-- | :-- |
+| **Overall Conversion** | Conversion rate of the overall funnel |
+| **Step 1 Event** | Step 1 count and conversion rate |
+| **Step 2 Event** | Step 2 count and conversion rate |
+
+The visualization changes as you select and deselect rows in the data table.
+
+---
+
+## Filters and controls
+
+Filter the dashboard by **user properties** or **session properties**. Segments, the data freshness indicator, date range, and time granularity work as described in the [Product Analytics overview](/product-analytics/overview).
+
+---
+
+## Next steps
+
+- [Funnels](/analysis/funnels) to build a standalone funnel analysis
+- [Product Overview](/product-analytics/product-overview)
+- [Feature Engagement](/product-analytics/feature-engagement)

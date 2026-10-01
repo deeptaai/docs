@@ -1,0 +1,88 @@
+---
+title: "User Activity Template"
+sidebarTitle: "User Activity"
+description: "A Klaritics dashboard for monitoring active user trends, first-time event usage, and distribution across device, country, and platform."
+---
+
+The User Activity template helps teams monitor user engagement, activity trends, recurring usage behavior, and retention patterns across their product.
+
+It provides a centralized view of:
+
+- Active user trends
+- User engagement composition
+- Most active events
+- Retention behavior
+- User recurrence patterns
+
+It serves as a foundational analytics workspace for product, growth, and customer success teams.
+
+---
+
+## Configuration panel
+
+| Input | Description |
+| :-- | :-- |
+| **Activity Event** | Single-select |
+| **Filters** | User properties and event properties |
+
+Inputs are fully editable, and changes trigger real-time updates in the charts.
+
+---
+
+## Charts
+
+Clicking a chart title opens the corresponding creation page, pre-filled with your selected event and a Last 30 Days date range.
+
+### Active Event Users Chart
+
+Displays the number of unique users performing the active event on each day.
+
+- **Label:** Uniques *(top-right)*
+- **Title:** "How many users are active each day?"
+- **Opens:** Line Chart creation with measure **Uniques**
+
+### First Time Active Event Chart
+
+Displays the number of users who did the event for the first time on each day.
+
+- **Label:** Uniques *(top-right)*
+- **Title:** "How many users performed the event for the first time each day?"
+- **Opens:** Line Chart creation with measure **Uniques**, with the **First Time** filter applied
+
+### Device Type Chart
+
+Displays the number of users coming from which devices.
+
+- **Label:** Uniques
+- **Title:** "Device Type: What devices are your new users on?"
+- **Opens:** Pie Chart creation with measure **Uniques**, breakdown **Device Type**
+
+### Country Chart
+
+Displays the number of users in each country.
+
+- **Label:** Uniques
+- **Title:** "User Traffic: Where are users from?"
+- **Opens:** Bar Chart creation with measure **Uniques**, breakdown **Country**
+
+### Platform Chart
+
+Displays the number of users in each platform.
+
+- **Label:** Uniques
+- **Title:** "User Traffic: Where are users from?"
+- **Opens:** Pie Chart creation with measure **Uniques**, breakdown **Platform**
+
+---
+
+## Data states and saving
+
+Data states and the **Save as Dashboard** behavior are the same across all templates. See the [Templates overview](/templates/overview) for both.
+
+---
+
+## Next steps
+
+- [Product KPIs](/templates/product-kpis)
+- [Product Analytics](/product-analytics/overview)
+- [Templates overview](/templates/overview)

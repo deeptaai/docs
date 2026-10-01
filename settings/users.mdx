@@ -1,0 +1,75 @@
+---
+title: "Users"
+sidebarTitle: "Users"
+description: "Invite users to Klaritics by email, assign a role and workspace, resend pending invitations, and activate or deactivate accounts from Settings."
+---
+
+Administrators manage users at the organization level, under **Settings → Users & Permissions**.
+
+Who you can invite, and which role you can give them, is governed by the role hierarchy described in [Roles](/settings/roles).
+
+---
+
+## Invite users
+
+<Steps>
+  <Step title="Enter emails">
+    Enter the email addresses of the people you want to invite.
+
+    ```text
+    alice@company.com
+    bob@company.com
+    john@company.com
+    ```
+  </Step>
+  <Step title="Assign workspace and role">
+    Select a role and workspace, applied to all the users in this invitation.
+
+    For example: `Viewer`, `production app`.
+  </Step>
+  <Step title="Send invitations">
+    Users receive an email invitation. On acceptance:
+
+    - The account is created
+    - The assigned role is activated
+    - Team memberships are applied
+  </Step>
+</Steps>
+
+---
+
+## User status
+
+The users list includes a status column with three possible values.
+
+| Status | Meaning |
+| :-- | :-- |
+| **Pending** | Invited, but the invitation has not yet been accepted |
+| **Active** | Invitation accepted and the account is in use |
+| **Deactivated** | Access removed from the workspace |
+
+<Note>
+  When a user's status is **pending**, you can resend the invitation to them.
+</Note>
+
+---
+
+## User actions
+
+| Action | Description |
+| :-- | :-- |
+| **View** | View the user's details |
+| **Send invite again** | Resend the invitation to the user |
+| **Deactivate / Activate** | Remove or restore the user's access to that particular workspace |
+| **Role Deactivated** | Shown when a user has been deactivated as a result of their role being deactivated |
+
+<Warning>
+  Deactivating a role deactivates every user associated with that role. Those users show as **Role Deactivated** rather than individually deactivated.
+</Warning>
+
+---
+
+## Next steps
+
+- [Roles](/settings/roles) for the role model and assignment hierarchy
+- [Dashboard and chart permissions](/dashboards/permissions) for access within a project

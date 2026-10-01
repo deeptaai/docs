@@ -1,0 +1,165 @@
+---
+title: "Roles and Permissions"
+sidebarTitle: "Roles"
+description: "Klaritics role-based access control: default system roles, custom roles created at organization level, role statuses, and the hierarchy governing who can assign what."
+---
+
+Organizations running analytics typically have several kinds of stakeholder, each needing a different level of access to dashboards, datasets, and administrative capabilities. Klaritics uses role-based access control (RBAC) with granular data access controls to manage this.
+
+Without a structured roles system, organizations run into unauthorized access to sensitive data, accidental modification or deletion of dashboards, difficulty managing access for large teams, and no visibility into who can perform which actions.
+
+Roles are managed under **Settings → Users & Permissions**.
+
+---
+
+## Default system roles
+
+Klaritics includes predefined roles covering common organizational use cases.
+
+| Role | Intended users | Capabilities |
+| :-- | :-- | :-- |
+| **Owner / Admin** | IT administrators, analytics leads | Full control over the platform, including user management and system configuration |
+| **Editor** | Data analysts, BI developers | Create and edit dashboards, but cannot manage users |
+| **Viewer** | Business stakeholders | Read-only access to dashboards |
+| **Custom Role** | Enterprise teams | A role created by combining specific permissions |
+
+<Warning>
+  Default roles **cannot be edited** and **cannot be deactivated**.
+</Warning>
+
+---
+
+## Custom roles
+
+Organizations that need roles tailored to internal workflows can create custom roles from a configurable permission catalogue.
+
+Custom roles are created at **organization level**. Every custom role is:
+
+- Visible across all applications and projects within the organization
+- Reusable across those applications and projects
+
+### Create a custom role
+
+<Steps>
+  <Step title="Define role details">
+    Provide the role's identifying information.
+
+    | Field | Description |
+    | :-- | :-- |
+    | **Role Name** | Unique role identifier |
+    | **Description** | Purpose of the role |
+    | **Role Scope** | Organization or Project |
+
+    For example: Role Name `Marketing Analyst`, Description `Can build marketing dashboards`, Scope `Project`.
+  </Step>
+  <Step title="Configure permissions">
+    Select permissions from categorized groups. You can enable or disable each permission for the role.
+  </Step>
+  <Step title="Review the role preview">
+    Before saving, review a summary of what the role grants and restricts.
+
+    ```text
+    Role: Marketing Analyst
+
+    Capabilities
+      View dashboards
+      Create dashboards
+      Edit dashboards
+
+    Data Access
+      Campaign Data
+      Website Analytics
+
+    Restrictions
+      Cannot export raw data
+      Cannot access revenue dataset
+    ```
+  </Step>
+  <Step title="Save the role">
+    Once saved, the role becomes available for assignment.
+  </Step>
+</Steps>
+
+---
+
+## Role actions and status
+
+| Action | Description |
+| :-- | :-- |
+| **View** | View role details and permissions |
+| **Edit** | Modify permissions. Available for custom roles only. |
+| **Deactivate / Activate** | Disable the role from further assignment and deactivate all users associated with it. Activation reverses this. |
+
+The roles list includes a status column. A role is either **active** or **deactivated**.
+
+<Warning>
+  Deactivating a role also deactivates every user associated with that role.
+</Warning>
+
+---
+
+## Who can assign which roles
+
+Role assignment is governed by hierarchy.
+
+| Role | Can assign |
+| :-- | :-- |
+| **Admin** | Admin, Editor, Viewer |
+| **Editor** | Editor, Viewer |
+| **Viewer** | Viewer only |
+
+### Custom role behavior
+
+A user holding a custom role can assign that same custom role, and can assign other roles created by a user with that custom role.
+
+**Example**
+
+User A holds the custom role `Marketing Lead`. They can assign `Marketing Lead`, and roles created by User A.
+
+They cannot assign `Admin` unless the hierarchy permits it.
+
+---
+
+## Multiple roles per user
+
+Users may inherit roles from more than one source:
+
+- Organization role
+- Team membership
+- Individual assignment
+
+**Example**
+
+A user belongs to the Marketing Team and the Leadership Team, inheriting `Marketing Analyst` and `Executive Viewer`. Klaritics combines these permissions during access evaluation.
+
+### Conflict resolution
+
+When a user inherits multiple roles, permission conflicts can occur. Klaritics resolves them using the **most permissive** strategy: the highest level of access available among the assigned roles is granted.
+
+```text
+Role A  →  View dashboards
+Role B  →  Edit dashboards
+
+Final permission  →  Edit dashboards
+```
+
+---
+
+## Removing users
+
+Removal follows the same hierarchy as assignment.
+
+```text
+Admin  →  Editor  →  Viewer
+```
+
+- Admin can remove Editors and Viewers
+- Editor can remove Viewers
+- Viewer cannot remove anyone
+
+---
+
+## Next steps
+
+- [Users](/settings/users) to invite team members and manage their status
+- [Dashboard and chart permissions](/dashboards/permissions) for resource-level access within a project

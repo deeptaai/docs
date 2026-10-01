@@ -1,0 +1,79 @@
+---
+title: "Saved Charts"
+sidebarTitle: "Overview"
+description: "Browse, open, edit, share, duplicate, and delete saved charts in Klaritics. The chart listing shows only the charts your permissions allow you to access."
+---
+
+Saved Charts is the listing of every chart you are allowed to access in a project. A chart is an analysis you have saved — a funnel, a retention curve, a chart analysis, an engagement matrix, and so on.
+
+Charts are independent resources. They can be pinned to dashboards, but they do not belong to them: deleting a dashboard leaves its charts untouched.
+
+---
+
+## What the listing shows
+
+The chart listing displays only the charts the current user is allowed to access, based on visibility:
+
+| Visibility | Who sees the chart |
+| :-- | :-- |
+| **Private** | Owner only |
+| **Restricted** | Owner and explicitly shared users |
+| **Project-wide** | Project users, subject to their chart project-level permission |
+
+---
+
+## Actions
+
+Each chart shows actions based on your effective chart permission.
+
+| Effective permission | Available actions |
+| :-- | :-- |
+| **Full Access** | View, Edit, Share, Duplicate, Delete |
+| **Editor** | View, Edit, Share |
+| **Viewer** | View |
+
+### View
+
+You can view chart data and the visualization based on your access, and view the chart configuration in read-only mode. You cannot modify the chart.
+
+### Edit
+
+You can edit the chart title and description, and modify the chart configuration, filters, dimensions and measures, and visualization settings. The exact editable properties follow the chart's own creation and edit behavior.
+
+### Share
+
+A chart can be shared as Private, Restricted, or Project-wide. See [Sharing](/dashboards/sharing) for the full model, including the limits on what you can grant.
+
+### Duplicate
+
+Only a user with Full Access can duplicate a chart. The duplicate receives a new chart ID, is owned by the duplicating user, is Private by default, and does not inherit the original chart's sharing permissions.
+
+### Delete
+
+Deleting requires confirmation. On confirmation, the chart is removed from the project.
+
+---
+
+## Creating charts
+
+Only a user with **Full Access** for charts can create a chart. Viewer cannot create charts, and Editor works with existing charts rather than creating new ones.
+
+Charts are created from the **Create Chart or Dashboard** action.
+
+---
+
+## Charts and dashboards are independent
+
+Chart access is independent of dashboard access, in both directions. Being able to edit a dashboard does not let you edit the charts on it, and chart-level permissions are always checked before chart data is exposed.
+
+<Note>
+  Deleting a dashboard does not delete the charts it contained. They remain in Saved Charts until deleted explicitly.
+</Note>
+
+---
+
+## Next steps
+
+- [Dashboard and chart permissions](/dashboards/permissions)
+- [Share dashboards and charts](/dashboards/sharing)
+- [Saved Dashboards](/dashboards/overview)

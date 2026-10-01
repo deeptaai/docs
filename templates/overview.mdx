@@ -1,42 +1,105 @@
 ---
-title: "Templates Overview: Pre-built Dashboards in Klaritics"
+title: "Dashboard Templates"
 sidebarTitle: "Overview"
-description: "Klaritics ships four pre-built templates to help you get started quickly with Product Analytics, Flow Analysis, Feature Adoption, and Product KPIs."
+description: "Pre-built, use-case-driven Klaritics dashboards. Pick a template, choose your events, review the charts, and save the result as a reusable dashboard."
 ---
 
-Templates in Klaritics give you a pre-built starting point for common analytics needs. Instead of creating charts and dashboards from scratch, you can apply a template and start analyzing your data immediately. Each template includes a curated set of widgets and layouts designed for a specific use case.
+Dashboard Templates let you get started with analytics without building dashboards from scratch. Each template is a pre-configured, use-case-driven dashboard: you select it, supply the events it needs, and the charts populate immediately.
+
+The flow is the same for every template:
+
+<Steps>
+  <Step title="Open Dashboard Templates">
+    Use the Dashboard Templates dropdown to reach the templates page.
+  </Step>
+  <Step title="Pick a template">
+    Each card shows the template name, a thumbnail preview, and a short description. Clicking a card opens its landing page.
+  </Step>
+  <Step title="Configure the inputs">
+    Select the events the template needs, and apply any filters.
+  </Step>
+  <Step title="Review the charts">
+    Charts update in real time as you change inputs.
+  </Step>
+  <Step title="Save as Dashboard">
+    The saved dashboard appears in [Saved Dashboards](/dashboards/overview).
+  </Step>
+</Steps>
+
+---
 
 ## Available templates
 
 <CardGroup cols={2}>
-  <Card title="Product Analytics" icon="chart-pie" href="/templates/product-analytics">
-    Broad usage, growth, and engagement views out of the box.
-  </Card>
-
   <Card title="Flow Analysis" icon="arrow-right" href="/templates/flow-analysis">
-    Pre-built user flow views to see how users move through key journeys.
+    Multi-step journeys, conversion, and drop-off.
   </Card>
 
-  <Card title="Feature Adoption" icon="zap" href="/templates/feature-adoption">
-    Track how new features are adopted after release.
+  <Card title="Feature Adoption" icon="bolt" href="/templates/feature-adoption">
+    How users discover, engage with, and are retained by a feature.
   </Card>
 
-  <Card title="Product KPIs" icon="target" href="/templates/product-kpis">
-    Headline product metrics on one dashboard.
+  <Card title="Product KPIs" icon="chart-pie" href="/templates/product-kpis">
+    Headline growth, engagement, and retention metrics.
+  </Card>
+
+  <Card title="User Activity" icon="users" href="/templates/user-activity">
+    Active user trends, first-time usage, and distribution.
   </Card>
 </CardGroup>
 
-## How templates work
+---
 
-When you apply a template, Klaritics creates a new dashboard populated with the template's default widgets. You can customize every widget, add new ones, remove the ones you do not need, and adjust the layout. Templates are a starting point, not a locked configuration.
+## How every template page is built
 
-<Tip>
-  Apply a template even if you already have dashboards. It is often faster to adapt a pre-built layout than to build a new one from scratch.
-</Tip>
+All templates share the same anatomy.
+
+### Header
+
+Shows the template name and the **Save as Dashboard** call to action.
+
+### Configuration panel
+
+Holds the template's event inputs and filters, which accept user properties and event properties. Inputs are fully editable, and changes trigger real-time updates in the charts.
+
+### Visualization area
+
+The date range defaults to **Last 30 Days** and applies to all charts.
+
+Charts render once the required events are selected. If no events are selected, all charts remain disabled and display:
+
+```text
+Select events to generate insights
+```
+
+---
+
+## Data states
+
+| State | Behavior |
+| :-- | :-- |
+| **No events selected** | All charts are disabled |
+| **Data available** | Charts render with insights and tooltips |
+| **No data available** | `No data available for selected inputs. Try adjusting filters or date range.` |
+| **Partial data** | Some charts render; others display `Not enough data to display this chart` |
+
+---
+
+## Saving a template as a dashboard
+
+Clicking **Save as Dashboard** opens a save popup. Once saved, the dashboard is stored in the Saved Dashboards section.
+
+<Warning>
+  Only chart configurations are saved. The configuration panel's event selection inputs are **not** persisted, and unsaved changes are not retained.
+</Warning>
+
+You must save the dashboard before editing its charts. After saving, you can update the existing dashboard or save it as a new one.
+
+---
 
 ## Next steps
 
-- [Product Analytics Template](/templates/product-analytics)
-- [Flow Analysis Template](/templates/flow-analysis)
-- [Feature Adoption Template](/templates/feature-adoption)
-- [Product KPIs Template](/templates/product-kpis)
+- [Flow Analysis](/templates/flow-analysis)
+- [Feature Adoption](/templates/feature-adoption)
+- [Product KPIs](/templates/product-kpis)
+- [User Activity](/templates/user-activity)

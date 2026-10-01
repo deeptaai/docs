@@ -1,0 +1,219 @@
+---
+title: "Dashboard and Chart Permissions"
+sidebarTitle: "Permissions"
+description: "How Klaritics resolves access to dashboards and charts from project-level and resource-level permissions, and why dashboard access never grants chart access."
+---
+
+Dashboards and charts are independent resources in Klaritics, and they carry independent permissions. Having a particular permission for dashboards does not grant the same permission for charts, and the reverse is equally true.
+
+Access to any single dashboard or chart is resolved from four independent scopes:
+
+- Dashboard project-level permission
+- Chart project-level permission
+- Dashboard-level permission
+- Chart-level permission
+
+---
+
+## The three permission levels
+
+Both dashboards and charts use the same three levels.
+
+| Permission | Capability |
+| :-- | :-- |
+| **Full Access** | Full control, including creation, viewing, editing, sharing, duplication, and deletion. |
+| **Editor** | View, edit, and share resources you have access to. Does not include create-level permission for new resources. |
+| **Viewer** | View only, for resources you have access to. |
+
+They form a strict hierarchy:
+
+```text
+Full Access
+     ↓
+  Editor
+     ↓
+  Viewer
+```
+
+---
+
+## Project-level permission
+
+Project-level permission defines the **maximum** capability a user can have for a feature. Dashboard and chart project-level permissions are configured independently of each other.
+
+A user might hold Full Access for charts and Viewer for dashboards, or any other combination. Each is evaluated on its own.
+
+---
+
+## Resource-level permission
+
+Resource-level permission applies to an individual dashboard or an individual chart. A specific resource can be assigned Full Access, Editor, or Viewer.
+
+---
+
+## Effective permission
+
+Effective permission is what the user can actually do. It is determined by:
+
+1. Project-level permission
+2. Resource-level permission
+3. Resource visibility and sharing configuration
+
+<Warning>
+  Resource-level permission can **restrict** a user's access but can never **raise** it beyond their project-level permission.
+</Warning>
+
+| Project permission | Resource permission | Effective permission |
+| :-- | :-- | :-- |
+| Full Access | Full Access | Full Access |
+| Full Access | Editor | Editor |
+| Full Access | Viewer | Viewer |
+| Editor | Full Access | Editor \* |
+| Editor | Editor | Editor |
+| Editor | Viewer | Viewer |
+| Viewer | Full Access | Viewer \* |
+| Viewer | Editor | Viewer \* |
+| Viewer | Viewer | Viewer |
+
+\* The UI can allow a resource owner to assign a permission higher than the recipient's project-level permission by showing a warning message. The effective permission still resolves down to the project-level ceiling.
+
+---
+
+## Resolution order
+
+Klaritics evaluates permissions in a fixed order, and the same logic is used everywhere access is decided.
+
+```text
+1. Identify the feature  →  Dashboard OR Chart
+          ↓
+2. Check project-level permission
+          ↓
+3. Check resource visibility  →  Private / Restricted / Project-wide
+          ↓
+4. Check resource-level permission
+          ↓
+5. Calculate effective permission
+          ↓
+6. Determine allowed actions
+```
+
+This resolution applies identically to the dashboard listing, chart listing, dashboard view and edit, chart view and edit, the share dialog, duplicate, delete, and the APIs behind all of them.
+
+---
+
+## Action visibility
+
+The actions available on a resource follow directly from the effective permission.
+
+<Tabs>
+  <Tab title="Dashboard">
+    | Effective permission | View | Edit | Share | Duplicate | Delete |
+    | :-- | :--: | :--: | :--: | :--: | :--: |
+    | **Full Access** | ✓ | ✓ | ✓ | ✓ | ✓ |
+    | **Editor** | ✓ | ✓ | ✓ | ✗ | ✗ |
+    | **Viewer** | ✓ | ✗ | ✗ | ✗ | ✗ |
+  </Tab>
+
+  <Tab title="Chart">
+    | Effective permission | View | Edit | Share | Duplicate | Delete |
+    | :-- | :--: | :--: | :--: | :--: | :--: |
+    | **Full Access** | ✓ | ✓ | ✓ | ✓ | ✓ |
+    | **Editor** | ✓ | ✓ | ✓ | ✗ | ✗ |
+    | **Viewer** | ✓ | ✗ | ✗ | ✗ | ✗ |
+  </Tab>
+</Tabs>
+
+---
+
+## Dashboards and charts are independent
+
+Access to a dashboard does not grant equivalent access to the charts inside it. This is the single most important rule in the model.
+
+**Example**
+
+A user holds `Dashboard 1 = Editor` and `Chart 1 = No Access`.
+
+The user **can**:
+
+- Open Dashboard 1
+- Edit Dashboard 1
+- Add existing charts they are allowed to access
+
+The user **cannot**:
+
+- View the content or data of Chart 1
+- Edit Chart 1
+
+Klaritics displays a permission-restricted state for Chart 1 rather than exposing its data.
+
+### Further combinations
+
+| Dashboard | Chart | Result |
+| :-- | :-- | :-- |
+| Editor | Viewer | Edit the dashboard, view the chart, cannot edit the chart |
+| Viewer | Editor | View the dashboard, edit the chart, cannot edit the dashboard |
+| Viewer | Viewer | View both, edit neither |
+| Editor | No Access | Edit the dashboard, cannot access the chart content |
+
+---
+
+## Creating resources
+
+Only a user with **Full Access** can create a dashboard or a chart. Editor and Viewer cannot create new resources in the current version; an Editor works with existing dashboards and charts that have been shared with them.
+
+---
+
+## Duplicating
+
+Only a user with Full Access can duplicate a dashboard or chart. A duplicate:
+
+- Receives a new unique ID
+- Uses a default name such as `Dashboard 1 - Copy`
+- Is owned by the user who performed the duplication
+- Is **Private** by default
+- Does **not** inherit the original resource's sharing permissions
+
+---
+
+## Deleting
+
+Deleting requires confirmation, and the dialog clearly identifies the resource being deleted. On confirmation, the resource is removed from the project.
+
+<Note>
+  Deleting a dashboard does **not** delete the charts it contained. Those charts remain available in [Saved Charts](/charts/overview) unless you delete them explicitly.
+</Note>
+
+---
+
+## Enforcement
+
+The UI does not rely only on hiding actions. Every permission-sensitive operation is also validated at the backend and API level, using the same permission model as the frontend. In practice this means:
+
+- A Viewer cannot call an edit API directly.
+- An Editor cannot call the delete API.
+- A user cannot assign a permission higher than allowed.
+- A user cannot reach a private resource through a manually constructed URL.
+
+---
+
+## Not supported in the current version
+
+The following are outside the current permission model:
+
+- Multiple roles assigned to the same user
+- Custom user-defined roles for dashboards and charts
+- Role inheritance
+- Cross-project permissions
+- Organization-level permissions
+- Temporary permissions and permission expiry
+- Approval workflows for sharing
+
+Each user has one effective dashboard project-level permission and one effective chart project-level permission.
+
+---
+
+## Next steps
+
+- [Share dashboards and charts](/dashboards/sharing) for Private, Restricted, and Project-wide visibility
+- [Saved Charts](/charts/overview) for the chart listing and its actions
+- [Roles](/settings/roles) for the organization-level role model
