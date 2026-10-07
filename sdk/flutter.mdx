@@ -90,16 +90,21 @@ The plugin declares the native Klaritics iOS SDK in its `Package.swift`. With Fl
 
 ## API reference
 
-All methods are called on `KlariticsFlutter`.
+All methods are called on `KlariticsFlutter`. Attributes are `Map<String, dynamic>`.
 
-| Method | Usage | Description |
+| Method | Signature | Description |
 | --- | --- | --- |
-| `setup` | `await setup(config)` | Initialize both platforms. Call once, before anything else. |
-| `logAppEvent` | `logAppEvent(eventName, attributes: {...})` | Log an analytics event. |
-| `logClientEvent` | `logClientEvent(eventName, attributes: {...})` | Log an event that stays on the device. |
-| `setUserIdentifier` | `setUserIdentifier(userId)` | Attach your own identifier to the current user. |
-| `setUserAttributes` | `setUserAttributes({...})` | Set user-level attributes. |
-| `setSessionAttributes` | `setSessionAttributes({...})` | Set attributes for the current session. |
+| `setup` | `Future<void> setup(KlariticsConfig config)` | Initialize both platforms. Call once, before anything else. |
+| `logAppEvent` | `logAppEvent(String eventName, {Map<String, dynamic>? attributes})` | Log an analytics event. |
+| `logAggregateEvent` | `logAggregateEvent(String eventName, {Map<String, dynamic>? attributes})` | Log an event that is counted and batched server-side rather than stored individually. |
+| `logClientEvent` | `logClientEvent(String eventName, {Map<String, dynamic>? attributes})` | Log an event that stays on the device. |
+| `setUserIdentifier` | `setUserIdentifier(String userIdentifier)` | Attach your own identifier to the current user. |
+| `setUserAttributes` | `setUserAttributes(Map<String, dynamic> attributes)` | Set user-level properties. |
+| `setSessionAttributes` | `setSessionAttributes(Map<String, dynamic> attributes)` | Set properties scoped to the current session. |
+| `trackScreen` | `trackScreen(String screenName)` | Record a screen view. |
+| `logRedirectionEvent` | `logRedirectionEvent(String url)` | Record a redirection to a URL. |
+| `reportCustomError` | `reportCustomError(String key, {Map<String, String>? errorInfo})` | Report a custom error. |
+| `getDeviceId` | `Future<String?> getDeviceId()` | Return the SDK-generated device identifier. |
 
 ## Common recipes
 
@@ -110,6 +115,9 @@ KlariticsFlutter.logAppEvent("login", attributes: {
   "type": "google",
   "language": "en",
 });
+
+// Counted and batched server-side
+KlariticsFlutter.logAggregateEvent("purchase_completed", attributes: {"value": 1299});
 
 // Client events stay on the device — use them for local logic such as nudges
 KlariticsFlutter.logClientEvent("soft_back_pressed", attributes: {
@@ -134,6 +142,18 @@ KlariticsFlutter.setSessionAttributes({
   "network": "4G",
   "location": "Hyderabad",
 });
+
+final deviceId = await KlariticsFlutter.getDeviceId();
+```
+
+### Screens, redirections, and errors
+
+```dart
+KlariticsFlutter.trackScreen("home");
+
+KlariticsFlutter.logRedirectionEvent("https://example.com/offer");
+
+KlariticsFlutter.reportCustomError("payment_failed", errorInfo: {"code": "E42"});
 ```
 
 ## Troubleshooting

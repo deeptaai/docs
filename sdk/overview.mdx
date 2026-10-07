@@ -60,17 +60,20 @@ Each SDK names these two values differently:
 
 ## API at a glance
 
-The same capability can have a different method name on each platform. A dash means the method isn't covered in that SDK's guide.
+The mobile SDKs share one method set, modeled on the [Kotlin Multiplatform SDK](/sdk/kmp). The Web SDK uses its own names. A dash means the method isn't available in that SDK.
 
-| Capability | Web | Android | iOS | React Native | Flutter | KMP |
+| Capability | Android | iOS | React Native | Flutter | KMP | Web |
 | --- | --- | --- | --- | --- | --- | --- |
-| Log an event | `logEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` |
-| Log a client event | `logClientEvent` | `logClientEvent` | — | `logClientEvent` | `logClientEvent` | `logClientEvent` |
-| Log an aggregate event | — | — | — | `logAggregateEvent` | — | `logAggregateEvent` |
-| Identify the user | `setUserId` | `setUserIdentifier` | — | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` |
-| Set user properties | `setUserProperties` | — | — | `setUserCustomInfo` | `setUserAttributes` | `setUserCustomInfo` |
-| Set session properties | `setSessionProperties` | — | — | `setSessionCustomInfo` | `setSessionAttributes` | `setSessionCustomInfo` |
-| Get the device / client ID | `getClientId` | `getDeviceId` | — | — | — | `getDeviceId` |
+| Log an event | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logEvent` |
+| Log an aggregate event | `logAggregateEvent` | `logAggregateEvent` | `logAggregateEvent` | `logAggregateEvent` | `logAggregateEvent` | — |
+| Log a client event | `logClientEvent` | `logClientEvent` | `logClientEvent` | `logClientEvent` | `logClientEvent` | `logClientEvent` |
+| Identify the user | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserId` |
+| Set user properties | `setUserCustomInfo` | `setUserCustomInfo` | `setUserCustomInfo` | `setUserAttributes` | `setUserCustomInfo` | `setUserProperties` |
+| Set session properties | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionAttributes` | `setSessionCustomInfo` | `setSessionProperties` |
+| Track a screen | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | — |
+| Log a redirection | `logRedirectionEvent` | `logRedirectionEvent` | `logRedirectionEvent` | `logRedirectionEvent` | `logRedirectionEvent` | — |
+| Report a custom error | `reportCustomError` | `reportCustomError` | `reportCustomError` | `reportCustomError` | `reportCustomError` | — |
+| Get the device / client ID | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getClientId` |
 
 Version history for every SDK is in [SDK release notes](/sdk/releases).
 
@@ -101,4 +104,4 @@ When you log events and attributes from your application, use plain names that d
   Do not use `$` as a prefix for events or attributes that you log. The Klaritics SDKs reserve the `$` prefix for events and attributes that they add automatically, such as session and device metadata. Names you log that start with `$` may collide with SDK-managed data.
 </Warning>
 
-For the full naming guidance, see [Event and attribute naming](/sdk/event-naming).
+For the full naming guidance, see [Event and attribute naming](/integrations/event-naming).

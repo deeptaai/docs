@@ -111,6 +111,7 @@
         "icon": "plug",
         "pages": [
           "integrations/overview",
+          "integrations/event-naming",
           {
             "group": "Client SDKs",
             "icon": "mobile",
@@ -122,7 +123,6 @@
               "sdk/react-native",
               "sdk/flutter",
               "sdk/kmp",
-              "sdk/event-naming",
               "sdk/releases"
             ]
           },
@@ -173,6 +173,10 @@
     {
       "source": "/kmp",
       "destination": "/sdk/kmp"
+    },
+    {
+      "source": "/sdk/event-naming",
+      "destination": "/integrations/event-naming"
     },
     {
       "source": "/templates/product-analytics",

@@ -71,30 +71,74 @@ class AppDelegate: NSObject {
 
 ## API reference
 
+All methods are called on `Klaritics`. Attributes are `[String: Any]` dictionaries.
+
 | Method | Swift | Objective-C |
 | --- | --- | --- |
-| `setup` | `Klaritics.setup(config)` | — |
-| `logAppEvent` | `Klaritics.logAppEvent(withName:info:)` | `[Klaritics logAppEventForEvent:withInfo:]` |
+| `setup` | `setup(_ config: KlariticsConfig)` | `setup:` |
+| `logAppEvent` | `logAppEvent(withName:info:)` | `logAppEventForEvent:withInfo:` |
+| `logAggregateEvent` | `logAggregateEvent(withName:info:)` | `logAggregateEventForEvent:withInfo:` |
+| `logClientEvent` | `logClientEvent(withName:info:)` | `logClientEventForEvent:withInfo:` |
+| `setUserIdentifier` | `setUserIdentifier(_:)` | `setUserIdentifier:` |
+| `setUserCustomInfo` | `setUserCustomInfo(_:)` | `setUserCustomInfo:` |
+| `setSessionCustomInfo` | `setSessionCustomInfo(_:)` | `setSessionCustomInfo:` |
+| `trackScreen` | `trackScreen(_:)` | `trackScreen:` |
+| `logRedirectionEvent` | `logRedirectionEvent(_:)` | `logRedirectionEvent:` |
+| `reportCustomError` | `reportCustomError(key:errorInfo:)` | `reportCustomErrorWithKey:errorInfo:` |
+| `getDeviceId` | `getDeviceId() -> String?` | `getDeviceId` |
+
+<Note>
+  iOS SDK v1.0.0 does not expose `logMetaEvent`, `resetUserCustomInfo`, `resetSessionCustomInfo`, `setCurrentScreenName`, `setPushRegistrationToken`, `setDynamicConfig`, `flushEventsIfAny`, or `optOut`. These are available on Android.
+</Note>
 
 ## Common recipes
 
-### Log an event
+### Log events
 
 <CodeGroup>
 
 ```swift Swift
-Klaritics.logAppEvent(
-    withName: "button_clicked",
-    info: ["button_label": "Submit"]
-)
+Klaritics.logAppEvent(withName: "button_clicked", info: ["button_label": "Submit"])
+
+// Counted and batched server-side
+Klaritics.logAggregateEvent(withName: "purchase_completed", info: ["value": 1299])
+
+// Stays on the device
+Klaritics.logClientEvent(withName: "soft_back_pressed", info: ["screen": "home"])
 ```
 
 ```objc Objective-C
-NSDictionary *info = @{ @"button_label": @"Submit" };
-[Klaritics logAppEventForEvent:@"button_clicked" withInfo:info];
+[Klaritics logAppEventForEvent:@"button_clicked" withInfo:@{ @"button_label": @"Submit" }];
+
+[Klaritics logAggregateEventForEvent:@"purchase_completed" withInfo:@{ @"value": @1299 }];
+
+[Klaritics logClientEventForEvent:@"soft_back_pressed" withInfo:@{ @"screen": @"home" }];
 ```
 
 </CodeGroup>
+
+### Identify a user and set properties
+
+```swift
+Klaritics.setUserIdentifier("user_123")
+
+Klaritics.setUserCustomInfo(["email": "user@example.com", "plan": "pro"])
+
+// Session-scoped properties
+Klaritics.setSessionCustomInfo(["network": "4G"])
+
+let deviceId = Klaritics.getDeviceId()
+```
+
+### Screens, redirections, and errors
+
+```swift
+Klaritics.trackScreen("home")
+
+Klaritics.logRedirectionEvent("https://example.com/offer")
+
+Klaritics.reportCustomError(key: "payment_failed", errorInfo: ["code": "E42"])
+```
 
 ## Troubleshooting
 
