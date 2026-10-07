@@ -1,121 +1,168 @@
 ---
-title: "Integrate the Klaritics Android SDK in Your App"
+title: "Android SDK Integration Guide for Klaritics"
 sidebarTitle: "Android"
-description: "Add the Klaritics Android SDK, configure Gradle and ProGuard, initialize with project_id and server_host, and log events from your Android app."
+description: "Add the Klaritics Android SDK with Gradle, initialize it with your project ID and server host, and log events from Java or Kotlin."
 ---
 
-The Klaritics Android SDK collects analytics from Android applications and sends them to your self-hosted Klaritics instance. Follow the steps below to add the repository, configure Gradle, and initialize the SDK.
+The Klaritics Android SDK collects analytics from Android apps and sends them to your self-hosted Klaritics instance. Add the Maven repository and dependency, then initialize once from your `Application`.
 
-## Step 1: Add the Klaritics Maven repository
+**Artifact:** `com.deeptaai.klaritics:klaritics-android-sdk:1.0.0`
 
-The Android SDK is published to a private Maven repository. Add the URL to the `repositories` block in your project-level `build.gradle`:
+## Requirements
+
+You need a **Project ID** and a **Server host** from the Klaritics dashboard. Your project ID is on the **Getting Started** page.
+
+## Add the repository
+
+The SDK is published to a public Maven repository. Add it in whichever place your project declares repositories:
+
+<CodeGroup>
 
 ```groovy build.gradle
 allprojects {
     repositories {
         // ...
-        maven {
-            url "https://asia-south1-maven.pkg.dev/org-infra-471907/klaritics-android-sdk"
-        }
-        // ...
+        maven { url "https://asia-south1-maven.pkg.dev/org-infra-471907/klaritics-android-sdk" }
     }
 }
 ```
 
-## Step 2: Add the SDK dependency
-
-Add the Klaritics dependency to your application module's `build.gradle`:
-
-```groovy app/build.gradle
-dependencies {
-    // ...
-    // Event tracking and a must-have dependency for other plugins
-    implementation 'com.deeptaai.klaritics:klaritics-android-sdk:1.0.0'
-    // ...
+```groovy settings.gradle
+dependencyResolutionManagement {
+    repositories {
+        // ...
+        maven { url "https://asia-south1-maven.pkg.dev/org-infra-471907/klaritics-android-sdk" }
+    }
 }
-```
-
-## Step 3: Configure ProGuard
-
-If you use ProGuard or R8, keep the Klaritics classes so events are logged correctly. Add the following rules to `proguard-rules.pro`:
-
-```proguard proguard-rules.pro
--keep class com.deeptaai.** { *; }
--dontwarn com.deeptaai.**
-```
-
-## Step 4: Disable dexing artifact transformation
-
-Add the following flag to your app module's `gradle.properties` file at `<project>/<app-module>/gradle.properties`:
-
-```properties gradle.properties
-android.enableDexingArtifactTransform = false
-```
-
-## Step 5: Initialize the SDK
-
-Initialize Klaritics from your `Application` class (or main entry point) before logging any events. Replace `<project-id>` and `<server-host>` with the values from your Klaritics dashboard. Your project ID is available on the **Getting Started** page of the dashboard.
-
-<CodeGroup>
-
-```java Java
-KlariticsConfig config = new KlariticsConfig("<project-id>", "<server-host>");
-Klaritics.setup(getApplicationContext(), config);
-```
-
-```kotlin Kotlin
-val config = KlariticsConfig("<project-id>", "<server-host>")
-Klaritics.setup(applicationContext, config)
 ```
 
 </CodeGroup>
 
-## Verify the integration
+<Note>
+  If your project uses `dependencyResolutionManagement` with `RepositoriesMode.FAIL_ON_PROJECT_REPOS`, the repository **must** go in `settings.gradle`.
+</Note>
 
-When the SDK initializes successfully, the following log line appears in Logcat:
+## Add the dependency
+
+```groovy app/build.gradle
+dependencies {
+    implementation 'com.deeptaai.klaritics:klaritics-android-sdk:1.0.0'
+}
+```
+
+## Configure your build
+
+<Steps>
+  <Step title="Keep Klaritics classes in ProGuard / R8">
+    If you use ProGuard or R8, keep the Klaritics classes so events are logged correctly:
+
+    ```proguard proguard-rules.pro
+    -keep class com.deeptaai.** { *; }
+    -dontwarn com.deeptaai.**
+    ```
+  </Step>
+  <Step title="Disable dexing artifact transformation">
+    Add this flag to your app module's `gradle.properties`, at `<project>/<app-module>/gradle.properties`:
+
+    ```properties gradle.properties
+    android.enableDexingArtifactTransform = false
+    ```
+  </Step>
+</Steps>
+
+## Initialize the SDK
+
+Call `Klaritics.setup(context, config)` once, from your `Application` class or main entry point, before any other Klaritics call.
+
+<CodeGroup>
+
+```kotlin Kotlin
+val config = KlariticsConfig("YOUR_PROJECT_ID", "https://YOUR_SERVER_HOST")
+Klaritics.setup(applicationContext, config)
+```
+
+```java Java
+KlariticsConfig config = new KlariticsConfig("YOUR_PROJECT_ID", "https://YOUR_SERVER_HOST");
+Klaritics.setup(getApplicationContext(), config);
+```
+
+</CodeGroup>
+
+### `KlariticsConfig`
+
+| Argument | Type | Description |
+| --- | --- | --- |
+| 1st | `String` | Your `project_id` from the Klaritics dashboard (Getting Started page). |
+| 2nd | `String` | Your server host — the URL of your Klaritics instance. |
+
+### Verify initialization
+
+When the SDK initializes successfully, this line appears in Logcat:
 
 ```text
 Klaritics(v2**) successfully initialized for: PROJECT_ID
 ```
 
-If you do not see this line, confirm the Maven URL, dependency version, and `project_id` and `server_host` values.
+## API reference
 
-## Logging events
+All methods are called on the `Klaritics` object. Attributes are `Map<String, Any?>`.
 
-Use `logAppEvent` for standard analytics events that are sent to Klaritics, and `logClientEvent` for events that stay on the device.
+| Method | Signature | Description |
+| --- | --- | --- |
+| `setup` | `(context: Context, config: KlariticsConfig)` | Initialize the SDK. Call once, before anything else. |
+| `logAppEvent` | `(eventName: String, attributes: Map<String, Any?>? = null)` | Log an analytics event sent to Klaritics. |
+| `setUserIdentifier` | `(userIdentifier: String)` | Attach your own identifier to the current user. |
+| `setUserCustomInfo` | `(userCustomInfo: Map<String, Any?>)` | Set user-level properties. |
+| `setSessionCustomInfo` | `(attributes: Map<String, Any?>)` | Set properties scoped to the current session. |
+| `trackScreen` | `(screenName: String)` | Record a screen view. |
+| `getDeviceId` | `(context: Context): String?` | Return the SDK-generated device identifier. |
 
-<CodeGroup>
+### Additional Android methods
 
-```kotlin App event
-val additionalInfo = mapOf(
+These are available on Android. On other platforms built on the native iOS SDK they may be no-ops — see [Kotlin Multiplatform parity notes](/sdk/kmp#platform-parity-notes).
+
+`logMetaEvent` · `resetUserCustomInfo` · `resetSessionCustomInfo` · `setCurrentScreenName` · `setPushRegistrationToken` · `setDynamicConfig` · `flushEventsIfAny` · `optOut`
+
+## Common recipes
+
+### Log an event
+
+```kotlin
+Klaritics.logAppEvent("product_clicked", mapOf(
     "product_id" to "sku-123",
-    "category" to "electronics"
-)
-Klaritics.logAppEvent("ProductClicked", additionalInfo)
+    "category" to "electronics",
+))
 ```
 
-```kotlin Client event
-val clientInfo = mapOf(
-    "source" to "soft_back"
-)
-Klaritics.logClientEvent("SoftBackPressed", clientInfo)
-```
-
-</CodeGroup>
-
-## User identification
-
-Assign your own user identifier so events tie back to a known account:
+### Identify a user and set properties
 
 ```kotlin
-Klaritics.setUserIdentifier("user@example.com")
-```
+Klaritics.setUserIdentifier("user_123")
 
-Retrieve the SDK-generated device identifier when you need it:
+Klaritics.setUserCustomInfo(mapOf(
+    "email" to "user@example.com",
+    "plan" to "pro",
+))
 
-```kotlin
+// Session-scoped properties
+Klaritics.setSessionCustomInfo(mapOf("network" to "4G"))
+
 val deviceId = Klaritics.getDeviceId(applicationContext)
 ```
+
+### Track a screen
+
+```kotlin
+Klaritics.trackScreen("home")
+```
+
+## Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| No `successfully initialized` line in Logcat | Check the Maven URL, the dependency version, and your project ID and server host values. |
+| `klaritics-android-sdk` not found | The repository isn't declared, or your project uses `FAIL_ON_PROJECT_REPOS` and it's in `build.gradle` instead of `settings.gradle`. See [Add the repository](#add-the-repository). |
+| Events missing in release builds | The ProGuard / R8 keep rules are missing. See [Configure your build](#configure-your-build). |
 
 ## Next steps
 
@@ -124,7 +171,11 @@ val deviceId = Klaritics.getDeviceId(applicationContext)
     Send test events from your app and watch them land on the Getting Started page.
   </Card>
 
-  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
-    Learn the naming conventions Klaritics expects for events and attributes.
+  <Card title="Release notes" icon="clock-rotate-left" href="/sdk/releases#android">
+    What changed in each Android SDK version.
   </Card>
 </CardGroup>
+
+---
+
+**Artifact:** `com.deeptaai.klaritics:klaritics-android-sdk:1.0.0` · [Release notes](/sdk/releases#android)

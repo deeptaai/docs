@@ -1,10 +1,10 @@
 ---
 title: "Naming Events and Attributes in Your Klaritics Integration"
 sidebarTitle: "Event Naming"
-description: "Guidance for naming the events and attributes you send from your app with Klaritics SDKs, and why you should avoid the reserved $ prefix."
+description: "How to name the events and attributes you send to Klaritics, from client SDKs or the External API, and why to avoid the reserved $ prefix."
 ---
 
-Consistent event and attribute names make your Klaritics analytics easier to query, chart, and share across your team. This page covers how to name the events and attributes you send from your application and the one reserved prefix to avoid.
+Consistent event and attribute names make your Klaritics analytics easier to query, chart, and share across your team. This page applies to everything you send, whether through a [client SDK](/sdk/overview) or the [External API](/integrations/external-api).
 
 ## Name events for what happens in your product
 
@@ -19,6 +19,10 @@ Klaritics.logEvent("add_to_cart", {
 ```
 
 Attach the properties that describe the event: identifiers, amounts, item names, screen names, and any other context you want to slice by later.
+
+<Note>
+  The [External API](/integrations/external-api) **requires** lowercase `snake_case` event names matching `^[a-z][a-z0-9_]*$`, and rejects anything else. If you send events from both SDKs and the API, use `snake_case` everywhere so the same action has the same name in both streams.
+</Note>
 
 ## Do not use `$` as a prefix
 

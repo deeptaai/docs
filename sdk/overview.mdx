@@ -34,14 +34,44 @@ Klaritics provides client SDKs for Android, iOS, Web, React Native, Kotlin Multi
   </Card>
 </CardGroup>
 
+<Tip>
+  Sending data from servers, jobs, or other systems rather than an app? Use the [External API](/integrations/external-api).
+</Tip>
+
 ## Shared initialization
 
 Every SDK requires two values to initialize:
 
-- `project_id`: your Klaritics project identifier, found in the Klaritics dashboard
-- `server_host`: the URL of your Klaritics instance (for example, `https://analytics.yourcompany.com`)
+- `project_id`: your Klaritics project identifier, found on the **Getting Started** page of the dashboard
+- `server_host`: the URL of your Klaritics instance, for example `https://analytics.yourcompany.com`
 
 The SDK does not start capturing events until both values are provided. We recommend verifying that the host is reachable at initialization time.
+
+Each SDK names these two values differently:
+
+| SDK | Project ID | Server host |
+| --- | --- | --- |
+| [Web](/sdk/web) | 1st argument to `init` | `server_host` option |
+| [Android](/sdk/android) | 1st argument to `KlariticsConfig` | 2nd argument to `KlariticsConfig` |
+| [iOS](/sdk/ios) | `appId` | `host` |
+| [React Native](/sdk/react-native) | `apiKey` | `options.host` |
+| [Flutter](/sdk/flutter) | `KlariticsConfig` constructor argument | `host` |
+| [Kotlin Multiplatform](/sdk/kmp) | `appId` | `host` |
+
+## API at a glance
+
+The mobile SDKs share one method set, modeled on the [Kotlin Multiplatform SDK](/sdk/kmp). The Web SDK uses its own names. A dash means the method isn't available in that SDK.
+
+| Capability | Android | iOS | React Native | Flutter | KMP | Web |
+| --- | --- | --- | --- | --- | --- | --- |
+| Log an event | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logEvent` |
+| Identify the user | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserId` |
+| Set user properties | `setUserCustomInfo` | `setUserCustomInfo` | `setUserCustomInfo` | `setUserAttributes` | `setUserCustomInfo` | `setUserProperties` |
+| Set session properties | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionAttributes` | `setSessionCustomInfo` | `setSessionProperties` |
+| Track a screen | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | — |
+| Get the device ID | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` |
+
+Version history for every SDK is in [SDK release notes](/sdk/releases).
 
 ## Verify your integration
 
@@ -49,7 +79,7 @@ After you initialize the SDK in your app, send a few test events to confirm the 
 
 <Steps>
   <Step title="Trigger a few events in your app">
-    Run your app in a debug build and perform real actions that call `logAppEvent`, `logClientEvent`, or `logEvent`. Sign in, tap a button, open a screen, add an item to the cart. Aim for at least 5 to 10 events across a couple of user sessions.
+    Run your app in a debug build and perform real actions that call `logAppEvent` (or `logEvent` on the Web). Sign in, tap a button, open a screen, add an item to the cart. Aim for at least 5 to 10 events across a couple of user sessions.
   </Step>
   <Step title="Watch events land on the Getting Started page">
     Open the Klaritics dashboard and go to **Getting Started**. Newly received events for your project appear here in near real time, along with the platform they came from and the attributes attached to them.
@@ -64,10 +94,10 @@ After you initialize the SDK in your app, send a few test events to confirm the 
 
 ## Event and attribute naming
 
-When you log events and attributes from your application, use plain names that describe what happened in your product, for example `ProductClicked` or `add_to_cart`, with attributes like `userId` or `item`.
+When you log events and attributes from your application, use plain names that describe what happened in your product, for example `add_to_cart` or `product_clicked`, with attributes like `user_id` or `item`.
 
 <Warning>
   Do not use `$` as a prefix for events or attributes that you log. The Klaritics SDKs reserve the `$` prefix for events and attributes that they add automatically, such as session and device metadata. Names you log that start with `$` may collide with SDK-managed data.
 </Warning>
 
-For the full naming guidance, see [Event and attribute naming](/sdk/event-naming).
+For the full naming guidance, see [Event and attribute naming](/integrations/event-naming).

@@ -30,7 +30,8 @@ Written against the real product or a PRD. Safe to edit and cite.
 | `settings/users.mdx` | IAM PRD |
 | `product-analytics/*.mdx` (5) | Product Analytics Dashboards PRD |
 | `templates/*.mdx` (5) | Dashboard Templates PRD |
-| `sdk/*.mdx` | Product |
+| `sdk/*.mdx` | Product. Restructured to the KMP layout; awaiting SDK-team review — see below |
+| `integrations/external-api.mdx` | External API guide |
 
 ---
 
@@ -72,6 +73,23 @@ Navigation mirrors this. There is no separate page per chart visualization type,
 The summary table lists five dashboards including Flow Analysis, but the intro says "four distinct dashboards" and the body details only four. Flow Analysis is documented as its own template instead. **Confirm** whether Flow Analysis also appears inside Product Analytics.
 
 ---
+
+## SDK review — open questions for SDK teams
+
+The SDK pages were restructured to match `sdk/kmp.mdx` using only facts already on each page. These are the gaps that surfaced:
+
+- **Requirements are missing** for the native Android, iOS, and Web SDKs — minimum `minSdk`, iOS deployment target, Xcode version, supported browsers. The KMP and React Native wrappers state their own minimums, but those don't establish the native ones.
+- **Methods removed by decision (2026-10-07):** `logClientEvent`, `logAggregateEvent`, `logRedirectionEvent`, and `reportCustomError` are no longer documented on any SDK, including React Native's `isAggregate` argument to `logAppEvent`. On the Web SDK, `getClientId` is replaced by `getDeviceId`. SDK teams to confirm the SDKs themselves match.
+- **Method signatures are derived, not sourced.** Only `logAppEvent`, `setUserIdentifier` and `getDeviceId` (Android) and `logAppEvent` (iOS) came from the original guides. `setUserCustomInfo`, `setSessionCustomInfo`, `trackScreen` and `getDeviceId` were written for Android, iOS, React Native and Flutter by applying each platform's existing naming pattern to the KMP API. **Every derived signature needs SDK-team confirmation before merge**, including Objective-C selectors, Flutter argument shapes, and whether React Native's `getDeviceId` is async.
+- **Flutter names user/session property methods differently** (`setUserAttributes`, `setSessionAttributes`) from the other mobile SDKs (`setUserCustomInfo`, `setSessionCustomInfo`). Kept as documented; confirm which is correct.
+- **Web SDK was not aligned** to the mobile method set, since it documents a different API (`logEvent`, `setUserId`, `setUserProperties`). Confirm whether it has a `trackScreen` equivalent, and that `getDeviceId` is its current name.
+- **KMP API table is internally inconsistent.** Its iOS column marks every method ✅, while the Tip below it talks about methods that are no-ops on iOS — and none of the no-op methods appear in the table.
+- **ProGuard rules differ.** Android: `-keep class com.deeptaai.** { *; }`. Flutter: `-keep class com.deeptaai.klaritics.** { *; }`. One is likely stale.
+- **Android repository visibility.** The old Android page said "private Maven repository"; the KMP page says both registries allow anonymous read. The Android page now says public — confirm.
+- **Android Logcat line** reads `Klaritics(v2**) successfully initialized`. `v2**` looks like a placeholder for a version.
+- **Web SDK version is unknown.** The script tag uses `@latest`; no version is stated, so release notes label it "Initial release".
+- **Event naming case.** The External API enforces `snake_case`. Do the SDK ingestion paths accept other casing? Examples were switched to `snake_case` for consistency.
+- **Release dates** for all v1.0.0 SDKs are unknown, so release-note entries carry no dates.
 
 ## Unverified pages
 
