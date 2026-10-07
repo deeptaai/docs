@@ -65,15 +65,11 @@ The mobile SDKs share one method set, modeled on the [Kotlin Multiplatform SDK](
 | Capability | Android | iOS | React Native | Flutter | KMP | Web |
 | --- | --- | --- | --- | --- | --- | --- |
 | Log an event | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logEvent` |
-| Log an aggregate event | `logAggregateEvent` | `logAggregateEvent` | `logAggregateEvent` | `logAggregateEvent` | `logAggregateEvent` | — |
-| Log a client event | `logClientEvent` | `logClientEvent` | `logClientEvent` | `logClientEvent` | `logClientEvent` | `logClientEvent` |
 | Identify the user | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserId` |
 | Set user properties | `setUserCustomInfo` | `setUserCustomInfo` | `setUserCustomInfo` | `setUserAttributes` | `setUserCustomInfo` | `setUserProperties` |
 | Set session properties | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionAttributes` | `setSessionCustomInfo` | `setSessionProperties` |
 | Track a screen | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | — |
-| Log a redirection | `logRedirectionEvent` | `logRedirectionEvent` | `logRedirectionEvent` | `logRedirectionEvent` | `logRedirectionEvent` | — |
-| Report a custom error | `reportCustomError` | `reportCustomError` | `reportCustomError` | `reportCustomError` | `reportCustomError` | — |
-| Get the device / client ID | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getClientId` |
+| Get the device ID | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` |
 
 Version history for every SDK is in [SDK release notes](/sdk/releases).
 
@@ -83,7 +79,7 @@ After you initialize the SDK in your app, send a few test events to confirm the 
 
 <Steps>
   <Step title="Trigger a few events in your app">
-    Run your app in a debug build and perform real actions that call `logAppEvent`, `logClientEvent`, or `logEvent`. Sign in, tap a button, open a screen, add an item to the cart. Aim for at least 5 to 10 events across a couple of user sessions.
+    Run your app in a debug build and perform real actions that call `logAppEvent` (or `logEvent` on the Web). Sign in, tap a button, open a screen, add an item to the cart. Aim for at least 5 to 10 events across a couple of user sessions.
   </Step>
   <Step title="Watch events land on the Getting Started page">
     Open the Klaritics dashboard and go to **Getting Started**. Newly received events for your project appear here in near real time, along with the platform they came from and the attributes attached to them.

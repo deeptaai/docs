@@ -77,14 +77,10 @@ All methods are called on `Klaritics`. Attributes are `[String: Any]` dictionari
 | --- | --- | --- |
 | `setup` | `setup(_ config: KlariticsConfig)` | `setup:` |
 | `logAppEvent` | `logAppEvent(withName:info:)` | `logAppEventForEvent:withInfo:` |
-| `logAggregateEvent` | `logAggregateEvent(withName:info:)` | `logAggregateEventForEvent:withInfo:` |
-| `logClientEvent` | `logClientEvent(withName:info:)` | `logClientEventForEvent:withInfo:` |
 | `setUserIdentifier` | `setUserIdentifier(_:)` | `setUserIdentifier:` |
 | `setUserCustomInfo` | `setUserCustomInfo(_:)` | `setUserCustomInfo:` |
 | `setSessionCustomInfo` | `setSessionCustomInfo(_:)` | `setSessionCustomInfo:` |
 | `trackScreen` | `trackScreen(_:)` | `trackScreen:` |
-| `logRedirectionEvent` | `logRedirectionEvent(_:)` | `logRedirectionEvent:` |
-| `reportCustomError` | `reportCustomError(key:errorInfo:)` | `reportCustomErrorWithKey:errorInfo:` |
 | `getDeviceId` | `getDeviceId() -> String?` | `getDeviceId` |
 
 <Note>
@@ -93,26 +89,16 @@ All methods are called on `Klaritics`. Attributes are `[String: Any]` dictionari
 
 ## Common recipes
 
-### Log events
+### Log an event
 
 <CodeGroup>
 
 ```swift Swift
 Klaritics.logAppEvent(withName: "button_clicked", info: ["button_label": "Submit"])
-
-// Counted and batched server-side
-Klaritics.logAggregateEvent(withName: "purchase_completed", info: ["value": 1299])
-
-// Stays on the device
-Klaritics.logClientEvent(withName: "soft_back_pressed", info: ["screen": "home"])
 ```
 
 ```objc Objective-C
 [Klaritics logAppEventForEvent:@"button_clicked" withInfo:@{ @"button_label": @"Submit" }];
-
-[Klaritics logAggregateEventForEvent:@"purchase_completed" withInfo:@{ @"value": @1299 }];
-
-[Klaritics logClientEventForEvent:@"soft_back_pressed" withInfo:@{ @"screen": @"home" }];
 ```
 
 </CodeGroup>
@@ -130,14 +116,10 @@ Klaritics.setSessionCustomInfo(["network": "4G"])
 let deviceId = Klaritics.getDeviceId()
 ```
 
-### Screens, redirections, and errors
+### Track a screen
 
 ```swift
 Klaritics.trackScreen("home")
-
-Klaritics.logRedirectionEvent("https://example.com/offer")
-
-Klaritics.reportCustomError(key: "payment_failed", errorInfo: ["code": "E42"])
 ```
 
 ## Troubleshooting

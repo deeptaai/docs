@@ -154,14 +154,10 @@ import com.klaritics.kmp.Klaritics
 | --- | --- | --- |
 | `setup` | `(config: KlariticsConfig, context: KlariticsContext)` | ✅ |
 | `logAppEvent` | `(eventName: String, attributes: Map<String, Any?>? = null)` | ✅ |
-| `logAggregateEvent` | `(eventName: String, attributes: Map<String, Any?>? = null)` | ✅ |
-| `logClientEvent` | `(eventName: String, attributes: Map<String, Any?>? = null)` | ✅ |
 | `setUserIdentifier` | `(userIdentifier: String)` | ✅ |
 | `setUserCustomInfo` | `(userCustomInfo: Map<String, Any?>)` | ✅ |
 | `setSessionCustomInfo` | `(attributes: Map<String, Any?>)` | ✅ |
 | `trackScreen` | `(screenName: String)` | ✅ |
-| `logRedirectionEvent` | `(url: String)` | ✅ |
-| `reportCustomError` | `(key: String, errorInfo: Map<String, String>? = null)` | ✅ |
 | `getDeviceId` | `(): String?` | ✅ |
 
 <Tip>
@@ -170,16 +166,10 @@ import com.klaritics.kmp.Klaritics
 
 ## Common recipes
 
-### Log events
+### Log an event
 
 ```kotlin
 Klaritics.logAppEvent("button_clicked", mapOf("button_name" to "submit"))
-
-// Aggregate events are counted/batched server-side rather than stored individually
-Klaritics.logAggregateEvent("purchase_completed", mapOf("value" to 1299))
-
-// Client-side event
-Klaritics.logClientEvent("soft_back_pressed", mapOf("screen" to "Home"))
 ```
 
 ### Identify a user and set properties

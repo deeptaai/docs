@@ -111,14 +111,10 @@ All methods are called on the `Klaritics` object. Attributes are `Map<String, An
 | --- | --- | --- |
 | `setup` | `(context: Context, config: KlariticsConfig)` | Initialize the SDK. Call once, before anything else. |
 | `logAppEvent` | `(eventName: String, attributes: Map<String, Any?>? = null)` | Log an analytics event sent to Klaritics. |
-| `logAggregateEvent` | `(eventName: String, attributes: Map<String, Any?>? = null)` | Log an event that is counted and batched server-side rather than stored individually. |
-| `logClientEvent` | `(eventName: String, attributes: Map<String, Any?>? = null)` | Log an event that stays on the device. |
 | `setUserIdentifier` | `(userIdentifier: String)` | Attach your own identifier to the current user. |
 | `setUserCustomInfo` | `(userCustomInfo: Map<String, Any?>)` | Set user-level properties. |
 | `setSessionCustomInfo` | `(attributes: Map<String, Any?>)` | Set properties scoped to the current session. |
 | `trackScreen` | `(screenName: String)` | Record a screen view. |
-| `logRedirectionEvent` | `(url: String)` | Record a redirection to a URL. |
-| `reportCustomError` | `(key: String, errorInfo: Map<String, String>? = null)` | Report a custom error. |
 | `getDeviceId` | `(context: Context): String?` | Return the SDK-generated device identifier. |
 
 ### Additional Android methods
@@ -129,20 +125,13 @@ These are available on Android. On other platforms built on the native iOS SDK t
 
 ## Common recipes
 
-### Log events
+### Log an event
 
 ```kotlin
-// Sent to Klaritics
 Klaritics.logAppEvent("product_clicked", mapOf(
     "product_id" to "sku-123",
     "category" to "electronics",
 ))
-
-// Counted and batched server-side
-Klaritics.logAggregateEvent("purchase_completed", mapOf("value" to 1299))
-
-// Stays on the device
-Klaritics.logClientEvent("soft_back_pressed", mapOf("screen" to "home"))
 ```
 
 ### Identify a user and set properties
@@ -161,14 +150,10 @@ Klaritics.setSessionCustomInfo(mapOf("network" to "4G"))
 val deviceId = Klaritics.getDeviceId(applicationContext)
 ```
 
-### Screens, redirections, and errors
+### Track a screen
 
 ```kotlin
 Klaritics.trackScreen("home")
-
-Klaritics.logRedirectionEvent("https://example.com/offer")
-
-Klaritics.reportCustomError("payment_failed", mapOf("code" to "E42"))
 ```
 
 ## Troubleshooting

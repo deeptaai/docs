@@ -116,12 +116,8 @@ import { logAppEvent } from '@deeptaai/klaritics-react-native-sdk'
 | `setUserIdentifier` | `(userId: string)` | Set a unique ID per user (email, phone, etc.). |
 | `setUserCustomInfo` | `(attributes: object)` | Set user-level attributes for grouping/identity. |
 | `setSessionCustomInfo` | `(attributes: object)` | Set attributes scoped to the current session. |
-| `logAppEvent` | `(eventName: string, attributes?: object, isAggregate?: boolean)` | Log an app event. `isAggregate` defaults to `false`. |
-| `logAggregateEvent` | `(eventName: string, attributes: object)` | Log an aggregate event (shorthand for `logAppEvent(..., true)`). |
-| `logClientEvent` | `(eventName: string, attributes?: object)` | Log a client-side event. |
+| `logAppEvent` | `(eventName: string, attributes?: object)` | Log an app event. |
 | `trackScreen` | `(screenName: string)` | Record a screen view. |
-| `logRedirectionEvent` | `(url: string)` | Record a redirection to a URL. |
-| `reportCustomError` | `(key: string, errorInfo?: object)` | Report a custom error. |
 | `getDeviceId` | `(): Promise<string \| null>` | Return the SDK-generated device identifier. |
 
 ## Common recipes
@@ -155,31 +151,10 @@ Klaritics.logAppEvent('add_to_cart', {
 })
 ```
 
-### Log an aggregate event
-
-```js
-Klaritics.logAggregateEvent('login', {
-  loginMode: 'google',
-  id: '46Juzcyx',
-})
-```
-
-### Log a client event
-
-```js
-Klaritics.logClientEvent('soft_back_pressed', {
-  screen: 'home',
-})
-```
-
-### Screens, redirections, and errors
+### Track a screen and get the device ID
 
 ```js
 Klaritics.trackScreen('home')
-
-Klaritics.logRedirectionEvent('https://example.com/offer')
-
-Klaritics.reportCustomError('payment_failed', { code: 'E42' })
 
 const deviceId = await Klaritics.getDeviceId()
 ```

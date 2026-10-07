@@ -62,11 +62,10 @@ The first argument is your `project_id`.
 | --- | --- | --- |
 | `init` | `init(projectId, options)` | Initialize the SDK. |
 | `logEvent` | `logEvent(eventName, properties, beforeRefresh?)` | Log an analytics event. Pass `true` as the third argument to send it before a page refresh. |
-| `logClientEvent` | `logClientEvent(eventName, properties)` | Log an event for your client-side logic. |
 | `setUserId` | `setUserId(userId)` | Identify the current user. |
 | `setUserProperties` | `setUserProperties(properties)` | Attach user properties. |
 | `setSessionProperties` | `setSessionProperties(properties)` | Attach properties to the current session. |
-| `getClientId` | `getClientId()` | Return the SDK-generated client ID. |
+| `getDeviceId` | `getDeviceId()` | Return the SDK-generated device ID. |
 | `startNewSession` | `startNewSession()` | Start a new session manually. |
 | `endSession` | `endSession()` | End the current session manually. |
 
@@ -88,10 +87,6 @@ Klaritics.logEvent("product_clicked", {
 Klaritics.logEvent("checkout_started", { cart_value: 99.99 }, true);
 ```
 
-```javascript Client event
-Klaritics.logClientEvent("soft_back_pressed", { page: "settings" });
-```
-
 </CodeGroup>
 
 ### Identify a user and set properties
@@ -104,10 +99,10 @@ Klaritics.setUserProperties({ plan: "pro", signup_date: "2024-01-15" });
 Klaritics.setSessionProperties({ campaign: "summer_sale" });
 ```
 
-### Control sessions
+### Get the device ID and control sessions
 
 ```javascript
-const clientId = Klaritics.getClientId();
+const deviceId = Klaritics.getDeviceId();
 
 Klaritics.startNewSession();
 Klaritics.endSession();

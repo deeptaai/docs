@@ -45,7 +45,7 @@ For platform-wide changes, see the [product release notes](/release-notes).
 
   - Install from npm or load with a script tag
   - `init` with `server_host`, `honorDNT`, `idle_time_out`, and `version` options
-  - `logEvent`, with an option to send before a page refresh, and `logClientEvent`
+  - `logEvent`, with an option to send before a page refresh
   - `setUserId`, `setUserProperties`, and `setSessionProperties`
   - Manual session control with `startNewSession` and `endSession`
 
@@ -61,7 +61,7 @@ For platform-wide changes, see the [product release notes](/release-notes).
 
   - Distributed through the Klaritics Maven repository
   - `setup` with a project ID and server host
-  - `logAppEvent` and `logClientEvent`
+  - `logAppEvent`
   - `setUserIdentifier` and `getDeviceId`
 
   See the [Android SDK guide](/sdk/android).
@@ -90,7 +90,7 @@ For platform-wide changes, see the [product release notes](/release-notes).
 
   - Autolinking on React Native 0.60+, with no native code to write
   - Initialize from JavaScript with `KlariticsProvider` or `setup`
-  - `logAppEvent`, `logAggregateEvent`, and `logClientEvent`
+  - `logAppEvent`
   - `setUserIdentifier`, `setUserCustomInfo`, and `setSessionCustomInfo`
   - Attribute objects pruned of `null`, `undefined`, `NaN`, `Infinity`, and empty nested objects before sending
 
@@ -105,7 +105,7 @@ For platform-wide changes, see the [product release notes](/release-notes).
   First release of the Flutter SDK.
 
   - Single `setup` call from Dart initializes Android and iOS
-  - `logAppEvent` and `logClientEvent`
+  - `logAppEvent`
   - `setUserIdentifier`, `setUserAttributes`, and `setSessionAttributes`
   - iOS native SDK added automatically through Swift Package Manager
 
