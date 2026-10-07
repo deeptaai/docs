@@ -1,0 +1,49 @@
+---
+title: "Integrations"
+sidebarTitle: "Overview"
+description: "Choose how to send data to Klaritics: client SDKs for web and mobile apps, or the External API for servers, jobs, and third-party systems."
+---
+
+There are two ways to send data into Klaritics. Most products use both: SDKs for what users do in the app, and the External API for what happens on your servers.
+
+<CardGroup cols={2}>
+  <Card title="Client SDKs" icon="mobile" href="/sdk/overview">
+    Track events from inside your web and mobile apps. The SDK handles sessions, device IDs, and batching for you.
+  </Card>
+
+  <Card title="External API" icon="server" href="/integrations/external-api">
+    Send events and user properties over HTTPS from backend services, jobs, warehouses, and CRMs.
+  </Card>
+</CardGroup>
+
+---
+
+## Which one to use
+
+| | Client SDKs | External API |
+| :-- | :-- | :-- |
+| **Runs in** | Your web or mobile app | Your servers |
+| **Use it for** | User actions inside the app | Server-side events, backfills, data from other systems |
+| **Credential** | `project_id` | `project_id` plus an API key |
+| **Safe to ship to end users** | Yes | **No** — the API key must stay server-side |
+| **Sessions and device IDs** | Handled by the SDK | You send `user_id` / `device_id` yourself |
+| **End-user IP** | Captured automatically | You must send `source_ip` |
+
+<Tip>
+  Keep identifiers consistent across both. An event sent through the External API should use the same `user_id` your app passes to the SDK, so both streams describe the same person.
+</Tip>
+
+---
+
+## Available SDKs
+
+<CardGroup cols={3}>
+  <Card title="Web" icon="globe" href="/sdk/web" />
+  <Card title="Android" icon="android" href="/sdk/android" />
+  <Card title="iOS" icon="apple" href="/sdk/ios" />
+  <Card title="React Native" icon="react" href="/sdk/react-native" />
+  <Card title="Flutter" icon="mobile" href="/sdk/flutter" />
+  <Card title="Kotlin Multiplatform" icon="code" href="/sdk/kmp" />
+</CardGroup>
+
+See [SDK release notes](/sdk/releases) for what changed in each version.

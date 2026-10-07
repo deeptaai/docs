@@ -1,117 +1,128 @@
 ---
-title: "Integrate the Klaritics Web SDK in Your Application"
+title: "Web SDK Integration Guide for Klaritics"
 sidebarTitle: "Web"
-description: "Install the Klaritics Web SDK via npm or script tag, initialize with project_id and server_host, and log events, user IDs, and session properties."
+description: "Install the Klaritics Web SDK via npm or script tag, initialize it with your project ID and server host, and log events, users, and session properties from the browser."
 ---
 
-The Klaritics Web SDK sends analytics events directly from the browser to your self-hosted Klaritics instance. You can install it via npm for bundler-based projects or load it from a CDN script tag for simpler setups. This guide covers installation, initialization, event logging, user and session management, and SPA behavior.
+The Klaritics Web SDK sends analytics events from the browser to your self-hosted Klaritics instance. Install it from npm for bundler-based projects, or load it with a script tag.
+
+**Package:** `@deeptaai/klaritics-web-sdk`
+
+## Requirements
+
+You need a **Project ID** and a **Server host** from the Klaritics dashboard. Your project ID is on the **Getting Started** page.
 
 ## Installation
 
 <Tabs>
   <Tab title="npm">
-    Install the package from npm:
-
     ```bash
     npm install --save @deeptaai/klaritics-web-sdk
     ```
 
-    Then import and initialize. Replace `YOUR_PROJECT_ID` and `YOUR_SERVER_HOST` with the values from your Klaritics dashboard.
-
     ```javascript
     import Klaritics from "@deeptaai/klaritics-web-sdk";
-    
-    Klaritics.init("YOUR_PROJECT_ID", {
-      server_host: "https://YOUR_SERVER_HOST"
-    });
     ```
   </Tab>
   <Tab title="Script tag">
-    Add the script tag to your HTML. The `defer` attribute ensures it loads after the page content.
+    The `defer` attribute loads the SDK after the page content.
 
     ```html
     <script type="text/javascript" defer
       src="https://unpkg.com/@deeptaai/klaritics-web-sdk@latest">
     </script>
     ```
-
-    Then initialize in your application code:
-
-    ```javascript
-    Klaritics.init("YOUR_PROJECT_ID", {
-      server_host: "https://YOUR_SERVER_HOST"
-    });
-    ```
   </Tab>
 </Tabs>
 
-<Note>
-  Your `project_id` is available on the **Getting Started** page of the Klaritics dashboard. The first positional argument to `Klaritics.init` is still the project identifier; only the placeholder value is renamed.
-</Note>
+## Initialize the SDK
 
-## Initialization options
+Call `Klaritics.init` once, before any other Klaritics call:
 
-You can pass additional options when calling `init`:
+```javascript
+Klaritics.init("YOUR_PROJECT_ID", {
+  server_host: "https://YOUR_SERVER_HOST"
+});
+```
+
+The first argument is your `project_id`.
+
+### Options
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `server_host` | string | Required. URL of your Klaritics instance. |
-| `honorDNT` | boolean | Honor the browser's Do Not Track setting. |
-| `idle_time_out` | number | Milliseconds of inactivity before a session ends. |
-| `version` | string | Application version to attach to events. |
+| `server_host` | `string` | **Required.** URL of your Klaritics instance. |
+| `honorDNT` | `boolean` | Honor the browser's Do Not Track setting. |
+| `idle_time_out` | `number` | Milliseconds of inactivity before a session ends. |
+| `version` | `string` | Application version to attach to events. |
 
-## Logging events
+## API reference
 
-Use `logEvent` to send standard analytics events. Use `logClientEvent` for events that are specific to your client-side logic.
+| Method | Usage | Description |
+| --- | --- | --- |
+| `init` | `init(projectId, options)` | Initialize the SDK. |
+| `logEvent` | `logEvent(eventName, properties, beforeRefresh?)` | Log an analytics event. Pass `true` as the third argument to send it before a page refresh. |
+| `logClientEvent` | `logClientEvent(eventName, properties)` | Log an event for your client-side logic. |
+| `setUserId` | `setUserId(userId)` | Identify the current user. |
+| `setUserProperties` | `setUserProperties(properties)` | Attach user properties. |
+| `setSessionProperties` | `setSessionProperties(properties)` | Attach properties to the current session. |
+| `getClientId` | `getClientId()` | Return the SDK-generated client ID. |
+| `startNewSession` | `startNewSession()` | Start a new session manually. |
+| `endSession` | `endSession()` | End the current session manually. |
+
+## Common recipes
+
+### Log events
 
 <CodeGroup>
 
 ```javascript Standard event
-Klaritics.logEvent("ProductClicked", {
+Klaritics.logEvent("product_clicked", {
   product_id: "sku-123",
   category: "electronics"
 });
 ```
 
 ```javascript Before refresh
-// Third argument true sends the event before a page refresh
-Klaritics.logEvent("CheckoutStarted", { cart_value: 99.99 }, true);
+// Third argument `true` sends the event before a page refresh
+Klaritics.logEvent("checkout_started", { cart_value: 99.99 }, true);
 ```
 
 ```javascript Client event
-Klaritics.logClientEvent("SoftBackPressed", { page: "settings" });
+Klaritics.logClientEvent("soft_back_pressed", { page: "settings" });
 ```
 
 </CodeGroup>
 
-## User and session management
+### Identify a user and set properties
 
 ```javascript
-// Identify the current user
-Klaritics.setUserId("user@example.com");
+Klaritics.setUserId("user_123");
 
-// Attach user properties
-Klaritics.setUserProperties({
-  plan: "pro",
-  signup_date: "2024-01-15"
-});
+Klaritics.setUserProperties({ plan: "pro", signup_date: "2024-01-15" });
 
-// Attach session properties
-Klaritics.setSessionProperties({
-  campaign: "summer_sale"
-});
+Klaritics.setSessionProperties({ campaign: "summer_sale" });
+```
 
-// Retrieve the SDK-generated client ID
+### Control sessions
+
+```javascript
 const clientId = Klaritics.getClientId();
 
-// Manually control sessions
 Klaritics.startNewSession();
 Klaritics.endSession();
 ```
 
 ## Single-page applications
 
-For SPAs, you can use your existing redirection handler to trigger events on route changes. URL-based page tracking is configured from the Klaritics dashboard and does not require additional SDK setup.
+Use your existing route-change handler to log events on navigation. URL-based page tracking is configured from the Klaritics dashboard and needs no extra SDK setup.
+
+## Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| Events lost when the page reloads | Pass `true` as the third argument to `logEvent` for events fired just before a refresh. |
+| Nothing is sent | Check that `init` runs before any other call, with a valid `server_host`. |
 
 ## Next steps
 
@@ -120,7 +131,11 @@ For SPAs, you can use your existing redirection handler to trigger events on rou
     Trigger test events, watch them land on the Getting Started page, and click Complete Setup.
   </Card>
 
-  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
-    Learn the naming conventions Klaritics expects for events and attributes.
+  <Card title="Release notes" icon="clock-rotate-left" href="/sdk/releases#web">
+    What changed in each Web SDK version.
   </Card>
 </CardGroup>
+
+---
+
+**Package:** `@deeptaai/klaritics-web-sdk` · [Release notes](/sdk/releases#web)

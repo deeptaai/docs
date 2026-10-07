@@ -1,25 +1,28 @@
 ---
-title: "Integrate the Klaritics Flutter SDK in Your App"
+title: "Flutter SDK Integration Guide for Klaritics"
 sidebarTitle: "Flutter"
-description: "Add the klaritics_flutter package, initialize the SDK once from Dart, and log events, user attributes, and session attributes across Android and iOS."
+description: "Add the klaritics_flutter package, initialize it once from Dart, and log events, user attributes, and session attributes on Android and iOS."
 ---
 
-The Klaritics Flutter SDK is a Dart wrapper around the native Android and iOS SDKs. A single call from Dart initializes both platforms, so you do not need to add native setup code to your `Activity`, `Application`, or `AppDelegate`.
+The Klaritics Flutter SDK is a Dart wrapper around the native Klaritics Android and iOS SDKs. A single call from Dart initializes both platforms, so you add no setup code to your `Activity`, `Application`, or `AppDelegate`.
 
-<Note>
-  The Flutter SDK requires Flutter `>= 3.0.1`.
-</Note>
+**Package:** `klaritics_flutter` · **Version:** 1.0.0
 
-## Installation
+## Requirements
 
-Add the `klaritics_flutter` package to your `pubspec.yaml`:
+| Requirement | Value |
+| --- | --- |
+| Flutter | `>= 3.0.1` |
+| iOS dependency manager | Swift Package Manager (Flutter's SwiftPM support enabled) |
+
+You need a **Project ID** and a **Host URL** from the Klaritics dashboard. Your project ID is on the **Getting Started** page.
+
+## Add the dependency
 
 ```yaml pubspec.yaml
 dependencies:
   klaritics_flutter: ^1.0.0
 ```
-
-Then import it in your Dart code:
 
 ```dart
 import 'package:klaritics_flutter/klaritics_flutter.dart';
@@ -27,29 +30,36 @@ import 'package:klaritics_flutter/klaritics_flutter.dart';
 
 ## Initialize the SDK
 
-Initialize the SDK **once** from Dart. Call it from `main()` before `runApp`, and `await` the call before you log any events. Replace `YOUR_PROJECT_ID` and `YOUR_HOST` with the values from your Klaritics dashboard. Your project ID is available on the **Getting Started** page of the dashboard.
+Initialize **once**, from `main()` before `runApp`, and `await` the call before logging any events:
 
 ```dart main.dart
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final config = KlariticsConfig('YOUR_PROJECT_ID');
-  config.host = 'YOUR_HOST';
+  config.host = 'https://YOUR_SERVER_HOST';
   await KlariticsFlutter.setup(config);
 
   runApp(const MyApp());
 }
 ```
 
+### `KlariticsConfig`
+
+| Property | Type | Description |
+| --- | --- | --- |
+| *(constructor argument)* | `String` | **Required.** Your `project_id` from the Klaritics dashboard. |
+| `host` | `String` | **Required.** Server URL to send data to. |
+
 <Tip>
-  Because initialization happens from Dart, you do not need to call the native `Klaritics.setup(...)` in your Android `Activity` or `Application`, or in your iOS `AppDelegate`.
+  Because initialization happens from Dart, don't call the native `Klaritics.setup(...)` in your Android `Activity` or `Application`, or in your iOS `AppDelegate`.
 </Tip>
 
-## Android configuration
+## Android setup
 
 <Steps>
   <Step title="Add the Klaritics Maven repository">
-    The Klaritics Android SDK is published to a private Maven repository. Add it to the `repositories` block in your project-level `android/build.gradle` (or `settings.gradle`):
+    Add it to the `repositories` block in `android/build.gradle` (or `settings.gradle`):
 
     ```groovy android/build.gradle
     maven {
@@ -57,9 +67,7 @@ Future<void> main() async {
     }
     ```
   </Step>
-  <Step title="Add the SDK dependency">
-    Add the Klaritics dependency to your `app/build.gradle`:
-
+  <Step title="Add the native SDK dependency">
     ```groovy app/build.gradle
     dependencies {
         implementation "com.deeptaai.klaritics:klaritics-android-sdk:1.0.0"
@@ -67,7 +75,7 @@ Future<void> main() async {
     ```
   </Step>
   <Step title="Configure ProGuard">
-    If you use ProGuard, add the following to `proguard-rules.pro`:
+    If you use ProGuard, add to `proguard-rules.pro`:
 
     ```proguard proguard-rules.pro
     -keep class com.deeptaai.klaritics.** { *; }
@@ -76,62 +84,65 @@ Future<void> main() async {
   </Step>
 </Steps>
 
-## iOS configuration
+## iOS setup
 
-The Klaritics iOS SDK is consumed via Swift Package Manager. The plugin declares the dependency in its `Package.swift`, so with Flutter's Swift Package Manager support enabled it is added to your iOS app automatically. No `AppDelegate` changes are required.
+The plugin declares the native Klaritics iOS SDK in its `Package.swift`. With Flutter's Swift Package Manager support enabled, it's added to your iOS app automatically. No `AppDelegate` changes are required.
 
-## APIs
+## API reference
 
-### Identifying users
+All methods are called on `KlariticsFlutter`.
 
-The Klaritics SDK automatically captures a device ID that the backend uses to identify users. If you want to attach your own identifier (useful for studying a specific user's journey), call `setUserIdentifier`:
+| Method | Usage | Description |
+| --- | --- | --- |
+| `setup` | `await setup(config)` | Initialize both platforms. Call once, before anything else. |
+| `logAppEvent` | `logAppEvent(eventName, attributes: {...})` | Log an analytics event. |
+| `logClientEvent` | `logClientEvent(eventName, attributes: {...})` | Log an event that stays on the device. |
+| `setUserIdentifier` | `setUserIdentifier(userId)` | Attach your own identifier to the current user. |
+| `setUserAttributes` | `setUserAttributes({...})` | Set user-level attributes. |
+| `setSessionAttributes` | `setSessionAttributes({...})` | Set attributes for the current session. |
+
+## Common recipes
+
+### Log events
 
 ```dart
-KlariticsFlutter.setUserIdentifier("<SOME_USER_ID>");
-```
+KlariticsFlutter.logAppEvent("login", attributes: {
+  "type": "google",
+  "language": "en",
+});
 
-### User attributes
-
-Attach identifying or profile information to the current user, such as name, age, or gender:
-
-```dart
-KlariticsFlutter.setUserAttributes({
-  'age': 27,
-  'gender': "male",
+// Client events stay on the device — use them for local logic such as nudges
+KlariticsFlutter.logClientEvent("soft_back_pressed", attributes: {
+  "screen_name": "payment",
 });
 ```
 
-### Session attributes
+### Identify a user and set attributes
 
-A session is the user's journey from opening the app to closing it. Attach information that is meaningful for the current session, such as network type or location:
+The SDK captures a device ID automatically. Add your own identifier when you want to follow a specific user's journey:
 
 ```dart
+KlariticsFlutter.setUserIdentifier("user_123");
+
+KlariticsFlutter.setUserAttributes({
+  'age': 27,
+  'plan': 'pro',
+});
+
+// A session runs from opening the app to closing it
 KlariticsFlutter.setSessionAttributes({
   "network": "4G",
   "location": "Hyderabad",
 });
 ```
 
-### App events
+## Troubleshooting
 
-App events let you analyze user behavior and optimize your product around goals such as retention or feature adoption. Log an event with a name and optional attributes:
-
-```dart
-KlariticsFlutter.logAppEvent("Login", attributes: {
-  "type": "Google",
-  "language": "valyrian",
-});
-```
-
-### Client events
-
-Client events stay on the device and are not sent to Klaritics. Use them to capture behavioral signals for local logic such as nudges or in-app prompts (for example, a soft back press or the user reaching the end of a page).
-
-```dart
-KlariticsFlutter.logClientEvent("SoftBackPressed", attributes: {
-  "screenName": "Payment",
-});
-```
+| Symptom | Fix |
+| --- | --- |
+| Events logged before setup are missing | `await KlariticsFlutter.setup(config)` in `main()` before `runApp`. |
+| Android build can't resolve `klaritics-android-sdk` | Add the Maven repository. See [Android setup](#android-setup). |
+| iOS doesn't pick up the native SDK | Enable Flutter's Swift Package Manager support. |
 
 ## Next steps
 
@@ -140,7 +151,11 @@ KlariticsFlutter.logClientEvent("SoftBackPressed", attributes: {
     Send test events from your app and watch them land on the Getting Started page.
   </Card>
 
-  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
-    Learn the naming conventions Klaritics expects for events and attributes.
+  <Card title="Release notes" icon="clock-rotate-left" href="/sdk/releases#flutter">
+    What changed in each Flutter SDK version.
   </Card>
 </CardGroup>
+
+---
+
+**Package:** `klaritics_flutter` · **Version:** 1.0.0 · **Flutter:** 3.0.1+ · [Release notes](/sdk/releases#flutter)

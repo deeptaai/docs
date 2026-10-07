@@ -1,0 +1,133 @@
+---
+title: "SDK Release Notes"
+sidebarTitle: "Release Notes"
+description: "Version history for every Klaritics client SDK: Web, Android, iOS, React Native, Flutter, and Kotlin Multiplatform."
+---
+
+{/*
+  HOW TO ADD A RELEASE
+  Add a new <Update> at the TOP of the relevant SDK section, newest first:
+
+  <Update label="v1.1.0" description="YYYY-MM-DD">
+    **Added**
+    - ...
+
+    **Changed**
+    - ...
+
+    **Fixed**
+    - ...
+  </Update>
+
+  Also bump the version on that SDK's page (the "Artifact"/"Package" line at
+  the top and bottom, and any install snippets).
+*/}
+
+Each Klaritics SDK is versioned and released independently. Jump to an SDK:
+
+<CardGroup cols={3}>
+  <Card title="Web" icon="globe" href="#web" />
+  <Card title="Android" icon="android" href="#android" />
+  <Card title="iOS" icon="apple" href="#ios" />
+  <Card title="React Native" icon="react" href="#react-native" />
+  <Card title="Flutter" icon="mobile" href="#flutter" />
+  <Card title="Kotlin Multiplatform" icon="code" href="#kotlin-multiplatform" />
+</CardGroup>
+
+For platform-wide changes, see the [product release notes](/release-notes).
+
+---
+
+## Web
+
+<Update label="Initial release" description="@deeptaai/klaritics-web-sdk">
+  First release of the Web SDK.
+
+  - Install from npm or load with a script tag
+  - `init` with `server_host`, `honorDNT`, `idle_time_out`, and `version` options
+  - `logEvent`, with an option to send before a page refresh, and `logClientEvent`
+  - `setUserId`, `setUserProperties`, and `setSessionProperties`
+  - Manual session control with `startNewSession` and `endSession`
+
+  See the [Web SDK guide](/sdk/web).
+</Update>
+
+---
+
+## Android
+
+<Update label="v1.0.0" description="com.deeptaai.klaritics:klaritics-android-sdk">
+  First release of the Android SDK.
+
+  - Distributed through the Klaritics Maven repository
+  - `setup` with a project ID and server host
+  - `logAppEvent` and `logClientEvent`
+  - `setUserIdentifier` and `getDeviceId`
+
+  See the [Android SDK guide](/sdk/android).
+</Update>
+
+---
+
+## iOS
+
+<Update label="v1.0.0" description="github.com/deeptaai/klaritics-ios-sdk">
+  First release of the iOS SDK.
+
+  - Distributed through Swift Package Manager
+  - `setup` with `appId` and `host`
+  - `logAppEvent` from Swift and Objective-C
+
+  See the [iOS SDK guide](/sdk/ios).
+</Update>
+
+---
+
+## React Native
+
+<Update label="v1.0.0" description="@deeptaai/klaritics-react-native-sdk">
+  First release of the React Native SDK.
+
+  - Autolinking on React Native 0.60+, with no native code to write
+  - Initialize from JavaScript with `KlariticsProvider` or `setup`
+  - `logAppEvent`, `logAggregateEvent`, and `logClientEvent`
+  - `setUserIdentifier`, `setUserCustomInfo`, and `setSessionCustomInfo`
+  - Attribute objects pruned of `null`, `undefined`, `NaN`, `Infinity`, and empty nested objects before sending
+
+  See the [React Native SDK guide](/sdk/react-native).
+</Update>
+
+---
+
+## Flutter
+
+<Update label="v1.0.0" description="klaritics_flutter">
+  First release of the Flutter SDK.
+
+  - Single `setup` call from Dart initializes Android and iOS
+  - `logAppEvent` and `logClientEvent`
+  - `setUserIdentifier`, `setUserAttributes`, and `setSessionAttributes`
+  - iOS native SDK added automatically through Swift Package Manager
+
+  See the [Flutter SDK guide](/sdk/flutter).
+</Update>
+
+---
+
+## Kotlin Multiplatform
+
+<Update label="v1.0.0" description="com.deeptaai.klaritics:klaritics-kmp">
+  First release of the Kotlin Multiplatform SDK.
+
+  - One shared Kotlin API that delegates to the native Android and iOS SDKs
+  - Requires Kotlin 2.4.0 or newer; Android `minSdk` 21, iOS 13.0+
+  - iOS linkage through Kotlin's SwiftPM integration, with no CocoaPods
+  - Attributes with `null` values dropped before dispatch, so both platforms send the same shape
+
+  **Known limitations**
+
+  - Some methods are safe no-ops on iOS, because the native iOS SDK v1.0.0 doesn't expose them yet. See [Platform parity notes](/sdk/kmp#platform-parity-notes).
+  - `KlariticsConfig.debug` and `KlariticsConfig.optOut` are honored on Android only.
+
+  See the [Kotlin Multiplatform SDK guide](/sdk/kmp).
+</Update>

@@ -30,7 +30,8 @@ Written against the real product or a PRD. Safe to edit and cite.
 | `settings/users.mdx` | IAM PRD |
 | `product-analytics/*.mdx` (5) | Product Analytics Dashboards PRD |
 | `templates/*.mdx` (5) | Dashboard Templates PRD |
-| `sdk/*.mdx` | Product |
+| `sdk/*.mdx` | Product. Restructured to the KMP layout; awaiting SDK-team review — see below |
+| `integrations/external-api.mdx` | External API guide |
 
 ---
 
@@ -72,6 +73,20 @@ Navigation mirrors this. There is no separate page per chart visualization type,
 The summary table lists five dashboards including Flow Analysis, but the intro says "four distinct dashboards" and the body details only four. Flow Analysis is documented as its own template instead. **Confirm** whether Flow Analysis also appears inside Product Analytics.
 
 ---
+
+## SDK review — open questions for SDK teams
+
+The SDK pages were restructured to match `sdk/kmp.mdx` using only facts already on each page. These are the gaps that surfaced:
+
+- **Requirements are missing** for the native Android, iOS, and Web SDKs — minimum `minSdk`, iOS deployment target, Xcode version, supported browsers. The KMP and React Native wrappers state their own minimums, but those don't establish the native ones.
+- **Native API surface is under-documented.** The KMP page says it delegates to the native SDKs and lists `logAggregateEvent`, `setUserCustomInfo`, `setSessionCustomInfo`, `trackScreen`, `logRedirectionEvent`, `reportCustomError`, plus Android-only `logMetaEvent`, `resetUserCustomInfo`, `setCurrentScreenName`, `setPushRegistrationToken`, `setDynamicConfig`, `flushEventsIfAny`, `optOut`. The Android page documents only 5 methods and the iOS page only 2. Native signatures are needed before those pages can list more.
+- **KMP API table is internally inconsistent.** Its iOS column marks every method ✅, while the Tip below it talks about methods that are no-ops on iOS — and none of the no-op methods appear in the table.
+- **ProGuard rules differ.** Android: `-keep class com.deeptaai.** { *; }`. Flutter: `-keep class com.deeptaai.klaritics.** { *; }`. One is likely stale.
+- **Android repository visibility.** The old Android page said "private Maven repository"; the KMP page says both registries allow anonymous read. The Android page now says public — confirm.
+- **Android Logcat line** reads `Klaritics(v2**) successfully initialized`. `v2**` looks like a placeholder for a version.
+- **Web SDK version is unknown.** The script tag uses `@latest`; no version is stated, so release notes label it "Initial release".
+- **Event naming case.** The External API enforces `snake_case`. Do the SDK ingestion paths accept other casing? Examples were switched to `snake_case` for consistency.
+- **Release dates** for all v1.0.0 SDKs are unknown, so release-note entries carry no dates.
 
 ## Unverified pages
 

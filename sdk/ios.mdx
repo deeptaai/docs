@@ -1,81 +1,107 @@
 ---
-title: "Integrate the Klaritics iOS SDK in Your App"
+title: "iOS SDK Integration Guide for Klaritics"
 sidebarTitle: "iOS"
-description: "Add the Klaritics iOS SDK via Swift Package Manager, initialize it in your AppDelegate with project_id and host, and log events from Swift or Objective-C."
+description: "Add the Klaritics iOS SDK with Swift Package Manager, initialize it in your AppDelegate with your project ID and host, and log events from Swift or Objective-C."
 ---
 
-The Klaritics iOS SDK collects analytics from iOS applications and sends them to your self-hosted Klaritics instance. Add the package with Swift Package Manager, then initialize it in your app delegate.
+The Klaritics iOS SDK collects analytics from iOS apps and sends them to your self-hosted Klaritics instance. Add it with Swift Package Manager, then initialize it once from your app delegate.
 
-## Add the Klaritics SDK to your project
+**Package:** `github.com/deeptaai/klaritics-ios-sdk` · **Version:** 1.0.0
 
-Klaritics uses Swift Package Manager to install and manage dependencies.
+## Requirements
+
+| Requirement | Value |
+| --- | --- |
+| Package manager | Swift Package Manager |
+| Languages | Swift, Objective-C |
+
+You need a **Project ID** and a **Host URL** from the Klaritics dashboard. Your project ID is on the **Getting Started** page.
+
+## Add the package
 
 <Steps>
-  <Step title="Open the Add Package Dependencies dialog">
-    In Xcode, choose **File → Add Package Dependencies** from the menu bar.
+  <Step title="Open Add Package Dependencies">
+    In Xcode, choose **File → Add Package Dependencies**.
   </Step>
   <Step title="Add the Klaritics repository">
-    When prompted, paste the Klaritics Apple platform SDK repository URL:
+    Paste the repository URL:
 
     ```text
     github.com/deeptaai/klaritics-ios-sdk
     ```
   </Step>
-  <Step title="Add the Klaritics library to your target">
-    In the **Choose Package Products** dialog, select the **Klaritics** library and choose your application target under **Add to Target**, then click **Add Package**.
+  <Step title="Add the library to your target">
+    In **Choose Package Products**, select the **Klaritics** library, choose your app target under **Add to Target**, and click **Add Package**.
   </Step>
 </Steps>
 
-<Note>
-  When finished, Xcode automatically resolves and downloads the dependency in the background.
-</Note>
+Xcode resolves and downloads the dependency in the background.
 
-## Initialize the Klaritics iOS SDK
+## Initialize the SDK
 
-Import Klaritics and call `Klaritics.setup(config)` from your `AppDelegate` in `application(_:didFinishLaunchingWithOptions:)`. Replace `<project-id>` and `<host>` with the values from your Klaritics dashboard. Your project ID is available on the **Getting Started** page of the dashboard.
+Import Klaritics and call `Klaritics.setup(config)` once, in `application(_:didFinishLaunchingWithOptions:)`, before any other Klaritics call.
 
 ```swift AppDelegate.swift
-//...
 import Klaritics
 
 @UIApplicationMain
 class AppDelegate: NSObject {
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        let config = KlariticsConfig(appId: "<project-id>", host: "<host>")
+        let config = KlariticsConfig(appId: "YOUR_PROJECT_ID", host: "https://YOUR_SERVER_HOST")
         Klaritics.setup(config)
 
-        //..ur code
         return true
     }
 }
 ```
 
-The SDK does not initialize until both `appId` (your `project_id`) and `host` are provided.
+### `KlariticsConfig`
 
-## Logging events
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `appId` | `String` | — (required) | Your `project_id` from the Klaritics dashboard (Getting Started page). |
+| `host` | `String` | — (required) | Server URL to send data to. |
 
-Use `logAppEvent` to send standard analytics events. The method accepts an event name and an optional dictionary of additional information.
+<Warning>
+  The SDK does not initialize until **both** `appId` and `host` are provided.
+</Warning>
+
+## API reference
+
+| Method | Swift | Objective-C |
+| --- | --- | --- |
+| `setup` | `Klaritics.setup(config)` | — |
+| `logAppEvent` | `Klaritics.logAppEvent(withName:info:)` | `[Klaritics logAppEventForEvent:withInfo:]` |
+
+## Common recipes
+
+### Log an event
 
 <CodeGroup>
 
 ```swift Swift
-let info = ["ButtonLabel": "Hey"]
 Klaritics.logAppEvent(
-    withName: "ButtonClicked",
-    info: info
+    withName: "button_clicked",
+    info: ["button_label": "Submit"]
 )
 ```
 
 ```objc Objective-C
-NSDictionary *info = @{
-    @"ButtonLabel": @"Hey"
-};
-[Klaritics logAppEventForEvent:@"ButtonClicked" withInfo:info];
+NSDictionary *info = @{ @"button_label": @"Submit" };
+[Klaritics logAppEventForEvent:@"button_clicked" withInfo:info];
 ```
 
 </CodeGroup>
+
+## Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| Nothing is sent | Check that both `appId` and `host` are set in `KlariticsConfig`. The SDK doesn't initialize without both. |
+| `No such module 'Klaritics'` | The **Klaritics** library wasn't added to your app target. Re-check the last step of [Add the package](#add-the-package). |
 
 ## Next steps
 
@@ -84,7 +110,11 @@ NSDictionary *info = @{
     Send test events from your app and watch them land on the Getting Started page.
   </Card>
 
-  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
-    Learn the naming conventions Klaritics expects for events and attributes.
+  <Card title="Release notes" icon="clock-rotate-left" href="/sdk/releases#ios">
+    What changed in each iOS SDK version.
   </Card>
 </CardGroup>
+
+---
+
+**Package:** `github.com/deeptaai/klaritics-ios-sdk` · **Version:** 1.0.0 · [Release notes](/sdk/releases#ios)

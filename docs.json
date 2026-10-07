@@ -107,17 +107,26 @@
         ]
       },
       {
-        "group": "SDK Integration",
-        "icon": "code",
+        "group": "Integrations",
+        "icon": "plug",
         "pages": [
-          "sdk/overview",
-          "sdk/web",
-          "sdk/android",
-          "sdk/ios",
-          "sdk/react-native",
-          "sdk/flutter",
-          "sdk/kmp",
-          "sdk/event-naming"
+          "integrations/overview",
+          {
+            "group": "Client SDKs",
+            "icon": "mobile",
+            "pages": [
+              "sdk/overview",
+              "sdk/web",
+              "sdk/android",
+              "sdk/ios",
+              "sdk/react-native",
+              "sdk/flutter",
+              "sdk/kmp",
+              "sdk/event-naming",
+              "sdk/releases"
+            ]
+          },
+          "integrations/external-api"
         ]
       },
       {

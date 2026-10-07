@@ -80,12 +80,19 @@ import { KlariticsProvider } from '@deeptaai/klaritics-react-native-sdk'
 
 export default function App() {
   return (
-    <KlariticsProvider apiKey="YOUR_PROJECT_ID" options={{ host: 'YOUR_HOST' }}>
+    <KlariticsProvider apiKey="YOUR_PROJECT_ID" options={{ host: 'https://YOUR_SERVER_HOST' }}>
       {/* your app */}
     </KlariticsProvider>
   )
 }
 ```
+
+### `KlariticsProvider` props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `apiKey` | `string` | — (required) | Your `project_id` from the Klaritics dashboard (Getting Started page). |
+| `options.host` | `string` | — (required) | Server URL to send data to, no trailing slash. |
 
 ## API reference
 
@@ -118,7 +125,7 @@ import { logAppEvent } from '@deeptaai/klaritics-react-native-sdk'
 ### Identify a user
 
 ```js
-Klaritics.setUserIdentifier('john@doe.com')
+Klaritics.setUserIdentifier('user_123')
 ```
 
 ### Set user and session properties
@@ -147,8 +154,8 @@ Klaritics.logAppEvent('add_to_cart', {
 ### Log an aggregate event
 
 ```js
-Klaritics.logAggregateEvent('Login', {
-  loginMode: 'Google',
+Klaritics.logAggregateEvent('login', {
+  loginMode: 'google',
   id: '46Juzcyx',
 })
 ```
@@ -156,8 +163,8 @@ Klaritics.logAggregateEvent('Login', {
 ### Log a client event
 
 ```js
-Klaritics.logClientEvent('SoftBackPressed', {
-  Screen: 'HomeScreen',
+Klaritics.logClientEvent('soft_back_pressed', {
+  screen: 'home',
 })
 ```
 
@@ -178,11 +185,11 @@ Klaritics.logClientEvent('SoftBackPressed', {
     Send test events from your app and watch them land on the Getting Started page.
   </Card>
 
-  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
-    Learn the naming conventions Klaritics expects for events and attributes.
+  <Card title="Release notes" icon="clock-rotate-left" href="/sdk/releases#react-native">
+    What changed in each React Native SDK version.
   </Card>
 </CardGroup>
 
 ---
 
-**Package:** `@deeptaai/klaritics-react-native-sdk` · **Version:** 1.0.0 · **License:** MIT
+**Package:** `@deeptaai/klaritics-react-native-sdk` · **Version:** 1.0.0 · **License:** MIT · [Release notes](/sdk/releases#react-native)

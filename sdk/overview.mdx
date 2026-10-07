@@ -34,14 +34,45 @@ Klaritics provides client SDKs for Android, iOS, Web, React Native, Kotlin Multi
   </Card>
 </CardGroup>
 
+<Tip>
+  Sending data from servers, jobs, or other systems rather than an app? Use the [External API](/integrations/external-api).
+</Tip>
+
 ## Shared initialization
 
 Every SDK requires two values to initialize:
 
-- `project_id`: your Klaritics project identifier, found in the Klaritics dashboard
-- `server_host`: the URL of your Klaritics instance (for example, `https://analytics.yourcompany.com`)
+- `project_id`: your Klaritics project identifier, found on the **Getting Started** page of the dashboard
+- `server_host`: the URL of your Klaritics instance, for example `https://analytics.yourcompany.com`
 
 The SDK does not start capturing events until both values are provided. We recommend verifying that the host is reachable at initialization time.
+
+Each SDK names these two values differently:
+
+| SDK | Project ID | Server host |
+| --- | --- | --- |
+| [Web](/sdk/web) | 1st argument to `init` | `server_host` option |
+| [Android](/sdk/android) | 1st argument to `KlariticsConfig` | 2nd argument to `KlariticsConfig` |
+| [iOS](/sdk/ios) | `appId` | `host` |
+| [React Native](/sdk/react-native) | `apiKey` | `options.host` |
+| [Flutter](/sdk/flutter) | `KlariticsConfig` constructor argument | `host` |
+| [Kotlin Multiplatform](/sdk/kmp) | `appId` | `host` |
+
+## API at a glance
+
+The same capability can have a different method name on each platform. A dash means the method isn't covered in that SDK's guide.
+
+| Capability | Web | Android | iOS | React Native | Flutter | KMP |
+| --- | --- | --- | --- | --- | --- | --- |
+| Log an event | `logEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` |
+| Log a client event | `logClientEvent` | `logClientEvent` | — | `logClientEvent` | `logClientEvent` | `logClientEvent` |
+| Log an aggregate event | — | — | — | `logAggregateEvent` | — | `logAggregateEvent` |
+| Identify the user | `setUserId` | `setUserIdentifier` | — | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` |
+| Set user properties | `setUserProperties` | — | — | `setUserCustomInfo` | `setUserAttributes` | `setUserCustomInfo` |
+| Set session properties | `setSessionProperties` | — | — | `setSessionCustomInfo` | `setSessionAttributes` | `setSessionCustomInfo` |
+| Get the device / client ID | `getClientId` | `getDeviceId` | — | — | — | `getDeviceId` |
+
+Version history for every SDK is in [SDK release notes](/sdk/releases).
 
 ## Verify your integration
 
@@ -64,7 +95,7 @@ After you initialize the SDK in your app, send a few test events to confirm the 
 
 ## Event and attribute naming
 
-When you log events and attributes from your application, use plain names that describe what happened in your product, for example `ProductClicked` or `add_to_cart`, with attributes like `userId` or `item`.
+When you log events and attributes from your application, use plain names that describe what happened in your product, for example `add_to_cart` or `product_clicked`, with attributes like `user_id` or `item`.
 
 <Warning>
   Do not use `$` as a prefix for events or attributes that you log. The Klaritics SDKs reserve the `$` prefix for events and attributes that they add automatically, such as session and device metadata. Names you log that start with `$` may collide with SDK-managed data.

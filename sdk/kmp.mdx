@@ -77,7 +77,7 @@ fun initAnalytics(context: KlariticsContext) {
     Klaritics.setup(
         KlariticsConfig(
             appId = "YOUR_PROJECT_ID",
-            host = "https://server.example.klaritics.com", // no trailing slash
+            host = "https://YOUR_SERVER_HOST", // no trailing slash
         ),
         context,
     )
@@ -230,11 +230,11 @@ You can call these from shared code without guards; they simply do nothing on iO
     Send test events from your app and watch them land on the Getting Started page.
   </Card>
 
-  <Card title="Event and attribute naming" icon="tag" href="/sdk/event-naming">
-    Learn the naming conventions Klaritics expects for events and attributes.
+  <Card title="Release notes" icon="clock-rotate-left" href="/sdk/releases#kotlin-multiplatform">
+    What changed in each Kotlin Multiplatform SDK version.
   </Card>
 </CardGroup>
 
 ---
 
-**Artifact:** `com.deeptaai.klaritics:klaritics-kmp:1.0.0` · **Kotlin:** 2.4.0+ · **Targets:** Android (minSdk 21), iOS (13.0+) · **License:** MIT
+**Artifact:** `com.deeptaai.klaritics:klaritics-kmp:1.0.0` · **Kotlin:** 2.4.0+ · **Targets:** Android (minSdk 21), iOS (13.0+) · **License:** MIT · [Release notes](/sdk/releases#kotlin-multiplatform)

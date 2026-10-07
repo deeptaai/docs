@@ -20,6 +20,10 @@ Klaritics.logEvent("add_to_cart", {
 
 Attach the properties that describe the event: identifiers, amounts, item names, screen names, and any other context you want to slice by later.
 
+<Note>
+  The [External API](/integrations/external-api) **requires** lowercase `snake_case` event names matching `^[a-z][a-z0-9_]*$`, and rejects anything else. If you send events from both SDKs and the API, use `snake_case` everywhere so the same action has the same name in both streams.
+</Note>
+
 ## Do not use `$` as a prefix
 
 The Klaritics SDKs use `$` as a reserved prefix for events and attributes that they add on your behalf, such as session events and standard device or user metadata.

@@ -1,0 +1,615 @@
+---
+title: "External API"
+sidebarTitle: "External API"
+description: "Send events and user properties to Klaritics over HTTPS from backend services, jobs, warehouses, CRMs, or any system that cannot use a client SDK."
+---
+
+The External API lets you send **events** and **user properties** to Klaritics from any system that cannot use a client SDK — backend services, server-side jobs, data warehouses, CRMs, or third-party platforms.
+
+It is a plain request/response JSON API over HTTPS. You call it; nothing calls you back.
+
+<Note>
+  You may hear these endpoints called "webhooks", because they are often wired up as the destination of another system's webhook. There is no callback, no signature header, and no subscription model — just two `POST` endpoints authenticated with an API key.
+</Note>
+
+---
+
+## Before you start
+
+| Item | Where it comes from | Notes |
+| :-- | :-- | :-- |
+| **Project ID** | Your Klaritics dashboard | Identifies your project. Appears in every request path. |
+| **API key** | Your Klaritics dashboard, under **Integrations → API keys** | Sent as a bearer token. Shown only once, at creation. Store it in a secret manager. |
+| **API host** | Your implementation contact | Written as `<API_HOST>` on this page. |
+
+Each API key is scoped to a single project. To send data to a different project, use a key issued for that project.
+
+<Warning>
+  The API key is a **write credential** for your analytics data. Keep it server-side. Never embed it in a mobile app, browser bundle, or anything shipped to end users — use the [client SDKs](/sdk/overview) for client-side tracking.
+</Warning>
+
+---
+
+## Endpoints
+
+```text Base URL
+https://<API_HOST>/external/v1/{project_id}
+```
+
+| Method | Path | Auth | Purpose |
+| :-- | :-- | :-- | :-- |
+| `POST` | `/external/v1/{project_id}/events` | Bearer token | Send a batch of 1–100 events |
+| `POST` | `/external/v1/{project_id}/users` | Bearer token | Create or update one user's properties |
+| `GET` | `/external/health` | None | Service health check |
+
+The API is **write-only**. There are no endpoints to read events or user properties back, and no delete endpoints.
+
+Confirm the exact base URL for your environment with your implementation contact before going live.
+
+---
+
+## Authentication
+
+Send your API key as a bearer token on every `/events` and `/users` call:
+
+```http
+Authorization: Bearer <YOUR_API_KEY>
+```
+
+Keys must be **active**. Enabling, disabling, or rotating a key in the dashboard takes effect immediately.
+
+| Condition | Status | Retry? |
+| :-- | :-- | :-- |
+| Missing or empty `Authorization` header | `401 unauthorized` | No — fix the credential |
+| Unknown or inactive key | `401 unauthorized` | No — fix the credential |
+| Empty `{project_id}` in the path | `401 unauthorized` | No — fix the URL |
+| Credential check temporarily unavailable | `500 internal error` | Yes, with backoff |
+
+---
+
+## Request conventions
+
+- Send `Content-Type: application/json` on every request.
+- Bodies must be UTF-8 JSON. Unknown extra fields are ignored.
+- Requests are abandoned after **30 seconds**. Set your client timeout to 30 seconds or less.
+- Every response includes an **`X-Request-Id`** header. **Log it** — it is the only handle support has for tracing a specific call.
+- Only `200` means the request was accepted:
+
+```json
+{ "message": "ok" }
+```
+
+---
+
+## Send events
+
+```http
+POST https://<API_HOST>/external/v1/{project_id}/events
+```
+
+The body is a **JSON array** of events — not an object wrapping an array. Send a single event as an array of one.
+
+```json
+[
+  {
+    "event": "purchase_completed",
+    "time": 1759300000000,
+    "user_id": "user_123",
+    "device_id": "ABC-123-DEF",
+    "properties": {
+      "amount": 1499.5,
+      "currency": "INR",
+      "order_id": "ord_8891"
+    },
+    "source_ip": "183.83.123.75"
+  }
+]
+```
+
+### Event fields
+
+| Field | Type | Required | Rules |
+| :-- | :-- | :-- | :-- |
+| `event` | string | **Yes** | Lowercase `snake_case`, matching `^[a-z][a-z0-9_]*$`. Starts with a letter; letters, digits, and underscores only. |
+| `time` | integer | **Yes** | When the event happened, as a **UTC epoch timestamp in milliseconds**. Must be greater than `0`. |
+| `user_id` | string | Conditional | Your stable identifier for the logged-in user. |
+| `device_id` | string | Conditional | Device or anonymous identifier. |
+| `properties` | object | **Yes** | Event attributes. At least **1** key, at most **255**. |
+| `source_ip` | string | **Yes** | The **end user's** IP address, as a valid IPv4 or IPv6 literal. |
+
+<Note>
+  **At least one of `user_id` or `device_id` must be non-empty.** If you send only one, Klaritics currently fills the other with the same value. Send both when you have both.
+</Note>
+
+### `source_ip` is mandatory
+
+Events sent from your servers would otherwise be recorded with your server's IP. Pass through the originating client IP — for example, the first address in `X-Forwarded-For` at your own ingress — so geographic enrichment is correct.
+
+If an event has no end user, such as a batch job, you still need to send a parseable value. Agree a convention with your implementation contact rather than inventing one per caller.
+
+### Property values
+
+| Type | Notes |
+| :-- | :-- |
+| string | Max **1024 bytes** |
+| number | JSON numbers. Send large IDs as strings — see [Gotchas](#gotchas). |
+| boolean | — |
+| array | Elements follow the same rules |
+| object | Accepted, but nested objects and arrays are flattened to JSON strings during processing. Prefer flat properties for anything you want to segment on. |
+| `null` | Accepted. Prefer omitting the key. |
+
+### A batch is accepted or rejected as a whole
+
+If **any** event in the batch is invalid, the **entire batch is rejected** with `400` and nothing is ingested. The response lists every failing field, indexed by position in your batch:
+
+```json
+{
+  "message": "validation failed",
+  "validation_errors": [
+    { "field": "events[0].event", "error": "must be snake_case" },
+    { "field": "events[1].time", "error": "must be a positive UTC millisecond timestamp" },
+    { "field": "events[1].user_id/device_id", "error": "at least one must be present" }
+  ]
+}
+```
+
+Fix or drop the failing events, then resend the batch.
+
+---
+
+## Set user properties
+
+```http
+POST https://<API_HOST>/external/v1/{project_id}/users
+```
+
+Sets profile properties on **one user** per call. There is no batch form.
+
+```json
+{
+  "$user_id": "user_123",
+  "$set": {
+    "plan": "premium",
+    "city": "Hyderabad",
+    "email_verified": true
+  }
+}
+```
+
+The field names are literally `$user_id` and `$set`, with the `$` prefix.
+
+| Field | Type | Required | Rules |
+| :-- | :-- | :-- | :-- |
+| `$user_id` | string | **Yes** | The user to update. Must be non-empty after trimming. |
+| `$set` | object | **Yes** | At least one key. Values follow the same rules as event [property values](#property-values). |
+
+### How updates are applied
+
+The update is a **merge**, not a replace:
+
+- Keys you send are created or overwritten.
+- Keys you don't send are left untouched.
+- The profile is created on the first write.
+
+There is no delete operation. To clear a property, set it to an empty string:
+
+```json
+{ "$user_id": "user_123", "$set": { "coupon_code": "" } }
+```
+
+<Tip>
+  Events are enriched with the user's properties as they are processed. Set a user's properties **before** or alongside their events, or those events won't carry the properties you expect.
+</Tip>
+
+---
+
+## Limits
+
+| Limit | Value | Applies to |
+| :-- | :-- | :-- |
+| Events per request | **100** | `/events` |
+| Request body size | **1 MiB** | `/events` |
+| Properties per event | **255** keys | `/events` |
+| String property length | **1024 bytes** | both |
+| Request rate | **100 requests/sec** per project, burst of **200** | `/events` |
+| Request duration | **30 seconds** | both |
+
+That puts sustained event throughput at roughly **10,000 events/sec per project**. If you need more, talk to your implementation contact before ramping up.
+
+`/users` is not rate limited, but pace large profile backfills rather than sending them as fast as possible.
+
+To stay under the limits, buffer events and send batches of up to 100, keep batches well under 1 MiB, and reuse HTTP connections.
+
+---
+
+## Errors and retries
+
+| Status | Body | Meaning | Retry? |
+| :-- | :-- | :-- | :-- |
+| `200` | `{"message":"ok"}` | Accepted | — |
+| `400` | `invalid request body` | Not valid JSON, wrong top-level shape, or over 1 MiB | **No** — fix the payload |
+| `400` | `validation failed` + `validation_errors` | One or more fields are invalid. Nothing was ingested. | **No** — fix the listed fields |
+| `401` | `unauthorized` | Missing, unknown, or inactive key, or empty project ID | **No** — fix the credential |
+| `404` | `404 page not found` | Wrong path or HTTP method | **No** — fix the URL |
+| `429` | `rate limit exceeded` | Rate limit exceeded on `/events`. Nothing was ingested. | **Yes**, with backoff |
+| `500` | `failed to ingest events` / `failed to set user properties` / `internal error` | Server-side failure | **Yes**, with backoff |
+| `503` | `health check failed` | `/health` only | **Yes** |
+
+Branch on the HTTP status and on `validation_errors[].field`. Treat the `message` strings as human-readable, not stable identifiers.
+
+```text Recommended handling
+200            → done
+400            → log payload + validation_errors, send to a dead-letter queue, alert. Don't retry.
+401            → stop sending, alert, verify or rotate the key. Don't retry in a loop.
+429            → exponential backoff with jitter, retry the same payload
+5xx / network  → exponential backoff with jitter, retry the same payload, cap attempts
+```
+
+No `Retry-After` header is returned on `429`. Back off exponentially — for example 250 ms, 500 ms, 1 s, 2 s, capped.
+
+### Retrying is safe
+
+Duplicate events are removed later in the pipeline, so **when in doubt, retry** — a duplicate is recoverable, a gap is not. That includes retrying after a timeout or network error, when you can't tell whether the request was accepted. Resending the same `/users` payload is naturally safe, since it merges the same values.
+
+Include a stable business identifier such as `order_id` in `properties` anyway. It makes your own reconciliation much easier.
+
+### Accepted is not the same as queryable
+
+A `200` from `/events` means the batch was valid and **accepted for ingestion**. It reaches reports after normal pipeline lag, and there is no status endpoint to poll. A `200` from `/users` means the profile was saved.
+
+`time` is not bounded, so backfills and late events are accepted. Always send the **real** event time, not the time of the API call, or backfilled data lands on today's date.
+
+---
+
+## Health check
+
+```http
+GET https://<API_HOST>/external/health
+```
+
+No authentication. Returns `200 {"message":"ok"}` when healthy and `503 {"message":"health check failed"}` otherwise. Use it as a reachability check, not as a replacement for your own monitoring.
+
+---
+
+## Examples
+
+<CodeGroup>
+
+```bash Send events
+curl -i -X POST "https://$API_HOST/external/v1/$PROJECT_ID/events" \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '[
+    {
+      "event": "purchase_completed",
+      "time": 1759300000000,
+      "user_id": "user_123",
+      "device_id": "ABC-123-DEF",
+      "properties": { "amount": 1499.5, "currency": "INR" },
+      "source_ip": "183.83.123.75"
+    }
+  ]'
+```
+
+```bash Set user properties
+curl -i -X POST "https://$API_HOST/external/v1/$PROJECT_ID/users" \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "$user_id": "user_123",
+    "$set": { "plan": "premium", "city": "Hyderabad" }
+  }'
+```
+
+</CodeGroup>
+
+### Client with batching and retries
+
+<AccordionGroup>
+  <Accordion title="Python" icon="python">
+    ```python
+    import os, time, json, random, requests
+
+    API_HOST   = os.environ["ANALYTICS_API_HOST"]
+    PROJECT_ID = os.environ["ANALYTICS_PROJECT_ID"]
+    API_KEY    = os.environ["ANALYTICS_API_KEY"]
+
+    BASE = f"https://{API_HOST}/external/v1/{PROJECT_ID}"
+    MAX_EVENTS_PER_REQUEST = 100
+
+    session = requests.Session()
+    session.headers.update({
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json",
+    })
+
+
+    def _sleep(attempt: int) -> None:
+        time.sleep(min(2 ** (attempt - 1) * 0.25, 8) * (0.5 + random.random()))
+
+
+    def _post(path: str, payload, max_attempts: int = 5):
+        """Back off on 429/5xx. Other 4xx are permanent — don't retry."""
+        for attempt in range(1, max_attempts + 1):
+            try:
+                resp = session.post(f"{BASE}{path}", data=json.dumps(payload), timeout=30)
+            except requests.RequestException:
+                # Safe to retry: duplicates are removed downstream, gaps are not recoverable.
+                if attempt == max_attempts:
+                    raise
+                _sleep(attempt)
+                continue
+
+            request_id = resp.headers.get("X-Request-Id", "")
+            if resp.status_code == 200:
+                return resp.json()
+            if resp.status_code == 400:
+                raise ValueError(f"rejected (reqId={request_id}): {resp.text}")
+            if resp.status_code == 401:
+                raise PermissionError(f"bad API key (reqId={request_id})")
+            if resp.status_code == 429 or resp.status_code >= 500:
+                if attempt == max_attempts:
+                    raise RuntimeError(f"giving up {resp.status_code} (reqId={request_id})")
+                _sleep(attempt)
+                continue
+            raise RuntimeError(f"unexpected {resp.status_code} (reqId={request_id})")
+
+
+    def send_events(events: list[dict]) -> None:
+        for i in range(0, len(events), MAX_EVENTS_PER_REQUEST):
+            _post("/events", events[i:i + MAX_EVENTS_PER_REQUEST])
+
+
+    def set_user_properties(user_id: str, properties: dict) -> None:
+        _post("/users", {"$user_id": user_id, "$set": properties})
+
+
+    set_user_properties("user_123", {"plan": "premium"})
+    send_events([{
+        "event": "purchase_completed",
+        "time": int(time.time() * 1000),
+        "user_id": "user_123",
+        "properties": {"amount": 1499.5, "order_id": "ord_8891"},
+        "source_ip": "183.83.123.75",
+    }])
+    ```
+  </Accordion>
+
+  <Accordion title="Node.js" icon="node-js">
+    ```javascript
+    const API_HOST   = process.env.ANALYTICS_API_HOST;
+    const PROJECT_ID = process.env.ANALYTICS_PROJECT_ID;
+    const API_KEY    = process.env.ANALYTICS_API_KEY;
+
+    const BASE = `https://${API_HOST}/external/v1/${PROJECT_ID}`;
+    const MAX_EVENTS_PER_REQUEST = 100;
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const backoff = (attempt) =>
+      Math.min(2 ** (attempt - 1) * 250, 8000) * (0.5 + Math.random());
+
+    async function post(path, payload, maxAttempts = 5) {
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        let res;
+        try {
+          res = await fetch(`${BASE}${path}`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+            signal: AbortSignal.timeout(30_000),
+          });
+        } catch (err) {
+          // Safe to retry: duplicates are removed downstream, gaps are not recoverable.
+          if (attempt === maxAttempts) throw err;
+          await sleep(backoff(attempt));
+          continue;
+        }
+
+        const reqId = res.headers.get('x-request-id') ?? '';
+        if (res.status === 200) return res.json();
+        if (res.status === 400) throw new Error(`rejected (reqId=${reqId}): ${await res.text()}`);
+        if (res.status === 401) throw new Error(`bad API key (reqId=${reqId})`);
+        if (res.status === 429 || res.status >= 500) {
+          if (attempt === maxAttempts) throw new Error(`giving up ${res.status} (reqId=${reqId})`);
+          await sleep(backoff(attempt));
+          continue;
+        }
+        throw new Error(`unexpected ${res.status} (reqId=${reqId})`);
+      }
+    }
+
+    async function sendEvents(events) {
+      for (let i = 0; i < events.length; i += MAX_EVENTS_PER_REQUEST) {
+        await post('/events', events.slice(i, i + MAX_EVENTS_PER_REQUEST));
+      }
+    }
+
+    async function setUserProperties(userId, properties) {
+      await post('/users', { $user_id: userId, $set: properties });
+    }
+
+    await setUserProperties('user_123', { plan: 'premium' });
+    await sendEvents([{
+      event: 'purchase_completed',
+      time: Date.now(),
+      user_id: 'user_123',
+      properties: { amount: 1499.5, order_id: 'ord_8891' },
+      source_ip: '183.83.123.75',
+    }]);
+    ```
+  </Accordion>
+
+  <Accordion title="Go" icon="golang">
+    ```go
+    package analytics
+
+    import (
+    	"bytes"
+    	"encoding/json"
+    	"fmt"
+    	"math"
+    	"math/rand"
+    	"net/http"
+    	"time"
+    )
+
+    const maxEventsPerRequest = 100
+
+    type Event struct {
+    	Name     string         `json:"event"`
+    	Time     int64          `json:"time"`
+    	UserID   string         `json:"user_id,omitempty"`
+    	DeviceID string         `json:"device_id,omitempty"`
+    	Props    map[string]any `json:"properties"`
+    	SourceIP string         `json:"source_ip"`
+    }
+
+    type Client struct {
+    	base   string
+    	apiKey string
+    	http   *http.Client
+    }
+
+    func New(apiHost, projectID, apiKey string) *Client {
+    	return &Client{
+    		base:   fmt.Sprintf("https://%s/external/v1/%s", apiHost, projectID),
+    		apiKey: apiKey,
+    		http:   &http.Client{Timeout: 30 * time.Second},
+    	}
+    }
+
+    func (c *Client) SendEvents(events []Event) error {
+    	for i := 0; i < len(events); i += maxEventsPerRequest {
+    		end := min(i+maxEventsPerRequest, len(events))
+    		if err := c.post("/events", events[i:end]); err != nil {
+    			return err
+    		}
+    	}
+    	return nil
+    }
+
+    func (c *Client) SetUserProperties(userID string, props map[string]any) error {
+    	return c.post("/users", map[string]any{"$user_id": userID, "$set": props})
+    }
+
+    func (c *Client) post(path string, payload any) error {
+    	body, err := json.Marshal(payload)
+    	if err != nil {
+    		return err
+    	}
+    	const maxAttempts = 5
+    	for attempt := 1; attempt <= maxAttempts; attempt++ {
+    		req, err := http.NewRequest(http.MethodPost, c.base+path, bytes.NewReader(body))
+    		if err != nil {
+    			return err
+    		}
+    		req.Header.Set("Authorization", "Bearer "+c.apiKey)
+    		req.Header.Set("Content-Type", "application/json")
+
+    		resp, err := c.http.Do(req)
+    		if err != nil {
+    			// Safe to retry: duplicates are removed downstream, gaps are not recoverable.
+    			if attempt == maxAttempts {
+    				return err
+    			}
+    			time.Sleep(backoff(attempt))
+    			continue
+    		}
+    		reqID := resp.Header.Get("X-Request-Id")
+    		buf := new(bytes.Buffer)
+    		_, _ = buf.ReadFrom(resp.Body)
+    		resp.Body.Close()
+
+    		switch {
+    		case resp.StatusCode == http.StatusOK:
+    			return nil
+    		case resp.StatusCode == http.StatusBadRequest, resp.StatusCode == http.StatusUnauthorized:
+    			return fmt.Errorf("rejected %d (reqId=%s): %s", resp.StatusCode, reqID, buf)
+    		case resp.StatusCode == http.StatusTooManyRequests, resp.StatusCode >= 500:
+    			if attempt == maxAttempts {
+    				return fmt.Errorf("giving up %d (reqId=%s): %s", resp.StatusCode, reqID, buf)
+    			}
+    			time.Sleep(backoff(attempt))
+    		default:
+    			return fmt.Errorf("unexpected %d (reqId=%s): %s", resp.StatusCode, reqID, buf)
+    		}
+    	}
+    	return nil
+    }
+
+    func backoff(attempt int) time.Duration {
+    	base := math.Min(math.Pow(2, float64(attempt-1))*250, 8000)
+    	return time.Duration(base*(0.5+rand.Float64())) * time.Millisecond
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Gotchas
+
+<AccordionGroup>
+  <Accordion title="The /events body must be a bare JSON array">
+    Send `[{...}]`, not `{"events":[{...}]}`. An object returns `400 invalid request body`.
+  </Accordion>
+
+  <Accordion title="Event names must be lowercase snake_case">
+    `Purchase Completed`, `purchaseCompleted`, `purchase-completed`, `2fa_enabled`, and `_internal` are all rejected. Use `purchase_completed` and `two_fa_enabled`. Events can't be renamed afterwards, so settle the naming up front.
+  </Accordion>
+
+  <Accordion title="time is milliseconds, not seconds">
+    A seconds-based timestamp passes validation because it's greater than `0`, then silently lands in 1970. Multiply by 1000.
+  </Accordion>
+
+  <Accordion title="Large integers lose precision">
+    Numbers are parsed as JSON doubles, so integers beyond 2^53 aren't exact. Send large IDs — Snowflake IDs, 19-digit order numbers — as **strings**.
+  </Accordion>
+
+  <Accordion title="Avoid . and $ in property keys">
+    A `.` in a key is treated as a path separator, and `$` is reserved. Stick to `[a-z0-9_]` keys.
+  </Accordion>
+
+  <Accordion title="properties cannot be empty">
+    `"properties": {}`, or no `properties` field at all, is rejected. If an event genuinely has no attributes, send something meaningful such as `{"source": "billing_service"}`.
+  </Accordion>
+
+  <Accordion title="Wiring a third-party webhook to this API">
+    This API doesn't call back or verify signatures. Put a small relay in between that authenticates with your API key and reshapes the third party's payload into the schemas above.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Go-live checklist
+
+- Project ID and API key stored in a secret manager, never in source or client-side code
+- Base URL confirmed for your environment
+- `Authorization: Bearer <key>` and `Content-Type: application/json` on every request
+- Events batched — at most 100 per request, body under 1 MiB
+- Event names matching `^[a-z][a-z0-9_]*$`, reviewed as a tracking plan
+- `time` sent as UTC epoch **milliseconds**, from the real event time
+- `user_id` and/or `device_id` on every event, consistent with your SDK-side IDs
+- `source_ip` set to the **end user's** IP, not your server's
+- Large IDs sent as strings; string values at most 1024 bytes
+- Retries with exponential backoff and jitter on `429`, `5xx`, timeouts, and network errors — **no** retries on `400` or `401`
+- `X-Request-Id` logged for every response
+- User properties written before or alongside the events they should enrich
+- Client timeout of 30 seconds or less, with connection reuse
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Client SDKs" icon="code" href="/sdk/overview">
+    Track events from web and mobile apps.
+  </Card>
+
+  <Card title="Event naming" icon="tag" href="/sdk/event-naming">
+    Naming conventions for events and properties.
+  </Card>
+</CardGroup>
