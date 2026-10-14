@@ -6,7 +6,7 @@ description: "Add the Klaritics Android SDK with Gradle, initialize it with your
 
 The Klaritics Android SDK collects analytics from Android apps and sends them to your self-hosted Klaritics instance. Add the Maven repository and dependency, then initialize once from your `Application`.
 
-**Artifact:** `com.deeptaai.klaritics:klaritics-android-sdk:1.0.0`
+**Artifact:** `com.deeptaai.klaritics:klaritics-android-sdk:1.0.2`
 
 ## Requirements
 
@@ -46,7 +46,7 @@ dependencyResolutionManagement {
 
 ```groovy app/build.gradle
 dependencies {
-    implementation 'com.deeptaai.klaritics:klaritics-android-sdk:1.0.0'
+    implementation 'com.deeptaai.klaritics:klaritics-android-sdk:1.0.2'
 }
 ```
 
@@ -117,12 +117,6 @@ All methods are called on the `Klaritics` object. Attributes are `Map<String, An
 | `trackScreen` | `(screenName: String)` | Record a screen view. |
 | `getDeviceId` | `(context: Context): String?` | Return the SDK-generated device identifier. |
 
-### Additional Android methods
-
-These are available on Android. On other platforms built on the native iOS SDK they may be no-ops — see [Kotlin Multiplatform parity notes](/sdk/kmp#platform-parity-notes).
-
-`logMetaEvent` · `resetUserCustomInfo` · `resetSessionCustomInfo` · `setCurrentScreenName` · `setPushRegistrationToken` · `setDynamicConfig` · `flushEventsIfAny` · `optOut`
-
 ## Common recipes
 
 ### Log an event
@@ -178,4 +172,4 @@ Klaritics.trackScreen("home")
 
 ---
 
-**Artifact:** `com.deeptaai.klaritics:klaritics-android-sdk:1.0.0` · [Release notes](/sdk/releases#android)
+**Artifact:** `com.deeptaai.klaritics:klaritics-android-sdk:1.0.2` · [Release notes](/sdk/releases#android)

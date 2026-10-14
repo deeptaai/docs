@@ -42,11 +42,9 @@ Pick the platform you want to instrument. Every SDK follows the same pattern, so
     ```js
     import Klaritics from "@deeptaai/klaritics-web-sdk";
 
-    Klaritics.init("YOUR_PROJECT_ID", {
-      server_host: "https://YOUR_SERVER_HOST"
-    });
+    Klaritics.init("YOUR_PROJECT_ID", "https://YOUR_SERVER_HOST");
 
-    Klaritics.logEvent("add_to_cart", {
+    Klaritics.logAppEvent("add_to_cart", {
       userId: "user@example.com",
       value: 1299,
       item: "Sony Head Phone 1201"

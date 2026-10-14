@@ -40,12 +40,31 @@ For platform-wide changes, see the [product release notes](/release-notes).
 
 ## Web
 
+<Update label="v1.0.1" description="@deeptaai/klaritics-web-sdk">
+  **Changed**
+
+  - `init` now takes the server host as its second argument: `Klaritics.init("PROJECT_ID", "SERVER_HOST")`
+  - `logEvent` is renamed to `logAppEvent`, matching the mobile SDKs
+  - `getClientId` is replaced by `getDeviceId`, matching the mobile SDKs
+
+  **Added**
+
+  - `logPageView`, the Web equivalent of `trackScreen`
+
+  **Removed**
+
+  - `logClientEvent`
+
+  See the [Web SDK guide](/sdk/web).
+</Update>
+
 <Update label="Initial release" description="@deeptaai/klaritics-web-sdk">
   First release of the Web SDK.
 
   - Install from npm or load with a script tag
   - `init` with `server_host`, `honorDNT`, `idle_time_out`, and `version` options
   - `logEvent`, with an option to send before a page refresh
+  - `getClientId`
   - `setUserId`, `setUserProperties`, and `setSessionProperties`
   - Manual session control with `startNewSession` and `endSession`
 
@@ -55,6 +74,16 @@ For platform-wide changes, see the [product release notes](/release-notes).
 ---
 
 ## Android
+
+<Update label="v1.0.2" description="com.deeptaai.klaritics:klaritics-android-sdk">
+  Current version.
+
+  ```groovy app/build.gradle
+  implementation 'com.deeptaai.klaritics:klaritics-android-sdk:1.0.2'
+  ```
+
+  See the [Android SDK guide](/sdk/android).
+</Update>
 
 <Update label="v1.0.0" description="com.deeptaai.klaritics:klaritics-android-sdk">
   First release of the Android SDK.

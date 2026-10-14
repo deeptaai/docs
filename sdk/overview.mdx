@@ -51,7 +51,7 @@ Each SDK names these two values differently:
 
 | SDK | Project ID | Server host |
 | --- | --- | --- |
-| [Web](/sdk/web) | 1st argument to `init` | `server_host` option |
+| [Web](/sdk/web) | 1st argument to `init` | 2nd argument to `init` |
 | [Android](/sdk/android) | 1st argument to `KlariticsConfig` | 2nd argument to `KlariticsConfig` |
 | [iOS](/sdk/ios) | `appId` | `host` |
 | [React Native](/sdk/react-native) | `apiKey` | `options.host` |
@@ -60,15 +60,15 @@ Each SDK names these two values differently:
 
 ## API at a glance
 
-The mobile SDKs share one method set, modeled on the [Kotlin Multiplatform SDK](/sdk/kmp). The Web SDK uses its own names. A dash means the method isn't available in that SDK.
+The mobile SDKs share one method set, modeled on the [Kotlin Multiplatform SDK](/sdk/kmp). The Web SDK follows it where it can, and uses its own names for user and session properties and page views. A dash means the method isn't available in that SDK.
 
 | Capability | Android | iOS | React Native | Flutter | KMP | Web |
 | --- | --- | --- | --- | --- | --- | --- |
-| Log an event | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logEvent` |
+| Log an event | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` | `logAppEvent` |
 | Identify the user | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserIdentifier` | `setUserId` |
 | Set user properties | `setUserCustomInfo` | `setUserCustomInfo` | `setUserCustomInfo` | `setUserAttributes` | `setUserCustomInfo` | `setUserProperties` |
 | Set session properties | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionCustomInfo` | `setSessionAttributes` | `setSessionCustomInfo` | `setSessionProperties` |
-| Track a screen | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | — |
+| Track a screen / page | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | `trackScreen` | `logPageView` |
 | Get the device ID | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` | `getDeviceId` |
 
 Version history for every SDK is in [SDK release notes](/sdk/releases).
@@ -79,7 +79,7 @@ After you initialize the SDK in your app, send a few test events to confirm the 
 
 <Steps>
   <Step title="Trigger a few events in your app">
-    Run your app in a debug build and perform real actions that call `logAppEvent` (or `logEvent` on the Web). Sign in, tap a button, open a screen, add an item to the cart. Aim for at least 5 to 10 events across a couple of user sessions.
+    Run your app in a debug build and perform real actions that call `logAppEvent`. Sign in, tap a button, open a screen, add an item to the cart. Aim for at least 5 to 10 events across a couple of user sessions.
   </Step>
   <Step title="Watch events land on the Getting Started page">
     Open the Klaritics dashboard and go to **Getting Started**. Newly received events for your project appear here in near real time, along with the platform they came from and the attributes attached to them.
