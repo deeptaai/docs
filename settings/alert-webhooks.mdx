@@ -1,0 +1,221 @@
+---
+title: "Alert Webhooks"
+sidebarTitle: "Alert Webhooks"
+description: "Connect webhook endpoints to Klaritics alerts, monitor deliveries, and reference the event types and JSON payloads each webhook receives."
+---
+
+Alert webhooks send a JSON payload to your endpoint whenever something happens to an alert — when it triggers, and also when it's created, edited, paused, or goes out of sync. Use them to route alerts into chat tools, incident systems, or your own automation.
+
+Each payload carries both a **human-readable summary** and **structured condition objects**, so it works for people reading it and for code acting on it.
+
+---
+
+## Add a webhook
+
+Go to **Settings → Integrations → Notification Webhooks** and click **Add Webhook**. You can also reach it from **Manage Webhooks** on the [Alerts](/settings/alerts) page.
+
+| Field | Required | Notes |
+| :-- | :-- | :-- |
+| **Name** | Yes | A readable name for the connection |
+| **Webhook URL** | Yes | The endpoint that receives payloads |
+| **Username** | No | For Basic Auth |
+| **Password** | No | For Basic Auth. Masked once saved. |
+
+You can create as many connections as you need, then pick one when you set up an alert's notifications.
+
+---
+
+## Manage connections
+
+The connections table shows each webhook's **Name**, **URL** (with sensitive parts masked, such as `https://hooks.example.com/***`), **Created At**, and **Status**.
+
+| Action | Effect |
+| :-- | :-- |
+| **Edit Details** | Change the name, URL, username, or password |
+| **Pause Connection** | Stop sending payloads. The connection stays attached to its alerts. |
+| **Activate Connection** | Resume a paused connection |
+| **Delete Connection** | Remove it. You'll see which alerts use it before confirming. |
+
+### Delivery activity
+
+Click a connection to see every delivery sent to it:
+
+| Column | Shows |
+| :-- | :-- |
+| **Alert Name** | The alert that sent it |
+| **Chart Name** | The alert's chart |
+| **Timestamp** | When the delivery was sent |
+| **Run ID** | A unique ID for the delivery, for tracing |
+| **Status** | Success, Failed, or Retrying |
+| **Errors** | Click to see the exact request payload sent and the response received |
+
+### Retries
+
+| Endpoint returns | What happens |
+| :-- | :-- |
+| `5xx` or `429` | Retried up to **5 times** with exponential backoff, over about 60 seconds |
+| `400`, `401`, `403`, or `404` | Not retried |
+
+Only **Active** connections receive events. Paused connections receive nothing, and every delivery gets its own Run ID.
+
+---
+
+## Events
+
+| Event | Sent when |
+| :-- | :-- |
+| `alert.triggered` | The alert's conditions are met |
+| `alert.created` | A new alert is created |
+| `alert.updated` | An alert's configuration is edited and saved |
+| `alert.paused` | An alert is paused |
+| `alert.activated` | A paused or Out of Sync alert becomes active |
+| `alert.out_of_sync` | A chart change affects the alert |
+| `alert.expired` | The chart's end date passes |
+| `alert.deleted` | An alert is deleted, directly or because its chart was deleted |
+
+---
+
+## Payload
+
+### Fields on every event
+
+| Property | Type | Description |
+| :-- | :-- | :-- |
+| `event` | string | Event name, such as `alert.triggered` |
+| `alert_id` | string | Unique alert ID |
+| `alert_name` | string | Alert name |
+| `chart_id` | string | Linked chart ID |
+| `chart_name` | string | Linked chart name |
+| `project_id` | string | Project ID |
+| `status` | string | Current alert status |
+| `timestamp` | datetime | When the event happened |
+| `triggered_by` | string | The user or system that caused the event |
+| `summary` | string | Human-readable summary |
+| `conditions` | array | Structured alert conditions — see below |
+| `frequency` | string | Evaluation frequency |
+| `created_by` | string | The alert's creator |
+| `alert_link` | string | URL of the alert's details |
+
+### Condition objects
+
+| Property | Type | Description |
+| :-- | :-- | :-- |
+| `metric` | string | The metric or event being monitored |
+| `measurement` | string | Measurement type |
+| `breakdowns` | array | Selected breakdown values |
+| `operator_group` | string | Operator category, such as `rank_change` |
+| `operator` | string | The selected operator |
+| `threshold_value` | number | The configured threshold |
+| `comparison` | object | Baseline details |
+
+Breakdowns and comparisons are objects:
+
+```json
+{ "property": "platform", "value": "mobile" }
+```
+
+```json
+{ "type": "last_n_days", "value": 7, "granularity": "daily" }
+```
+
+### Extra fields per event
+
+<AccordionGroup>
+  <Accordion title="alert.triggered">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `current_value` | number | The value that was evaluated |
+    | `comparison_value` | number | The baseline value |
+    | `difference` | number | Difference between the two |
+    | `evaluation_window` | string | Time window used |
+    | `filters` | object | Filters applied |
+  </Accordion>
+
+  <Accordion title="alert.created">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `created_by` | string | Who created the alert |
+  </Accordion>
+
+  <Accordion title="alert.updated">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `updated_by` | string | Who edited the alert |
+    | `updated_fields` | array | What changed, such as `conditions`, `frequency`, `recipients`, `breakdowns` |
+  </Accordion>
+
+  <Accordion title="alert.paused">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `paused_by` | string | Who paused the alert |
+  </Accordion>
+
+  <Accordion title="alert.activated">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `activated_by` | string | Who activated the alert |
+  </Accordion>
+
+  <Accordion title="alert.out_of_sync">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `change_summary` | array | The chart changes responsible, such as metric changed, breakdown removed, chart type changed, distribution bucket modified |
+    | `updated_by` | string | Who changed the chart |
+  </Accordion>
+
+  <Accordion title="alert.expired">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `expired_at` | datetime | When the alert expired |
+    | `chart_end_date` | datetime | The chart's end date |
+  </Accordion>
+
+  <Accordion title="alert.deleted">
+    | Property | Type | Description |
+    | :-- | :-- | :-- |
+    | `deleted_by` | string | The user, or the system when the chart was deleted |
+  </Accordion>
+</AccordionGroup>
+
+### Example: `alert.triggered`
+
+```json
+{
+  "event": "alert.triggered",
+  "alert_id": "ALT_1001",
+  "alert_name": "Mobile Payment Rank Change",
+  "chart_name": "Payment Analysis",
+  "status": "active",
+  "summary": "payment_done with platform = mobile changed rank.",
+  "conditions": [
+    {
+      "metric": "payment_done",
+      "measurement": "event_count",
+      "breakdowns": [
+        { "property": "platform", "value": "mobile" }
+      ],
+      "operator_group": "rank_change",
+      "operator": "rank_changes",
+      "comparison": {
+        "type": "previous_period",
+        "granularity": "daily"
+      }
+    }
+  ],
+  "timestamp": "2026-01-18T10:30:00Z"
+}
+```
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Alerts" icon="bell" href="/settings/alerts">
+    Create and manage alerts.
+  </Card>
+
+  <Card title="Third-Party Cohort Sync" icon="arrow-right-arrow-left" href="/settings/third-party-cohorts">
+    Send cohorts to webhooks and MoEngage.
+  </Card>
+</CardGroup>

@@ -103,7 +103,8 @@
         "pages": [
           "settings/roles",
           "settings/users",
-          "settings/alerts"
+          "settings/alerts",
+          "settings/alert-webhooks"
         ]
       },
       {

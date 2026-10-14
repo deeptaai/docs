@@ -1,58 +1,193 @@
 ---
-title: "Third Party Cohorts: Import External Cohorts"
-sidebarTitle: "Third Party Cohorts"
-description: "Import cohorts defined in external systems into Klaritics and use them in your analyses, funnels, and retention reports."
+title: "Third-Party Cohort Sync"
+sidebarTitle: "Third-Party Cohort Sync"
+description: "Send Klaritics cohorts to external tools such as MoEngage or any HTTPS webhook, once or on a recurring schedule, with incremental updates and sync monitoring."
 ---
 
-Third Party Cohorts in Klaritics let you bring cohort definitions from external systems into your instance. Once imported, these cohorts behave like native Klaritics cohorts. You can use them to filter analyses, compare segments in [Funnels](/analysis/funnels), and measure [Retention](/analysis/retention) for groups you have already defined elsewhere.
+Third-Party Cohort Sync sends your [cohorts](/analysis/cohorts) **from Klaritics to external tools** — communication platforms, CRMs, and marketing systems — so you can act on them there.
 
-## Why use third-party cohorts
+Without it, acting on a cohort means exporting a CSV, uploading it somewhere else, and repeating that every time the cohort changes. By then the data is stale and high-intent users have gone cold. Cohort sync automates the whole loop.
 
-If your team already defines user segments in another platform, re-creating those filters in Klaritics is repetitive and error-prone. Importing those cohorts directly keeps your segments consistent across tools and saves time.
+<Note>
+  Sync is **outbound only**. Klaritics pushes cohorts to destinations; it does not import cohorts from them.
+</Note>
 
-## How it works
+---
 
-<Steps>
-  <Step title="Connect the external source">
-    Configure the integration with your third-party system from the Integrations settings.
-  </Step>
-  <Step title="Select cohorts to import">
-    Choose which cohorts from the external system should be available inside Klaritics.
-  </Step>
-  <Step title="Sync and refresh">
-    The cohort membership syncs on a schedule you define. Imported cohorts update automatically as the source changes.
-  </Step>
-  <Step title="Use in analyses">
-    Select the imported cohort as a filter or breakdown in any analysis that supports cohorts.
-  </Step>
-</Steps>
-
-## Where you can use imported cohorts
+## Destinations
 
 <CardGroup cols={2}>
-  <Card title="Cohort analysis" icon="users">
-    Compare behavior across imported and native cohorts in [Cohorts](/analysis/cohorts).
+  <Card title="Custom Webhook" icon="link">
+    Any HTTPS endpoint you configure. Use it to reach any system without a native integration.
   </Card>
 
-  <Card title="Funnels" icon="filter">
-    Measure conversion rates for specific imported segments.
-  </Card>
-
-  <Card title="Retention" icon="refresh-cw">
-    Track how well an imported cohort retains over time.
-  </Card>
-
-  <Card title="Dashboard filters" icon="layout-dashboard">
-    Apply imported cohorts as filters on dashboard charts for focused views.
+  <Card title="Native integrations" icon="plug">
+    Pre-built connections that handle the platform's API for you. Currently: **MoEngage**.
   </Card>
 </CardGroup>
 
+Native integrations are built on the same engine as custom webhooks, with the payload shaped for the platform. They typically send cohort membership as a true/false user attribute.
+
+---
+
+## Connect a destination
+
+Go to **Settings → Integrations**. The page lists native integrations and your custom webhook connections. Click **Add Connection**.
+
+<Tabs>
+  <Tab title="Custom Webhook">
+    | Field | Required | Notes |
+    | :-- | :-- | :-- |
+    | **Connector Name** | Yes | A readable name for the connection |
+    | **Webhook URL** | Yes | Must be **HTTPS** |
+    | **Properties to Export** | No | Additional user properties to include |
+    | **Authentication** | No | Basic Auth: username and password |
+    | **Data Sync Mode** | Yes | Incremental Updates (default) or Full Replace. See [below](#data-sync-mode). |
+  </Tab>
+
+  <Tab title="MoEngage">
+    | Field | Required |
+    | :-- | :-- |
+    | **Connector Name** | Yes |
+    | **Username** | Yes |
+    | **Password** | Yes |
+    | **MOE-AppKey** | Yes |
+    | **MoEngage Data Center** | Yes — DC-01, DC-02, DC-03, or DC-04 |
+    | **Properties to Export** | No |
+
+    Everything after setup works the same as a custom webhook.
+  </Tab>
+</Tabs>
+
+### Data Sync Mode
+
+| Mode | First sync | Later syncs |
+| :-- | :-- | :-- |
+| **Incremental Updates** *(recommended, default)* | The full cohort | Only users who **entered or left** the cohort, sent as `add_members` and `remove_members` |
+| **Full Replace on Every Sync** | The full cohort | The full cohort again. The destination replaces what it had. |
+
+<Warning>
+  Data Sync Mode **can't be changed** once the first sync runs.
+</Warning>
+
+### What gets sent
+
+Every sync includes these properties:
+
+- Primary identifier (`user_id` or mapped identifier)
+- Cohort ID
+- Cohort name
+- Email
+- First name
+- Last name
+
+Any additional properties you selected in **Properties to Export** are added. Selecting only what you need keeps payloads small.
+
 <Note>
-  Imported cohorts are read-only inside Klaritics. Edit the cohort definition in the source system and the changes will sync on the next refresh.
+  **Only identified users are exported.** Members without a known user identifier are not sent to destinations.
 </Note>
+
+---
+
+## Sync a cohort
+
+Syncs are set up from the connection, not from the Cohorts page.
+
+<Steps>
+  <Step title="Open the connection">
+    In **Settings → Integrations**, open an existing connection or create one.
+  </Step>
+  <Step title="Add a cohort">
+    Click **Add Cohort for Sync** and pick from your cohorts. You can also create a new cohort from here.
+  </Step>
+  <Step title="Name the export">
+    Give it an export cohort name. It must be unique across both your cohorts and your existing synced cohorts.
+  </Step>
+  <Step title="Choose the export type">
+    **One-Time Export** or **Recurring Sync**, and the frequency for recurring.
+  </Step>
+  <Step title="Start the sync">
+    Confirm, and the first sync runs.
+  </Step>
+</Steps>
+
+<Tip>
+  **Why from Integrations?** Cohorts are editable. Controlling exports from the Cohorts page would make it easy to change a cohort mid-sync and send inconsistent data to the destination. Keeping export settings in Integrations treats the cohort as a reference, not the control point.
+</Tip>
+
+### Export types
+
+| Type | Behavior |
+| :-- | :-- |
+| **One-Time Export** | Sends the cohort once, with no later updates. You can run it again as many times as you like; each run is a new execution. |
+| **Recurring Sync** | Re-evaluates the cohort and syncs automatically on a schedule, following the connection's Data Sync Mode. |
+
+**Recurring frequency** defaults to every **30 minutes**. You can set a custom number of hours or days instead.
+
+A workspace can have up to **60 active recurring syncs** across all destinations by default. The limit is configurable at deployment. When it's reached, you can't create another recurring sync until one is paused or removed.
+
+---
+
+## Monitor syncs
+
+Each connection has a details page with its settings — name, masked URL, authentication type, and selected properties — and a table of the cohorts synced to it:
+
+| Column | Shows |
+| :-- | :-- |
+| **Cohort Name** | The export cohort name |
+| **Sync Type** | Recurring or One-time |
+| **Last Export Completed Time** | When the most recent run finished |
+| **User Profiles Exported** | How many users were sent |
+| **Status** | Active or Inactive |
+
+### Actions
+
+| Action | Available for |
+| :-- | :-- |
+| **Pause Export** / **Resume Export** | Recurring syncs |
+| **View in Explore** | All syncs — opens the user list filtered to the cohort |
+| **Disconnect** | A live sync |
+
+### Export history
+
+Click a synced cohort to see its export runs, 10 per page. Each run shows:
+
+| Field | Description |
+| :-- | :-- |
+| **Timestamp** and **Run ID** | When the run happened, and its unique ID |
+| **Summary** | Total users, users added, users removed |
+| **Cohort CSV** | Each `distinct_id` with its operation: add, remove, or no operation |
+| **Status** | Success, Failure, or Partial |
+| **Processed / Unprocessed** | Counts reported back by the destination |
+| **Errors** | Click to see the exact JSON sent and the destination's response |
+
+For native integrations, the columns that come from the destination's response can differ.
+
+---
+
+## Failures and retries
+
+| Destination returns | What happens |
+| :-- | :-- |
+| `5xx` or `429` | Retried up to **5 times** with exponential backoff, over about 60 seconds. If all retries fail, the run stops and the next scheduled sync tries again. |
+| `400`, `401`, `403`, or `404` | **Sync is paused immediately.** No retries — the connection or payload needs fixing first. |
+
+Failed runs are recorded in the export history with the destination's `error.message`.
+
+<Warning>
+  **Disconnecting a connection stops every sync attached to it.**
+</Warning>
+
+---
 
 ## Next steps
 
-- [Cohorts Analysis](/analysis/cohorts)
-- [Funnels Analysis](/analysis/funnels)
-- [Retention Analysis](/analysis/retention)
+<CardGroup cols={2}>
+  <Card title="Cohorts" icon="users" href="/analysis/cohorts">
+    Build the cohorts you want to sync.
+  </Card>
+
+  <Card title="Alert webhooks" icon="bell" href="/settings/alert-webhooks">
+    Send alert notifications to webhooks.
+  </Card>
+</CardGroup>

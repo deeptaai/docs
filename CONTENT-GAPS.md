@@ -26,6 +26,9 @@ Written against the real product or a PRD. Safe to edit and cite.
 | `dashboards/sharing.mdx` | Dashboard & Chart Management PRD |
 | `charts/*.mdx` (3) | Dashboard & Chart Management PRD |
 | `dashboards/overview.mdx`, `create-dashboard.mdx`, `manage-dashboards.mdx` | Dashboard & Chart Management PRD |
+| `analysis/cohorts.mdx` | Cohorts PRD |
+| `settings/third-party-cohorts.mdx` | Third Party Cohorts PRD |
+| `settings/alerts.mdx`, `settings/alert-webhooks.mdx` | Alerts PRD |
 | `settings/roles.mdx` | IAM PRD |
 | `settings/users.mdx` | IAM PRD |
 | `product-analytics/*.mdx` (5) | Product Analytics Dashboards PRD |
@@ -63,6 +66,19 @@ Navigation mirrors this. There is no separate page per chart visualization type,
 - Section numbering jumps from 5 to 8, and the custom role flow jumps from Step 3 to Step 5. Content for the missing sections may exist elsewhere.
 
 
+### Cohorts, Third-Party Cohorts, and Alerts PRDs (2026-10-14)
+
+- **Third-party cohorts were documented backwards.** The old page described *importing* cohorts from external systems. The PRD describes *outbound* sync from Klaritics to custom webhooks and MoEngage. Rewritten accordingly.
+- **Cohorts PRD lists third-party cohorts as Future scope**, while the Third Party Cohorts PRD defines them as V1 current scope. Documented as live, since a full PRD was supplied.
+- **Cohorts PRD references User Flows**, which isn't released, as both a cohort source and a place to apply cohorts. Omitted. Its "Insights" references are documented as Chart Analysis.
+- **Alerts PRD contradicts itself on Editor permissions.** §2, §6, §9, §10, §12 and every scenario say an Editor can create alerts and edit/delete their own. The §4 "Alert Actions" table marks Editor Create and Delete as ✗. Documented per the majority; confirm.
+- **Alerts PRD's chart-type × operator matrix** ("Alert Configurations Sheet") was not provided, so the page says operators adapt to the chart without listing which appear where.
+- **Alerts PRD email subjects** are all `[Klaritics Alert Triggered]`, including for created/paused/deleted emails — likely a copy-paste slip. Subjects are not documented.
+- **Alerts PRD preview example** shows Slack as a channel and a 15-minute frequency, neither of which the spec supports (channels are Email and Webhook; frequency is N hours/days/weeks/months). A consistent example was written instead.
+- **Alerts PRD email templates contain real names** (a project name and a person's name). Not reproduced.
+- **Retry behavior for alert webhooks** says "same logic as third party cohorts". Third-party cohorts *pause* the sync on 400/401/403/404; whether alert webhook connections are also paused is not stated. Documented only as "not retried".
+- **Statistical Anomaly and In and Out alerts are V2.** Mentioned as coming in a future release.
+
 ### Dashboard & Chart Management PRD contradiction
 
 §3.1 and §28 state Editor has no create permission; §24 Acceptance Criteria states Full Access **or Editor** can create a dashboard. Documented as **Editor cannot create**, per your decision. The PRD itself should be reconciled.
@@ -84,18 +100,11 @@ The install path for a self-hosted product in 57 lines, with no installable deta
 **Status: the owner is supplying this.** When it arrives it needs container images and registry, a real compose/Helm manifest, system requirements, datastore dependencies and versions, ports and TLS expectations, where `project_id` and `server_host` come from after install, and the upgrade/rollback procedure.
 
 
-### `settings/alerts.mdx`
-
-Claims three condition types and hedges Step 5 with "if available". No PRD. Needed: real condition types and operators, notification channels, whether recipients are users/roles/addresses, evaluation frequency, alert history.
-
-### `settings/third-party-cohorts.mdx`
-
-Describes connecting an external source and syncing on a schedule, with imported cohorts read-only. **No third-party system is ever named.** Needed: which integrations exist, how auth is configured, real sync mechanism and cadence.
 
 
-### `analysis/retention.mdx`, `analysis/cohorts.mdx`
+### `analysis/retention.mdx`
 
-Both give a confident step-by-step build flow that was never observed. Compare either against `analysis/funnels.mdx` or `analysis/stickiness.mdx` for the depth difference. Retention in particular claims day/week/month cohort granularity, and is referenced by the Product Analytics and Feature Adoption pages, which makes getting it right more urgent.
+Gives a confident step-by-step build flow that was never observed. Compare it against `analysis/funnels.mdx` or `analysis/stickiness.mdx` for the depth difference. Retention in particular claims day/week/month cohort granularity, and is referenced by the Product Analytics and Feature Adoption pages, which makes getting it right more urgent.
 
 ---
 

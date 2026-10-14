@@ -1,45 +1,245 @@
 ---
 title: "Cohorts"
 sidebarTitle: "Cohorts"
-description: "Create and manage user cohorts in Klaritics by behavior or properties, then use them across analyses or import external cohorts via third-party integrations."
+description: "Build reusable groups of users in Klaritics from behavior, properties, sequences, chart populations, or uploaded user IDs, then apply them across your analyses."
 ---
 
-Cohorts in Klaritics are groups of users who share a behavior, property, or time-based characteristic. You can build cohorts from events, user attributes, or a combination of both, then use them to filter or break down other analyses such as funnels, retention, and chart analysis.
+A **cohort** is a group of unique users who meet a set of conditions — or who were saved from a chart, or uploaded as a list. Once saved, a cohort is reusable across Klaritics:
 
-## When to use Cohorts
+```text
+Define  →  Save  →  Reuse  →  Analyze  →  Export
+```
 
-Use Cohorts when you want to:
+Cohorts solve a common problem: you discover an important group of users mid-analysis — people who added to cart but never purchased, or who retained on Day 7 — and then have to rebuild that logic every time you need it. A cohort captures the group once.
 
-- Track users who performed a specific action in a time window
-- Compare behavior across user segments in other analyses
-- Import user lists from external tools for unified analysis
+<Note>
+  Membership is always evaluated per **unique `user_id`**. A user who performs an event many times is still one member.
+</Note>
 
-## Build a cohort
+---
+
+## Three ways to create a cohort
+
+<CardGroup cols={3}>
+  <Card title="Behavioral" icon="filter" href="#build-a-behavioral-cohort">
+    Define rules from events, properties, sequences, and time. **Stores the rules.**
+  </Card>
+
+  <Card title="From a chart" icon="chart-line" href="#save-a-cohort-from-a-chart">
+    Save the users behind a funnel step, retention cell, or chart segment. **Stores the users.**
+  </Card>
+
+  <Card title="CSV upload" icon="file-csv" href="#upload-a-csv">
+    Upload a list of user IDs. **Stores the users.**
+  </Card>
+</CardGroup>
+
+| Origin | Created from | Nature |
+| :-- | :-- | :-- |
+| **Behavioral** | **Cohorts → Create Cohort → Add Event** | Dynamic or static, depending on its time conditions |
+| **CSV Upload** | **Cohorts → Create Cohort → Upload CSV** | Always static |
+| **Funnel, Retention, Chart Analysis** | **Save as Cohort** inside the chart | Always static |
+
+The key distinction: a behavioral cohort turns **conditions into user IDs**, and is re-evaluated against its rules. Chart and CSV cohorts store a fixed list of **user IDs**, with no rules behind them.
+
+---
+
+## Build a behavioral cohort
+
+A behavioral cohort is built from event conditions, user-property conditions, groups of conditions, logical operators, and time conditions.
 
 <Steps>
-  <Step title="Define the criteria">
-    Choose whether the cohort is based on a user property, an event, or a sequence of events within a date range.
+  <Step title="Open the builder">
+    Go to **Cohorts → Create Cohort** and choose **Add Event**.
   </Step>
-  <Step title="Set conditions">
-    Add filters such as event count thresholds, property values, or time windows. For example, users who completed at least two purchases in the last thirty days.
+  <Step title="Add event conditions">
+    Each condition is an event, optional event properties, and a time condition. For example: `purchase_completed` where `category = Electronics` and `price ≥ 5000`, in the last 30 days.
   </Step>
-  <Step title="Preview and save">
-    Review the matching user count, then save the cohort. Saved cohorts are available across all analyses in your project.
+  <Step title="Choose how conditions combine">
+    Pick the group's operator: **OR**, **AND**, or **AND THEN**. Add more groups if needed.
   </Step>
-  <Step title="Use in analyses">
-    Reference the saved cohort as a filter or breakdown in funnels, retention, chart analysis, and more.
+  <Step title="Add user-property conditions">
+    Optionally add a property group, such as `plan = Premium AND country = India`.
+  </Step>
+  <Step title="Check the count">
+    Use **Show Count** to see how many users qualify, as a trend over the last 30, 60, or 90 days.
+  </Step>
+  <Step title="Name and save">
+    Name the cohort and save it. It's then available across your analyses.
   </Step>
 </Steps>
 
-## Import external cohorts
+### Operators
 
-Klaritics supports importing cohorts from external systems so you can combine third-party segmentation with your event data. To set this up, see [Third Party Cohorts](/settings/third-party-cohorts).
+| Operator | A user qualifies when… | Example |
+| :-- | :-- | :-- |
+| **OR** | Any condition is met. The default when you add events. | `A OR B OR C` |
+| **AND** | All conditions are met | `A AND B AND C` |
+| **AND THEN** | The events happen in this order | `A AND THEN B AND THEN C` |
+| **DIDN'T** | An event did **not** happen after the previous one. Only available with AND THEN. | `add_to_cart AND THEN DIDN'T purchase_completed` |
 
-## Save and share
+<Warning>
+  A group uses **one operator throughout**. `A AND B AND C` is valid; `A AND B OR C` and `A AND B AND THEN C` are not. The builder prevents mixing them.
+</Warning>
 
-Cohort definitions can be pinned to dashboards as charts so your team can monitor group size and composition over time. You can also configure alerts on a cohort chart to be notified when membership crosses a threshold.
+### Groups
+
+You can add several event groups, each with its own operator, and join them with a single **AND** or **OR**:
+
+```text
+Group 1:  A OR B
+   AND
+Group 2:  X AND Y
+   AND
+Group 3:  P AND THEN Q
+```
+
+**User properties** go in a separate property group, which supports AND and OR but not AND THEN — properties have no order. Event groups and property groups combine at the top level.
+
+### Property operators
+
+| Type | Operators |
+| :-- | :-- |
+| **String** | Equals, Not Equals, Contains, Does Not Contain, Is Set, Is Not Set |
+| **Numeric** | Equals, Not Equals, `>`, `<`, `≥`, `≤`, Is Set, Is Not Set |
+
+### Time conditions
+
+Each condition has its own time setting, and different conditions can use different ranges — for example, event A in the last 7 days AND event B between Jan 1 and Jan 31.
+
+| Setting | Meaning | Behavior |
+| :-- | :-- | :-- |
+| **Any time** | Performed at least once in available history | — |
+| **Fixed range** | Between two dates, such as Jan 1 – Jan 31 | Never moves |
+| **Relative range** | Last N minutes, hours, days, weeks, or months | Moves with the current date |
+
+<Note>
+  Relative ranges are **calendar-based and include today**. If today is Oct 7, "Last 5 days" means Oct 3 – Oct 7, not the last 120 hours.
+</Note>
+
+### Sequences with AND THEN
+
+- Events must happen in order, but **other events in between are allowed**: a user who does `A → C → D → B` still qualifies for `A AND THEN B`.
+- Each step can have an optional time bound, measured from the step **immediately before it**:
+
+```text
+A  AND THEN  B within 5 days  AND THEN  C within 3 days
+```
+
+- Time bounds can be set in minutes, hours, days, weeks, or months.
+- **DIDN'T** works the same way, and its time bound is also optional — `A AND THEN DIDN'T B` is valid.
+
+### Dynamic and static cohorts
+
+| Type | When | Membership |
+| :-- | :-- | :-- |
+| **Static** | Every time condition is a fixed range | Fixed |
+| **Dynamic** | At least one condition uses a relative range | Recalculated as the window moves |
+
+A cohort mixing fixed and relative ranges is dynamic. A dynamic cohort whose range has a definite end date stops adding users once that date passes.
+
+Membership in a dynamic cohort can change repeatedly. A user who adds to cart on June 1 and purchases on June 2 leaves "Cart, didn't purchase" — and re-qualifies if they add to cart again on June 5 without purchasing.
+
+### Naming and saving
+
+Every cohort needs a name. Defaults are `Cohort 001`, `Cohort 002`, and so on, and you can change them. On save, Klaritics validates the configuration and name, stores the definition, calculates the current members, and makes the cohort available across your analyses.
+
+---
+
+## Save a cohort from a chart
+
+Inside a supported chart, use **Save as Cohort** to save the users behind a specific population:
+
+| Chart | Populations you can save |
+| :-- | :-- |
+| [Funnels](/analysis/funnels) | Users who converted at a step, dropped off, or completed the funnel |
+| [Retention](/analysis/retention) | A retention cell, such as users retained on Day 7 |
+| [Chart Analysis](/analysis/chart-analysis) | A segment or data point, such as `country = India` |
+
+<Warning>
+  A chart cohort stores **user IDs only** — not the chart's query, filters, or date range, and it doesn't update later. If the chart is filtered to the last 7 days, India, and Android, the cohort holds exactly the users in that filtered view. Saving "Purchase Conversion Users" from a funnel does not save the funnel's steps.
+</Warning>
+
+---
+
+## Upload a CSV
+
+Go to **Cohorts → Create Cohort → Upload CSV**.
+
+| Rule | Behavior |
+| :-- | :-- |
+| **Format** | Exactly one column, `user_id`. Files with more columns are rejected. |
+| **Unknown IDs** | Ignored. 10,000 uploaded with 9,500 matched gives 9,500 members. |
+| **Duplicates** | Merged. `user_101` three times plus `user_205` gives 2 members. |
+| **Lifetime** | Never expires. Members persist until the cohort is changed or deleted. |
+
+```csv
+user_id
+user_101
+user_205
+user_318
+```
+
+---
+
+## Use cohorts in analyses
+
+- Apply a saved cohort as a filter in [Chart Analysis](/analysis/chart-analysis), [Funnels](/analysis/funnels), [Retention](/analysis/retention), and other supported charts.
+- One cohort can be used in many charts.
+- A chart can include **several cohorts side by side** for comparison — for example, High Intent Users vs. Indian Users on the same funnel.
+
+<Note>
+  **The chart's date range always wins.** Applying a cohort never overrides it — both are evaluated together. A cohort defined over the last 30 days, applied to a funnel showing the last 7 days, contributes its members within the funnel's 7-day window.
+</Note>
+
+---
+
+## Manage cohorts
+
+The cohort list shows **Name**, **Type**, **User Count**, **Created By**, **Created At**, and **Last Updated**. You can search by name, filter by type (Behavioral, CSV Upload, Funnel, Retention, Chart Analysis), and sort by created date, last updated, or user count.
+
+| Action | What it does |
+| :-- | :-- |
+| **View** | Open the cohort |
+| **Duplicate** | Copy a behavioral cohort's full rules so you can edit and rename the copy |
+| **Export** | Download the members as a CSV with a `user_id` column |
+| **Delete** | Remove the cohort, if nothing is using it |
+
+**Duplicate to build on an existing cohort.** For example, duplicate "High Intent Users" and add `country = India` to make "High Intent Users: India". This is how you extend a cohort — cohorts can't be nested inside each other.
+
+<Warning>
+  **A cohort in use can't be deleted.** You'll see: *"Cannot delete cohort. This cohort is currently being used by other analytics. Remove the cohort from those charts before deleting it."*
+</Warning>
+
+### Permissions
+
+Anyone with access can view, apply, analyze, and export cohorts. Editing or duplicating a cohort's definition requires editor permission.
+
+### If an event stops reporting
+
+A behavioral cohort that uses an event which stops arriving stays intact and usable. Its count drops to 0 if nobody qualifies, but the condition is never silently removed.
+
+---
+
+## Examples
+
+| Industry | Cohort | Used for |
+| :-- | :-- | :-- |
+| Banking | Checked loan eligibility **OR** salary account holder = true | Pre-approved loan offers and cross-selling |
+| E-commerce | Added a wishlist item **OR** loyalty tier = Gold | Early access to a sale |
+| Music | Listened to 20+ songs in a month **AND** plan = Free | Converting engaged free users with a Premium offer |
+| Any | `add_to_cart` **AND THEN DIDN'T** `purchase_completed` within 5 days | Cart abandonment follow-up |
+
+---
 
 ## Next steps
 
-- [Retention](/analysis/retention) to measure how cohorts return over time
-- [Third Party Cohorts](/settings/third-party-cohorts) to import external user groups
+<CardGroup cols={2}>
+  <Card title="Sync cohorts to other tools" icon="arrow-right-arrow-left" href="/settings/third-party-cohorts">
+    Send cohorts to MoEngage or any webhook, once or on a schedule.
+  </Card>
+
+  <Card title="Retention" icon="rotate" href="/analysis/retention">
+    Measure how a cohort returns over time.
+  </Card>
+</CardGroup>

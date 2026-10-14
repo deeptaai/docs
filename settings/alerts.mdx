@@ -1,47 +1,288 @@
 ---
-title: "Alerts: Monitor Chart Metrics on Dashboards"
-sidebarTitle: "Overview"
-description: "Configure alerts on dashboard charts in Klaritics to get notified when metric values cross thresholds or change unexpectedly."
+title: "Alerts"
+sidebarTitle: "Alerts"
+description: "Monitor saved Klaritics charts and get notified by email or webhook when a metric crosses a threshold, changes relative to a baseline, or shifts in rank."
 ---
 
-Alerts in Klaritics let you monitor the charts on your dashboards and get notified when something needs attention. You can set trigger conditions based on metric thresholds or relative changes, so your team responds quickly to shifts in product behavior.
+Alerts watch a saved chart and notify you when its metrics behave in a way you care about — a conversion rate dropping below 3%, revenue falling 20% week over week, or a city slipping out of the top 10.
 
-## How alerts work
+Alerts are available on [Chart Analysis](/analysis/chart-analysis) and [Funnels](/analysis/funnels) charts.
 
-Alerts are attached to individual charts within a dashboard. When the chart's data meets the condition you define, Klaritics sends a notification to the configured recipients. You can set conditions such as:
+<Note>
+  **The chart must be saved first.** An alert is always attached to a saved chart and inherits its configuration.
+</Note>
 
-- A metric crosses above or below a fixed threshold.
-- A metric changes by more than a percentage compared to a previous period.
-- A count drops to zero or spikes unexpectedly.
+---
 
-## Setting up an alert
+## Alert types
+
+<CardGroup cols={3}>
+  <Card title="Threshold" icon="arrows-up-down">
+    A metric crosses a fixed value. *Conversion rate below 3%.*
+  </Card>
+
+  <Card title="Relative change" icon="arrow-trend-down">
+    A metric changes compared to a previous period. *Revenue down 20%.*
+  </Card>
+
+  <Card title="Rank change" icon="ranking-star">
+    A breakdown value moves in the ranking. *Hyderabad leaves the top 10 cities.*
+  </Card>
+</CardGroup>
+
+### Threshold
+
+Triggers when a metric crosses a fixed numeric or percentage value.
+
+| Operators |
+| :-- |
+| Greater than · Less than · Equal to · Greater than or equal to · Less than or equal to |
+| In between · Not in between *(these take a second value)* |
+
+### Relative change
+
+Triggers when the current value changes compared to a baseline period.
+
+| Operator | Calculated as |
+| :-- | :-- |
+| **No Change** | The value is the same as the baseline |
+| **Increased** | `Current − Baseline` |
+| **Decreased** | `Baseline − Current` |
+| **Increased By %** | `((Current − Baseline) / Baseline) × 100` |
+| **Decreased By %** | `((Baseline − Current) / Baseline) × 100` |
+
+The baseline follows the **chart's granularity**: a daily chart compares against previous days, a weekly chart against previous weeks, a monthly chart against previous months.
+
+### Rank change
+
+Monitors how breakdown values rank against the previous period, set by the alert's evaluation frequency — a daily alert compares with yesterday's ranking, a weekly one with last week's.
+
+<Note>
+  Rank change is only available when the chart has a **breakdown**.
+</Note>
+
+<Tabs>
+  <Tab title="A specific value">
+    For example, `City = Hyderabad`.
+
+    | Operator | Example |
+    | :-- | :-- |
+    | **Rank Changes** | Hyderabad's rank changed |
+    | **Moves to Top N** | Hyderabad moved into the top 10 cities |
+    | **Moves to Bottom N** | Hyderabad moved into the bottom 10 cities |
+  </Tab>
+
+  <Tab title="Any value">
+    For example, `City = Any`.
+
+    | Operator | Example |
+    | :-- | :-- |
+    | **Top N Values Change** | The top 10 cities changed |
+    | **Bottom N Values Change** | The bottom 10 campaigns changed |
+  </Tab>
+</Tabs>
+
+<Info>
+  **Coming in a future release:** Statistical anomaly alerts, which detect deviations from historical behavior, and In and Out alerts, which detect breakdown values appearing or disappearing.
+</Info>
+
+---
+
+## Create an alert
 
 <Steps>
-  <Step title="Open a dashboard">
-    Navigate to the dashboard that contains the chart you want to monitor. See [Dashboards Overview](/dashboards/overview) for details.
+  <Step title="Open alerts on a saved chart">
+    Use the **Alert** icon in the chart header, **Set Alert** in the chart menu, or the context menu on a row, segment, or funnel step.
+
+    A popup lists the chart's existing alerts with their status. From here you can open or delete an alert, click **Create Alert**, or go to **Manage Alerts** for the full list.
   </Step>
-  <Step title="Select the chart">
-    Click the chart you want to alert on. Alerts are configured per chart.
+  <Step title="Name the alert">
+    Give it a name your recipients will recognize.
   </Step>
-  <Step title="Define the condition">
-    Choose the metric, comparison operator, and threshold. You can also set a lookback window for relative comparisons.
+  <Step title="Define the criteria">
+    Choose what to monitor and add one or more conditions. See [Criteria](#criteria).
   </Step>
-  <Step title="Choose recipients">
-    Specify who should receive the alert when the condition is met.
+  <Step title="Set up notifications">
+    Choose how often to check, and where to send notifications. See [Notifications](#notifications).
   </Step>
-  <Step title="Save and test">
-    Save the alert. Use a manual test if available to confirm the notification path works.
+  <Step title="Review and save">
+    Check the plain-language preview, then save. The alert is **active immediately**.
   </Step>
 </Steps>
 
-## Best practices
+---
 
-- **Alert on actionable metrics.** Choose charts where a change genuinely requires a response.
-- **Use thresholds carefully.** Too many alerts lead to fatigue. Start with critical metrics only.
-- **Review alert history.** Check past triggers to tune thresholds and reduce noise.
+## Criteria
+
+The alert inherits the chart's metrics, measurements, breakdowns, filters, granularity, and aggregation. You choose which slice of the chart to watch, then set conditions on it.
+
+| Selector | What you pick |
+| :-- | :-- |
+| **Metric** | One of the chart's metrics, or **Any** when the chart has several |
+| **Breakdown** | A specific value such as `Country = India`, or **Any**. There is one selector per breakdown on the chart. |
+| **Distribution bucket** | For distribution charts, the single bucket to watch, such as `20–30 sec` |
+
+Each **condition** has a metric slice, an operator, a value, and — for relative change — a baseline.
+
+### Multiple conditions
+
+Combine conditions with **AND** or **OR**:
+
+```text
+Revenue decreases by 20%
+  AND
+Conversion Rate < 3%
+  AND
+India moves to Bottom 10
+```
+
+<Warning>
+  Use **one** logical operator per group. Mixing AND and OR in the same group isn't supported.
+</Warning>
+
+The operators on offer adapt to the chart: its type, metric, module, and whether it has breakdowns. Rank operators, for example, only appear when there's a breakdown.
+
+---
+
+## Notifications
+
+### Evaluation frequency
+
+How often the conditions are checked: every **N hours**, **days**, **weeks**, or **months**.
+
+### Channels
+
+| Channel | Setup |
+| :-- | :-- |
+| **Email** | Add one or more recipients |
+| **Webhook** | Pick a webhook connection. See [Alert webhooks](/settings/alert-webhooks). |
+
+### Preview
+
+Before saving, you'll see a plain-language summary of what the alert does:
+
+```text
+Alert me when:
+  Revenue decreases by more than 20%
+  AND Conversion Rate falls below 3%
+  compared to the previous week.
+
+Check: every 1 day
+Notify: Email, Webhook
+```
+
+### End date
+
+An alert runs until the **chart's end date**. When that date passes, the alert becomes **Expired** and recipients are notified. To extend it, change the chart's date range — an expired alert itself can't be edited.
+
+---
+
+## Alert status
+
+| Status | Meaning | Actions |
+| :-- | :-- | :-- |
+| **Active** | Checking conditions and sending notifications | Pause |
+| **Paused** | Stopped by a user. No checks, no notifications. | Activate |
+| **Out of Sync** | The chart changed in a way that affects the alert. Checks are stopped until you update it. | Pause |
+| **Expired** | The chart's end date has passed | None |
+
+---
+
+## When you edit the chart
+
+Alerts are tied to the chart's configuration, so saving changes to a chart can affect them.
+
+| Chart change | Effect on linked alerts |
+| :-- | :-- |
+| Date range | Alert updates automatically |
+| Granularity | Alert updates automatically |
+| Compare settings | Alert updates automatically |
+| Metric or measurement | Alert becomes **Out of Sync** |
+| Cohort | Alert becomes **Out of Sync** |
+| Breakdown | Alert becomes **Out of Sync** |
+| Chart type | Alert becomes **Out of Sync** |
+| Distribution buckets | Alert becomes **Out of Sync** |
+
+If a change affects any alerts, Klaritics asks you to confirm before saving. The confirmation lists each affected alert, its condition, why it's affected, and its new status.
+
+An Out of Sync alert stops sending notifications and shows a warning badge. **To reactivate it, edit the alert to match the new chart and save it.**
+
+<Note>
+  **Deleting a chart deletes its alerts.**
+</Note>
+
+---
+
+## Manage all alerts
+
+Go to **Settings → Alerts** to see every alert in the project.
+
+| Column | Shows |
+| :-- | :-- |
+| **Alert Name** | Click to open the alert's details |
+| **Creator** | Who created it |
+| **Last Modified** | When it was last changed |
+| **Triggers** | How many times it has fired |
+| **Last Triggered** | When it last fired |
+| **Created** | When it was created |
+| **Frequency** | How often it's checked, such as once per day |
+| **Status** | Active, Paused, Out of Sync, or Expired |
+
+Search by alert name, sort by any column, and edit, delete, pause, or activate alerts from each row. **Manage Webhooks** in the page header opens the webhook connections.
+
+---
+
+## Email notifications
+
+Email recipients are notified when an alert:
+
+| Event | When |
+| :-- | :-- |
+| **Triggers** | Its conditions are met |
+| **Is created** | It's saved for the first time |
+| **Is updated** | Its conditions, frequency, recipients, or breakdowns change |
+| **Is paused** | A user pauses it |
+| **Is activated** | It's resumed after being paused or Out of Sync |
+| **Goes Out of Sync** | A chart change affects it — the email explains what to fix |
+| **Expires** | The chart's end date passes |
+| **Is deleted** | It's deleted directly, or because its chart was deleted |
+
+Each email includes the alert condition, the project and chart name, the alert's creator, a link to the chart, and a link to manage all alerts. Lifecycle emails go to the alert's recipients, its creator, and project admins.
+
+---
+
+## Permissions
+
+Alerts have their own project-level permission, set in [Roles](/settings/roles). It works alongside chart permissions, not instead of them.
+
+| Alert permission | View | Create | Edit | Delete |
+| :-- | :--: | :--: | :--: | :--: |
+| **Full Access** | ✓ | ✓ | Any alert | Any alert |
+| **Editor** | ✓ | ✓ | **Own** alerts only | **Own** alerts only |
+| **Viewer** | ✓ | ✗ | ✗ | ✗ |
+
+Whoever creates an alert becomes its owner. Ownership decides whether an Editor can change it.
+
+<Warning>
+  **You need access to the chart.** Without access to a chart, you can't see or manage its alerts — even with Full Access to alerts.
+</Warning>
+
+Chart and alert permissions are independent in both directions:
+
+- A **chart Viewer** with **alert Editor** can create and manage their own alerts, without being able to change the chart.
+- A **chart Editor** with **alert Viewer** can change the chart, but can only view its alerts.
+- Dashboard access never grants alert access.
+
+---
 
 ## Next steps
 
-- [Charts Overview](/charts/overview)
-- [Dashboards Overview](/dashboards/overview)
-- [Create a Dashboard](/dashboards/create-dashboard)
+<CardGroup cols={2}>
+  <Card title="Alert webhooks" icon="link" href="/settings/alert-webhooks">
+    Connect webhooks and see the payloads they receive.
+  </Card>
+
+  <Card title="Dashboard and chart permissions" icon="shield" href="/dashboards/permissions">
+    How chart access is resolved.
+  </Card>
+</CardGroup>
